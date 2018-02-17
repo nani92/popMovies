@@ -4,6 +4,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
+import eu.napcode.popmovies.api.UrlUtils;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -12,5 +14,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Log.d("Natalia", "api key " + BuildConfig.TMDB_API_KEY);
+        UrlUtils.getPopularMoviesUrl();
     }
 }
