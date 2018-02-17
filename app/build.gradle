@@ -1,5 +1,9 @@
 apply plugin: 'com.android.application'
 
+def localPropertiesFile = rootProject.file("local.properties")
+def localProperties = new Properties()
+localProperties.load(new FileInputStream(localPropertiesFile))
+
 android {
     compileSdkVersion 26
     defaultConfig {
@@ -9,6 +13,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        buildConfigField "String", "TMDB_API_KEY", localProperties['tmdb.apiKey']
     }
     buildTypes {
         release {
