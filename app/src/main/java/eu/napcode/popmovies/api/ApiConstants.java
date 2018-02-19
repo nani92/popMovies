@@ -9,4 +9,6 @@ public class ApiConstants {
 
     public static final String TMDB_API_KEY = BuildConfig.TMDB_API_KEY;
     public static final String URL_PARAM_API_KEY = "api_key";
+
+    public static final String POSTER_BASE_URL = "http://image.tmdb.org/t/p/w185//";
 }

@@ -1,8 +1,6 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 project.ext {
-    daggerVersion = "2.11"
     supportVersion = "27.0.2"
-    glideVersion = "4.4.0"
 }
 
 buildscript {

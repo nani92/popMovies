@@ -14,6 +14,7 @@ public class MoviesMapper {
                     Movie movie = new Movie();
                     movie.setTitle(responseMovie.getTitle());
                     movie.setId(responseMovie.getId());
+                    movie.setPosterPath(responseMovie.getPosterPath());
 
                     return movie;
                 }

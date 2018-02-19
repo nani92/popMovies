@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +17,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import eu.napcode.popmovies.R;
 import eu.napcode.popmovies.model.Movie;
+
+import static eu.napcode.popmovies.api.ApiConstants.POSTER_BASE_URL;
 
 public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesViewHolder> {
 
@@ -38,6 +42,9 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
     @Override
     public void onBindViewHolder(MoviesViewHolder holder, int position) {
         holder.titleTextView.setText(movies.get(position).getTitle());
+        Glide.with(holder.itemView)
+                .load(POSTER_BASE_URL + movies.get(position).getPosterPath())
+                .into(holder.posterImageView);
     }
 
     @Override
