@@ -1,5 +1,6 @@
 package eu.napcode.popmovies.movies;
 
+import android.content.res.Configuration;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -16,6 +17,9 @@ import eu.napcode.popmovies.R;
 import eu.napcode.popmovies.model.Movie;
 
 public class MainActivity extends AppCompatActivity implements MoviesView {
+
+    private static final int COLUMNS_LANDSCAPE = 4;
+    private static final int COLUMNS_PORTRAIT = 2;
 
     @Inject MoviesPresenter moviesPresenter;
 
@@ -45,9 +49,12 @@ public class MainActivity extends AppCompatActivity implements MoviesView {
     }
 
     private GridLayoutManager getLayoutManager() {
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
 
-        return gridLayoutManager;
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            return new GridLayoutManager(this, COLUMNS_PORTRAIT);
+        } else {
+            return new GridLayoutManager(this, COLUMNS_LANDSCAPE);
+        }
     }
 
     @Override
