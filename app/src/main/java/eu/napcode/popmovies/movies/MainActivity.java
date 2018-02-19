@@ -12,7 +12,7 @@ import eu.napcode.popmovies.api.ApiConstants;
 import eu.napcode.popmovies.api.MoviesService;
 import eu.napcode.popmovies.api.UrlUtils;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MoviesView {
 
     @Inject MoviesPresenter moviesPresenter;
 
@@ -24,5 +24,7 @@ public class MainActivity extends AppCompatActivity {
         AndroidInjection.inject(this);
 
         Log.d("Natalia", "");
+
+        moviesPresenter.getMovies();
     }
 }
