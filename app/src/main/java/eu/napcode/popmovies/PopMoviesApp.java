@@ -1,30 +1,41 @@
 package eu.napcode.popmovies;
 
 
+import android.app.Activity;
 import android.app.Application;
 
-import eu.napcode.popmovies.dependency.component.DaggerNetworkingComponent;
-import eu.napcode.popmovies.dependency.component.NetworkingComponent;
-import eu.napcode.popmovies.dependency.module.AppModule;
-import eu.napcode.popmovies.dependency.module.NetworkingModule;
+import javax.inject.Inject;
 
-import static eu.napcode.popmovies.api.ApiConstants.TMDB_URL_BASE;
+import dagger.android.AndroidInjector;
+import dagger.android.DispatchingAndroidInjector;
+import dagger.android.HasActivityInjector;
+import eu.napcode.popmovies.dependency.component.DaggerAppComponent;
 
-public class PopMoviesApp extends Application {
 
-    private NetworkingComponent networkingComponent;
+public class PopMoviesApp extends Application implements HasActivityInjector {
+
+    @Inject
+    DispatchingAndroidInjector<Activity> dispatchingAndroidInjector;
+
 
     @Override
     public void onCreate() {
         super.onCreate();
-        
-        setupNetworkingComponent();
+
+        setupDagger();
     }
 
-    private void setupNetworkingComponent() {
-        this.networkingComponent = DaggerNetworkingComponent.builder()
-                .appModule(new AppModule(this))
-                .networkingModule(new NetworkingModule(TMDB_URL_BASE))
-                .build();
+    private void setupDagger() {
+        DaggerAppComponent
+                .builder()
+                .application(this)
+                .build()
+                .inject(this);
+    }
+
+
+    @Override
+    public AndroidInjector<Activity> activityInjector() {
+        return this.dispatchingAndroidInjector;
     }
 }
