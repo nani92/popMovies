@@ -38,6 +38,7 @@ public class MoviesPresenter implements GetMoviesListener, BasePresenter<MoviesV
     @Override
     public void moviesReceived(List<Movie> movies) {
         Log.d("Natalia", "" + movies.size());
+        this.moviesView.setMovies(movies);
     }
 
     @Override
