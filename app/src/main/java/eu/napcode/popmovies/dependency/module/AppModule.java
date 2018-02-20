@@ -4,7 +4,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import eu.napcode.popmovies.api.ApiConstants;
+import eu.napcode.popmovies.api.ApiUtils;
 import eu.napcode.popmovies.api.MoviesService;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -18,7 +18,7 @@ public class AppModule {
     @Provides
     MoviesService provideMoviesService() {
         return new Retrofit.Builder()
-                .baseUrl(ApiConstants.TMDB_URL_BASE)
+                .baseUrl(ApiUtils.TMDB_URL_BASE)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(getHttpClient())
                 .build()

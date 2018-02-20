@@ -2,4 +2,8 @@
 <resources>
     <dimen name="base_margin">16dp</dimen>
     <dimen name="small_margin">8dp</dimen>
+
+    <dimen name="header_text_size">24sp</dimen>
+    <dimen name="label_text_size">12sp</dimen>
+    <dimen name="details_value_text_size">16sp</dimen>
 </resources>

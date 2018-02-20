@@ -3,7 +3,7 @@ package eu.napcode.popmovies.repository;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import eu.napcode.popmovies.api.ApiConstants;
+import eu.napcode.popmovies.api.ApiUtils;
 import eu.napcode.popmovies.api.MoviesService;
 import eu.napcode.popmovies.api.responsemodel.ResponseMoviePage;
 import eu.napcode.popmovies.model.Movie;
@@ -39,7 +39,7 @@ public class MoviesRepository {
 
     private void downloadMovies(final GetMoviesListener listener) {
         this.moviesService
-                .getMoviesByPopularity(ApiConstants.TMDB_API_KEY)
+                .getMoviesByPopularity(ApiUtils.TMDB_API_KEY)
                 .enqueue(new Callback<ResponseMoviePage>() {
 
                     @Override

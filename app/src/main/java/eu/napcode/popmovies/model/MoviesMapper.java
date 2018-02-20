@@ -15,6 +15,11 @@ public class MoviesMapper {
                     movie.setTitle(responseMovie.getTitle());
                     movie.setId(responseMovie.getId());
                     movie.setPosterPath(responseMovie.getPosterPath());
+                    movie.setBackdropPath(responseMovie.getBackdropPath());
+                    movie.setOriginalTitle(responseMovie.getOriginalTitle());
+                    movie.setReleaseDate(responseMovie.getReleaseDate());
+                    movie.setVoteAverage(responseMovie.getVoteAverage());
+                    movie.setPlot(responseMovie.getOverview());
 
                     return movie;
                 }

@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">PopMovies</string>
+    <string name="release_date_label">Release date</string>
+    <string name="original_title">Original title</string>
+    <string name="average_vote">Average vote</string>
 </resources>

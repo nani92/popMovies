@@ -32,6 +32,12 @@ public class DetailsPresenter implements BasePresenter<DetailsView> {
     public void getMovie(int id) {
         this.movie = this.moviesRepository.getMovieById(id);
 
-        this.detailsView.setMovieTitle(this.movie.getTitle());
+        this.detailsView.displayMovieTitle(this.movie.getTitle());
+        this.detailsView.displayBackdropImageView(this.movie.getBackdropPath());
+        this.detailsView.displayPosterImageView(this.movie.getPosterPath());
+        this.detailsView.displayOriginalTitle(this.movie.getOriginalTitle());
+        this.detailsView.displayReleaseDate(this.movie.getReleaseDate());
+        this.detailsView.displayVoteAverage(this.movie.getVoteAverage());
+        this.detailsView.displayPlot(this.movie.getPlot());
     }
 }

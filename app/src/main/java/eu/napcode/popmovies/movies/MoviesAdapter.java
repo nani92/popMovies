@@ -2,7 +2,6 @@ package eu.napcode.popmovies.movies;
 
 
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,9 +16,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import eu.napcode.popmovies.R;
+import eu.napcode.popmovies.api.ApiUtils;
 import eu.napcode.popmovies.model.Movie;
-
-import static eu.napcode.popmovies.api.ApiConstants.POSTER_BASE_URL;
 
 public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesViewHolder> {
 
@@ -48,7 +46,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
         holder.titleTextView.setText(movies.get(position).getTitle());
 
         Glide.with(holder.itemView)
-                .load(POSTER_BASE_URL + movies.get(position).getPosterPath())
+                .load(ApiUtils.getPosterUrl(movies.get(position).getPosterPath()))
                 .into(holder.posterImageView);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {

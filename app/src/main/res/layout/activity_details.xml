@@ -1,21 +1,188 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/base_margin">
 
-    <ImageView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintDimensionRatio="w,16:9"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
-
-    <TextView
-        android:id="@+id/titleTextView"
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content">
 
-</android.support.constraint.ConstraintLayout>
+        <ImageView
+            android:id="@+id/backdropImageView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintDimensionRatio="w,16:9"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@mipmap/ic_launcher"/>
+
+        <ImageView
+            android:id="@+id/posterImageView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            app:layout_constraintBottom_toBottomOf="@id/backdropImageView"
+            app:layout_constraintLeft_toRightOf="@id/leftGuideline"
+            app:layout_constraintRight_toLeftOf="@id/posterRightGuideline"
+            app:layout_constraintTop_toBottomOf="@id/backdropImageView"
+            tools:src="@mipmap/ic_launcher"/>
+
+        <TextView
+            android:id="@+id/titleTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/small_margin"
+            android:layout_marginTop="@dimen/small_margin"
+            android:textSize="@dimen/header_text_size"
+            app:layout_constraintLeft_toRightOf="@id/posterRightGuideline"
+            app:layout_constraintRight_toLeftOf="@id/rightGuideline"
+            app:layout_constraintTop_toBottomOf="@id/backdropImageView"
+            tools:text="@tools:sample/lorem"/>
+
+        <View
+            android:id="@+id/detailsTopDividerView"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginBottom="@dimen/small_margin"
+            android:layout_marginTop="@dimen/small_margin"
+            android:background="@color/gray"
+            app:layout_constraintLeft_toRightOf="@id/leftGuideline"
+            app:layout_constraintRight_toLeftOf="@id/rightGuideline"
+            app:layout_constraintTop_toBottomOf="@id/posterTitleBarrier"/>
+
+        <TextView
+            android:id="@+id/releaseDateLabelTextView"
+            style="@style/LabelStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/release_date_label"
+            app:layout_constraintBottom_toBottomOf="@id/releaseDateValueTextView"
+            app:layout_constraintLeft_toRightOf="@id/leftGuideline"
+            app:layout_constraintTop_toTopOf="@id/releaseDateValueTextView"/>
+
+        <TextView
+            android:id="@+id/releaseDateValueTextView"
+            style="@style/DetailsValueStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/release_date_label"
+            app:layout_constraintLeft_toRightOf="@id/labelsBarrier"
+            app:layout_constraintRight_toLeftOf="@id/rightGuideline"
+            app:layout_constraintTop_toBottomOf="@id/detailsTopDividerView"
+            tools:text="@tools:sample/lorem"/>
+
+        <TextView
+            android:id="@+id/originalTitleLabelTextView"
+            style="@style/LabelStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/original_title"
+            app:layout_constraintBottom_toBottomOf="@id/originalTitleValueTextView"
+            app:layout_constraintLeft_toRightOf="@id/leftGuideline"
+            app:layout_constraintTop_toTopOf="@id/originalTitleValueTextView"/>
+
+        <TextView
+            android:id="@+id/originalTitleValueTextView"
+            style="@style/DetailsValueStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/release_date_label"
+            app:layout_constraintLeft_toRightOf="@id/labelsBarrier"
+            app:layout_constraintRight_toLeftOf="@id/rightGuideline"
+            app:layout_constraintTop_toBottomOf="@id/releaseDateValueTextView"
+            tools:text="@tools:sample/lorem"/>
+
+        <TextView
+            android:id="@+id/averageVoteLabelTextView"
+            style="@style/LabelStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/average_vote"
+            app:layout_constraintBottom_toBottomOf="@id/averageVoteValueTextView"
+            app:layout_constraintLeft_toRightOf="@id/leftGuideline"
+            app:layout_constraintTop_toTopOf="@id/averageVoteValueTextView"/>
+
+        <TextView
+            android:id="@+id/averageVoteValueTextView"
+            style="@style/DetailsValueStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/release_date_label"
+            app:layout_constraintLeft_toRightOf="@id/labelsBarrier"
+            app:layout_constraintRight_toLeftOf="@id/rightGuideline"
+            app:layout_constraintTop_toBottomOf="@id/originalTitleValueTextView"
+            tools:text="@tools:sample/lorem"/>
+
+        <View
+            android:id="@+id/detailsBottomDividerView"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginBottom="@dimen/small_margin"
+            android:layout_marginTop="@dimen/small_margin"
+            android:background="@color/gray"
+            app:layout_constraintLeft_toRightOf="@id/leftGuideline"
+            app:layout_constraintRight_toLeftOf="@id/rightGuideline"
+            app:layout_constraintTop_toBottomOf="@id/averageVoteValueTextView"/>
+
+        <TextView
+            android:id="@+id/plotTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/base_margin"
+            android:textSize="@dimen/details_value_text_size"
+            app:layout_constraintLeft_toRightOf="@id/leftGuideline"
+            app:layout_constraintRight_toLeftOf="@id/rightGuideline"
+            app:layout_constraintTop_toBottomOf="@id/detailsBottomDividerView"
+            tools:text="@tools:sample/lorem/random"/>
+
+        <android.support.constraint.Guideline
+            android:id="@+id/leftGuideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/base_margin"/>
+
+        <android.support.constraint.Guideline
+            android:id="@+id/rightGuideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/base_margin"/>
+
+        <android.support.constraint.Guideline
+            android:id="@+id/bottomGuideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_end="@dimen/base_margin"/>
+
+        <android.support.constraint.Guideline
+            android:id="@+id/posterRightGuideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.3"/>
+
+        <android.support.constraint.Barrier
+            android:id="@+id/posterTitleBarrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="posterImageView,titleTextView"/>
+
+        <android.support.constraint.Barrier
+            android:id="@+id/labelsBarrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="right"
+            app:constraint_referenced_ids="releaseDateLabelTextView,
+                averageVoteLabelTextView,
+                originalTitleLabelTextView"/>
+
+    </android.support.constraint.ConstraintLayout>
+</ScrollView>
