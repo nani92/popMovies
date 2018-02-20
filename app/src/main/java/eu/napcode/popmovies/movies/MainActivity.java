@@ -1,5 +1,6 @@
 package eu.napcode.popmovies.movies;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,8 +16,9 @@ import butterknife.ButterKnife;
 import dagger.android.AndroidInjection;
 import eu.napcode.popmovies.R;
 import eu.napcode.popmovies.model.Movie;
+import eu.napcode.popmovies.moviedetails.DetailsActivity;
 
-public class MainActivity extends AppCompatActivity implements MoviesView {
+public class MainActivity extends AppCompatActivity implements MoviesView, MoviesAdapter.OnMovieClickedListener {
 
     private static final int COLUMNS_LANDSCAPE = 4;
     private static final int COLUMNS_PORTRAIT = 2;
@@ -44,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements MoviesView {
 
     private void setupRecyclerView() {
         this.recyclerView.setLayoutManager(getLayoutManager());
-        this.moviesAdapter = new MoviesAdapter();
+        this.moviesAdapter = new MoviesAdapter(this);
         this.recyclerView.setAdapter(this.moviesAdapter);
     }
 
@@ -60,5 +62,13 @@ public class MainActivity extends AppCompatActivity implements MoviesView {
     @Override
     public void setMovies(List<Movie> movies) {
         this.moviesAdapter.setMovies(movies);
+    }
+
+    @Override
+    public void movieClicked(int movieId) {
+        Intent intent = new Intent(this, DetailsActivity.class);
+        intent.putExtra(DetailsActivity.KEY_MOVIE_ID, movieId);
+
+        startActivity(intent);
     }
 }

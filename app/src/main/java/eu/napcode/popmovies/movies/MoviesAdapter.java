@@ -2,6 +2,7 @@ package eu.napcode.popmovies.movies;
 
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,9 +23,12 @@ import static eu.napcode.popmovies.api.ApiConstants.POSTER_BASE_URL;
 
 public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesViewHolder> {
 
-    List<Movie> movies = new ArrayList<>();
+    private List<Movie> movies = new ArrayList<>();
+    private OnMovieClickedListener onMovieClickedListener;
 
-    public MoviesAdapter() {}
+    public MoviesAdapter(OnMovieClickedListener onMovieClickedListener) {
+        this.onMovieClickedListener = onMovieClickedListener;
+    }
 
     public void setMovies(List<Movie> movies) {
         this.movies = movies;
@@ -40,11 +44,20 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
     }
 
     @Override
-    public void onBindViewHolder(MoviesViewHolder holder, int position) {
+    public void onBindViewHolder(MoviesViewHolder holder, final int position) {
         holder.titleTextView.setText(movies.get(position).getTitle());
+
         Glide.with(holder.itemView)
                 .load(POSTER_BASE_URL + movies.get(position).getPosterPath())
                 .into(holder.posterImageView);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                onMovieClickedListener.movieClicked(movies.get(position).getId());
+            }
+        });
     }
 
     @Override
@@ -64,5 +77,9 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
+    }
+
+    public interface OnMovieClickedListener {
+        void movieClicked(int movieId);
     }
 }
