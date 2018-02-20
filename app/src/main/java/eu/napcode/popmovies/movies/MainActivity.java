@@ -48,6 +48,28 @@ public class MainActivity extends AppCompatActivity implements MoviesView, Movie
         this.recyclerView.setLayoutManager(getLayoutManager());
         this.moviesAdapter = new MoviesAdapter(this);
         this.recyclerView.setAdapter(this.moviesAdapter);
+
+        this.recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                GridLayoutManager layoutManager = (GridLayoutManager) recyclerView.getLayoutManager();
+
+                int visibleItemCount = layoutManager.getChildCount();
+                int totalItemCount = layoutManager.getItemCount();
+                int firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition();
+
+                if (MainActivity.this.moviesPresenter.shouldDownloadMoreMovies()) {
+
+                    if (visibleItemCount + firstVisibleItemPosition >= totalItemCount
+                            && firstVisibleItemPosition >= 0) {
+                        MainActivity.this.moviesPresenter.getMovies();
+                    }
+                }
+            }
+        });
     }
 
     private GridLayoutManager getLayoutManager() {
@@ -61,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements MoviesView, Movie
 
     @Override
     public void setMovies(List<Movie> movies) {
-        this.moviesAdapter.setMovies(movies);
+        this.moviesAdapter.addMovies(movies);
     }
 
     @Override

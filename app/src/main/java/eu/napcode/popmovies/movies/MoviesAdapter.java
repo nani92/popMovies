@@ -1,6 +1,5 @@
 package eu.napcode.popmovies.movies;
 
-
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,9 +27,13 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
         this.onMovieClickedListener = onMovieClickedListener;
     }
 
-    public void setMovies(List<Movie> movies) {
-        this.movies = movies;
+    public void addMovies(List<Movie> movies) {
+        this.movies.addAll(movies);
         notifyDataSetChanged();
+    }
+
+    public void clearMovies() {
+        this.movies.clear();
     }
 
     @Override

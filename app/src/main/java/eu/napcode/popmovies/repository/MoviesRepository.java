@@ -8,12 +8,14 @@ import eu.napcode.popmovies.api.MoviesService;
 import eu.napcode.popmovies.api.responsemodel.ResponseMoviePage;
 import eu.napcode.popmovies.model.Movie;
 import eu.napcode.popmovies.model.MoviesMapper;
+import eu.napcode.popmovies.movies.SortMovies;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 import com.google.common.collect.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Singleton
@@ -21,38 +23,71 @@ public class MoviesRepository {
 
     private MoviesService moviesService;
 
-    private List<Movie> movies;
+    private List<Movie> movies = new ArrayList<>();
+    private SortMovies lastSortMovies = SortMovies.NONE;
+    private int downloadedMoviesPage = 0;
+    private boolean isThereNextMoviesPageToDownload = true;
+    private boolean isDownloading = false;
 
     @Inject
     public MoviesRepository(MoviesService moviesService) {
         this.moviesService = moviesService;
     }
 
-    public void getMovies(final GetMoviesListener getMoviesListener) {
+    public void getMovies(DownloadMoviesListener downloadMoviesListener, SortMovies sortMovies) {
 
-        if (this.movies == null || this.movies.isEmpty()) {
-            downloadMovies(getMoviesListener);
+        if (sortMovies != lastSortMovies) {
+            this.lastSortMovies = sortMovies;
+            this.movies.clear();
+
+            downloadMovies(downloadMoviesListener, sortMovies);
         } else {
-            getMoviesListener.moviesReceived(this.movies);
+            downloadMoreMovies(downloadMoviesListener, sortMovies);
         }
+
     }
 
-    private void downloadMovies(final GetMoviesListener listener) {
+    private void downloadMovies(final DownloadMoviesListener listener, SortMovies sortMovies) {
         this.moviesService
-                .getMovies(ApiUtils.URL_TOP_RATED, ApiUtils.TMDB_API_KEY)
-                .enqueue(new Callback<ResponseMoviePage>() {
+                .getMovies(SortMovies.getUrlPathForSort(sortMovies), ApiUtils.TMDB_API_KEY)
+                .enqueue(getResponseMoviesCallback(listener));
+        this.isDownloading = true;
+    }
 
-                    @Override
-                    public void onResponse(Call<ResponseMoviePage> call, Response<ResponseMoviePage> response) {
-                        MoviesRepository.this.movies = Lists.transform(response.body().getResponseMovies(), MoviesMapper.responseToMovie);
-                        listener.moviesReceived(MoviesRepository.this.movies);
-                    }
+    private Callback<ResponseMoviePage> getResponseMoviesCallback(final DownloadMoviesListener listener) {
+        return new Callback<ResponseMoviePage>() {
 
-                    @Override
-                    public void onFailure(Call<ResponseMoviePage> call, Throwable t) {
-                        listener.moviesFailure();
-                    }
-                });
+            @Override
+            public void onResponse(Call<ResponseMoviePage> call, Response<ResponseMoviePage> response) {
+                MoviesRepository.this.isDownloading = false;
+
+                List<Movie> movies = Lists.transform(response.body().getResponseMovies(), MoviesMapper.responseToMovie);
+                MoviesRepository.this.movies.addAll(movies);
+                setMoviesPageVars(response);
+
+                listener.moviesReceived(movies);
+            }
+
+            @Override
+            public void onFailure(Call<ResponseMoviePage> call, Throwable t) {
+                MoviesRepository.this.isDownloading = false;
+
+                listener.moviesFailure();
+            }
+        };
+    }
+
+    private void setMoviesPageVars( Response<ResponseMoviePage> response) {
+        this.downloadedMoviesPage = response.body().getPage();
+        this.isThereNextMoviesPageToDownload =
+                this.downloadedMoviesPage < response.body().getTotalPages();
+    }
+
+    private void downloadMoreMovies(final DownloadMoviesListener listener, SortMovies sortMovies) {
+        this.moviesService
+                .getNextMovies(SortMovies.getUrlPathForSort(sortMovies), this.downloadedMoviesPage + 1, ApiUtils.TMDB_API_KEY)
+                .enqueue(getResponseMoviesCallback(listener));
+        this.isDownloading = true;
     }
 
     public Movie getMovieById(int movieId) {
@@ -65,5 +100,9 @@ public class MoviesRepository {
         }
 
         return null;
+    }
+
+    public boolean shouldDownloadMoreMovies() {
+        return this.isThereNextMoviesPageToDownload && !this.isDownloading;
     }
 }

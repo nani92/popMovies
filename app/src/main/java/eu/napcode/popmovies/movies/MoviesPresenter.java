@@ -1,17 +1,15 @@
 package eu.napcode.popmovies.movies;
 
-import android.util.Log;
-
 import java.util.List;
 
 import javax.inject.Inject;
 
 import eu.napcode.popmovies.archbase.BasePresenter;
 import eu.napcode.popmovies.model.Movie;
-import eu.napcode.popmovies.repository.GetMoviesListener;
+import eu.napcode.popmovies.repository.DownloadMoviesListener;
 import eu.napcode.popmovies.repository.MoviesRepository;
 
-public class MoviesPresenter implements GetMoviesListener, BasePresenter<MoviesView> {
+public class MoviesPresenter implements DownloadMoviesListener, BasePresenter<MoviesView> {
 
     private MoviesView moviesView;
     private MoviesRepository moviesRepository;
@@ -32,12 +30,15 @@ public class MoviesPresenter implements GetMoviesListener, BasePresenter<MoviesV
     }
 
     public void getMovies() {
-        this.moviesRepository.getMovies(this);
+        this.moviesRepository.getMovies(this, SortMovies.POPULAR);
+    }
+
+    public boolean shouldDownloadMoreMovies() {
+        return this.moviesRepository.shouldDownloadMoreMovies();
     }
 
     @Override
     public void moviesReceived(List<Movie> movies) {
-        Log.d("Natalia", "" + movies.size());
         this.moviesView.setMovies(movies);
     }
 
@@ -45,4 +46,5 @@ public class MoviesPresenter implements GetMoviesListener, BasePresenter<MoviesV
     public void moviesFailure() {
 
     }
+
 }
