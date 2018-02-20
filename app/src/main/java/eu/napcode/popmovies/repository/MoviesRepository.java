@@ -39,7 +39,7 @@ public class MoviesRepository {
 
     private void downloadMovies(final GetMoviesListener listener) {
         this.moviesService
-                .getMoviesByPopularity(ApiUtils.TMDB_API_KEY)
+                .getMovies(ApiUtils.URL_TOP_RATED, ApiUtils.TMDB_API_KEY)
                 .enqueue(new Callback<ResponseMoviePage>() {
 
                     @Override
