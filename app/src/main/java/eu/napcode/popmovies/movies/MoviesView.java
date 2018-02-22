@@ -10,4 +10,8 @@ public interface MoviesView extends BaseView {
     void setMovies(List<Movie> movies);
 
     void clearRecyclerView();
+
+    void showProgressBar();
+
+    void hideProgressBar();
 }

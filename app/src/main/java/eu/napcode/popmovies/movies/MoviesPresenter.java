@@ -31,6 +31,7 @@ public class MoviesPresenter implements DownloadMoviesListener, BasePresenter<Mo
     }
 
     public void getMovies() {
+        this.moviesView.showProgressBar();
         this.moviesRepository.getMovies(this, this.sort);
     }
 
@@ -45,12 +46,13 @@ public class MoviesPresenter implements DownloadMoviesListener, BasePresenter<Mo
 
     @Override
     public void moviesReceived(List<Movie> movies) {
+        this.moviesView.hideProgressBar();
         this.moviesView.setMovies(movies);
     }
 
     @Override
     public void moviesFailure() {
-
+        this.moviesView.hideProgressBar();
     }
 
 }

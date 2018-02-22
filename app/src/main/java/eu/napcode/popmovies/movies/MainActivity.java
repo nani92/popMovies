@@ -8,6 +8,8 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import java.util.List;
 
@@ -29,6 +31,9 @@ public class MainActivity extends AppCompatActivity implements MoviesView, Movie
 
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
+
+    @BindView(R.id.progressBar)
+    ProgressBar progressBar;
 
     MoviesAdapter moviesAdapter;
 
@@ -114,6 +119,16 @@ public class MainActivity extends AppCompatActivity implements MoviesView, Movie
     @Override
     public void clearRecyclerView() {
         this.moviesAdapter.clearMovies();
+    }
+
+    @Override
+    public void showProgressBar() {
+        this.progressBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideProgressBar() {
+        this.progressBar.setVisibility(View.GONE);
     }
 
     @Override
