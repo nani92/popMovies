@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import java.util.List;
 
@@ -82,8 +84,36 @@ public class MainActivity extends AppCompatActivity implements MoviesView, Movie
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if (item.getItemId() == R.id.popular) {
+            this.moviesPresenter.setSort(SortMovies.POPULAR);
+        }
+
+        if (item.getItemId() == R.id.topRated) {
+            this.moviesPresenter.setSort(SortMovies.TOP_RATED);
+        }
+
+        this.moviesPresenter.getMovies();
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public void setMovies(List<Movie> movies) {
         this.moviesAdapter.addMovies(movies);
+    }
+
+    @Override
+    public void clearRecyclerView() {
+        this.moviesAdapter.clearMovies();
     }
 
     @Override

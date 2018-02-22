@@ -8,4 +8,6 @@ import eu.napcode.popmovies.model.Movie;
 public interface MoviesView extends BaseView {
 
     void setMovies(List<Movie> movies);
+
+    void clearRecyclerView();
 }

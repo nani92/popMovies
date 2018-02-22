@@ -13,6 +13,7 @@ public class MoviesPresenter implements DownloadMoviesListener, BasePresenter<Mo
 
     private MoviesView moviesView;
     private MoviesRepository moviesRepository;
+    private SortMovies sort = SortMovies.POPULAR;
 
     @Inject
     public MoviesPresenter(MoviesRepository moviesRepository) {
@@ -30,7 +31,12 @@ public class MoviesPresenter implements DownloadMoviesListener, BasePresenter<Mo
     }
 
     public void getMovies() {
-        this.moviesRepository.getMovies(this, SortMovies.POPULAR);
+        this.moviesRepository.getMovies(this, this.sort);
+    }
+
+    public void setSort(SortMovies sort) {
+        this.sort = sort;
+        this.moviesView.clearRecyclerView();
     }
 
     public boolean shouldDownloadMoreMovies() {
