@@ -14,18 +14,21 @@
         <ImageView
             android:id="@+id/backdropImageView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="200dp"
+            android:adjustViewBounds="false"
+            android:cropToPadding="false"
+            android:scaleType="centerCrop"
             app:layout_constraintDimensionRatio="w,16:9"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:src="@mipmap/ic_launcher"/>
+            app:layout_constraintTop_toTopOf="parent" tools:src="@mipmap/ic_launcher"/>
 
         <ImageView
             android:id="@+id/posterImageView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
+            android:transitionName="@string/poster_transition"
             app:layout_constraintBottom_toBottomOf="@id/backdropImageView"
             app:layout_constraintLeft_toRightOf="@id/leftGuideline"
             app:layout_constraintRight_toLeftOf="@id/posterRightGuideline"
@@ -166,6 +169,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.3"/>
+
+        <android.support.constraint.Guideline
+            android:id="@+id/backdropBottomGuideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.3"/>
 
         <android.support.constraint.Barrier
