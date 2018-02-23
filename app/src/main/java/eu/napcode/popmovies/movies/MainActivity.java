@@ -2,8 +2,9 @@ package eu.napcode.popmovies.movies;
 
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -55,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements MoviesView, Movie
         setupRecyclerView();
         setupSwipeRefreshLayout();
 
-        this.moviesPresenter.getMovies();
+        this.moviesPresenter.loadMovies();
     }
 
     private void setupRecyclerView() {
@@ -79,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements MoviesView, Movie
 
                     if (visibleItemCount + firstVisibleItemPosition >= totalItemCount
                             && firstVisibleItemPosition >= 0) {
-                        MainActivity.this.moviesPresenter.getMovies();
+                        MainActivity.this.moviesPresenter.loadMovies();
                     }
                 }
             }
@@ -97,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements MoviesView, Movie
 
     private void setupSwipeRefreshLayout() {
         this.emptyLayout.setOnRefreshListener(() -> {
-            this.moviesPresenter.getMovies();
+            this.moviesPresenter.loadMovies();
         });
     }
 
@@ -119,7 +120,7 @@ public class MainActivity extends AppCompatActivity implements MoviesView, Movie
             this.moviesPresenter.setSort(SortMovies.TOP_RATED);
         }
 
-        this.moviesPresenter.getMovies();
+        this.moviesPresenter.loadMovies();
 
         return super.onOptionsItemSelected(item);
     }
@@ -162,10 +163,13 @@ public class MainActivity extends AppCompatActivity implements MoviesView, Movie
     }
 
     @Override
-    public void movieClicked(Movie movie) {
+    public void movieClicked(Movie movie, View view) {
         Intent intent = new Intent(this, DetailsActivity.class);
         intent.putExtra(DetailsActivity.KEY_MOVIE, movie);
+        Bundle bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(this,
+                new Pair<View, String>(view.findViewById(R.id.posterImageView), getString(R.string.poster_transition)))
+                .toBundle();
 
-        startActivity(intent);
+        startActivity(intent, bundle);
     }
 }

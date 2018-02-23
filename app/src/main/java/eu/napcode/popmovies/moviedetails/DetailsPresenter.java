@@ -2,7 +2,7 @@ package eu.napcode.popmovies.moviedetails;
 
 import javax.inject.Inject;
 
-import eu.napcode.popmovies.archbase.BasePresenter;
+import eu.napcode.popmovies.utils.archbase.BasePresenter;
 import eu.napcode.popmovies.model.Movie;
 import eu.napcode.popmovies.repository.MoviesRepository;
 

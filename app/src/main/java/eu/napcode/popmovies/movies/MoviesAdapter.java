@@ -52,13 +52,8 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
                 .load(ApiUtils.getPosterUrl(movies.get(position).getPosterPath()))
                 .into(holder.posterImageView);
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                onMovieClickedListener.movieClicked(movies.get(position));
-            }
-        });
+        holder.itemView.setOnClickListener(v ->
+                onMovieClickedListener.movieClicked(movies.get(position), v));
     }
 
     @Override
@@ -81,6 +76,6 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
     }
 
     public interface OnMovieClickedListener {
-        void movieClicked(Movie movie);
+        void movieClicked(Movie movie, View view);
     }
 }

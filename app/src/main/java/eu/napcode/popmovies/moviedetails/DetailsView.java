@@ -1,6 +1,6 @@
 package eu.napcode.popmovies.moviedetails;
 
-import eu.napcode.popmovies.archbase.BaseView;
+import eu.napcode.popmovies.utils.archbase.BaseView;
 
 public interface DetailsView extends BaseView {
 

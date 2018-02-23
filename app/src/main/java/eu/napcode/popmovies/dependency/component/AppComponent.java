@@ -11,13 +11,15 @@ import eu.napcode.popmovies.PopMoviesApp;
 import eu.napcode.popmovies.dependency.module.ActivityModule;
 import eu.napcode.popmovies.dependency.module.AppModule;
 import eu.napcode.popmovies.dependency.module.RepositoryModule;
+import eu.napcode.popmovies.dependency.module.RxModule;
 
 @Singleton
 @Component(modules = {
         AndroidInjectionModule.class,
         AppModule.class,
         ActivityModule.class,
-        RepositoryModule.class
+        RepositoryModule.class,
+        RxModule.class
 })
 public interface AppComponent {
     @Component.Builder

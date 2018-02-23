@@ -1,4 +1,4 @@
-package eu.napcode.popmovies.archbase;
+package eu.napcode.popmovies.utils.archbase;
 
 public interface BasePresenter<T> {
 

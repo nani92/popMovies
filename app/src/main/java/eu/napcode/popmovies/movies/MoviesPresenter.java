@@ -4,11 +4,11 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import eu.napcode.popmovies.archbase.BasePresenter;
+import eu.napcode.popmovies.utils.archbase.BasePresenter;
 import eu.napcode.popmovies.model.Movie;
 import eu.napcode.popmovies.repository.MoviesRepository;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
+import eu.napcode.popmovies.utils.rx.RxSchedulers;
+import io.reactivex.Scheduler;
 
 public class MoviesPresenter implements BasePresenter<MoviesView> {
 
@@ -17,9 +17,13 @@ public class MoviesPresenter implements BasePresenter<MoviesView> {
     private SortMovies sort = SortMovies.POPULAR;
     private boolean isDownloadingMovies;
 
+    private Scheduler ioScheduler, mainScheduler;
+
     @Inject
-    public MoviesPresenter(MoviesRepository moviesRepository) {
+    public MoviesPresenter(MoviesRepository moviesRepository, RxSchedulers rxSchedulers) {
         this.moviesRepository = moviesRepository;
+        this.ioScheduler = rxSchedulers.io();
+        this.mainScheduler = rxSchedulers.androidMainThread();
     }
 
     @Override
@@ -32,13 +36,13 @@ public class MoviesPresenter implements BasePresenter<MoviesView> {
 
     }
 
-    public void getMovies() {
+    public void loadMovies() {
         this.isDownloadingMovies = true;
         this.moviesView.displayProgressBar();
         this.moviesRepository
                 .getMovies(this.sort)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(this.ioScheduler)
+                .observeOn(this.mainScheduler)
                 .subscribe(movies -> moviesDownloaded(movies),
                         error -> errorWithDownloadingMovies(error));
     }
