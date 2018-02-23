@@ -40,7 +40,7 @@ public class MoviesPresenter implements BasePresenter<MoviesView> {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(movies -> moviesDownloaded(movies),
-                        error -> displayError(error));
+                        error -> errorWithDownloadingMovies(error));
     }
 
     public void setSort(SortMovies sort) {
@@ -61,7 +61,7 @@ public class MoviesPresenter implements BasePresenter<MoviesView> {
         this.moviesView.hideEmptyLayout();
     }
 
-    void displayError(Throwable error) {
+    void errorWithDownloadingMovies(Throwable error) {
         this.isDownloadingMovies = false;
         this.moviesView.hideProgressBar();
         this.moviesView.displayErrorWithDownloading();
