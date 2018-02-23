@@ -7,7 +7,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import eu.napcode.popmovies.api.ApiUtils;
+import eu.napcode.popmovies.utils.ApiUtils;
 import eu.napcode.popmovies.api.MoviesService;
 import eu.napcode.popmovies.api.responsemodel.ResponseMoviePage;
 import eu.napcode.popmovies.model.Movie;

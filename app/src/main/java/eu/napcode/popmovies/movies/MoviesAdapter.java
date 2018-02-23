@@ -15,7 +15,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import eu.napcode.popmovies.R;
-import eu.napcode.popmovies.api.ApiUtils;
+import eu.napcode.popmovies.utils.ApiUtils;
 import eu.napcode.popmovies.model.Movie;
 
 public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesViewHolder> {

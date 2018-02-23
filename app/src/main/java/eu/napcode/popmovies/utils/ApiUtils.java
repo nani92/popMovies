@@ -1,4 +1,4 @@
-package eu.napcode.popmovies.api;
+package eu.napcode.popmovies.utils;
 
 import eu.napcode.popmovies.BuildConfig;
 

@@ -4,7 +4,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import eu.napcode.popmovies.api.ApiUtils;
+import eu.napcode.popmovies.utils.ApiUtils;
 import eu.napcode.popmovies.api.MoviesService;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;

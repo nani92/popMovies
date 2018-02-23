@@ -1,6 +1,6 @@
 package eu.napcode.popmovies.movies;
 
-import eu.napcode.popmovies.api.ApiUtils;
+import eu.napcode.popmovies.utils.ApiUtils;
 
 public enum SortMovies {
     NONE,

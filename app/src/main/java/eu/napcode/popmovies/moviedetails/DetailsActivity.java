@@ -14,7 +14,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.android.AndroidInjection;
 import eu.napcode.popmovies.R;
-import eu.napcode.popmovies.api.ApiUtils;
+import eu.napcode.popmovies.utils.ApiUtils;
 import eu.napcode.popmovies.model.Movie;
 
 public class DetailsActivity extends AppCompatActivity implements DetailsView {
