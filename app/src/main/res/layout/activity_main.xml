@@ -11,6 +11,11 @@
         android:layout_height="match_parent"
         android:visibility="gone"
         tools:visibility="visible"/>
+    
+    <include
+        android:id="@+id/emptyLayout"
+        layout="@layout/empty_list_layout"
+        tools:visibility="gone"/>
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -19,10 +24,5 @@
         android:layout_gravity="center"
         android:visibility="gone"
         tools:visibility="visible"/>
-
-    <include
-        android:id="@+id/emptyLayout"
-        layout="@layout/empty_list_layout"
-        tools:visibility="gone"/>
 
 </FrameLayout>
