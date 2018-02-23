@@ -68,7 +68,6 @@ public class MoviesPresenter implements BasePresenter<MoviesView> {
         manageEmptyLayout();
 
         this.moviesView.hideProgressBar();
-        this.moviesView.displayMovies(movies);
     }
 
     void manageEmptyLayout() {
@@ -77,6 +76,7 @@ public class MoviesPresenter implements BasePresenter<MoviesView> {
             this.moviesView.displayEmptyLayout();
         } else {
             this.moviesView.hideEmptyLayout();
+            this.moviesView.displayMovies(movies);
         }
     }
 
