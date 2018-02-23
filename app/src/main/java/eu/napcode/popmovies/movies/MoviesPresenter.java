@@ -1,7 +1,5 @@
 package eu.napcode.popmovies.movies;
 
-import android.util.Log;
-
 import java.util.List;
 
 import javax.inject.Inject;
@@ -36,7 +34,7 @@ public class MoviesPresenter implements BasePresenter<MoviesView> {
 
     public void getMovies() {
         this.isDownloadingMovies = true;
-        this.moviesView.showProgressBar();
+        this.moviesView.displayProgressBar();
         this.moviesRepository
                 .getMovies(this.sort)
                 .subscribeOn(Schedulers.io())
@@ -48,6 +46,7 @@ public class MoviesPresenter implements BasePresenter<MoviesView> {
     public void setSort(SortMovies sort) {
         this.sort = sort;
         this.moviesView.clearRecyclerView();
+        this.moviesView.displayEmptyLayout();
     }
 
     public boolean shouldDownloadMoreMovies() {

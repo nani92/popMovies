@@ -11,11 +11,13 @@ public interface MoviesView extends BaseView {
 
     void clearRecyclerView();
 
-    void showProgressBar();
+    void displayProgressBar();
 
     void hideProgressBar();
 
     void displayErrorWithDownloading();
 
     void hideEmptyLayout();
+
+    void displayEmptyLayout();
 }

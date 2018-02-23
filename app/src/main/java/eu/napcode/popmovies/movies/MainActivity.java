@@ -119,7 +119,6 @@ public class MainActivity extends AppCompatActivity implements MoviesView, Movie
     @Override
     public void displayMovies(List<Movie> movies) {
         this.moviesAdapter.addMovies(movies);
-        this.recyclerView.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -128,7 +127,7 @@ public class MainActivity extends AppCompatActivity implements MoviesView, Movie
     }
 
     @Override
-    public void showProgressBar() {
+    public void displayProgressBar() {
         this.progressBar.setVisibility(View.VISIBLE);
     }
 
@@ -145,6 +144,13 @@ public class MainActivity extends AppCompatActivity implements MoviesView, Movie
     @Override
     public void hideEmptyLayout() {
         this.emptyLayout.setVisibility(View.GONE);
+        this.recyclerView.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void displayEmptyLayout() {
+        this.emptyLayout.setVisibility(View.VISIBLE);
+        this.recyclerView.setVisibility(View.GONE);
     }
 
     @Override

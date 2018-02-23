@@ -11,7 +11,7 @@
         android:layout_height="match_parent"
         android:visibility="gone"
         tools:visibility="visible"/>
-    
+
     <include
         android:id="@+id/emptyLayout"
         layout="@layout/empty_list_layout"
