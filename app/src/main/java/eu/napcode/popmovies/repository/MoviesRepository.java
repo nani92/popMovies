@@ -1,13 +1,14 @@
 package eu.napcode.popmovies.repository;
 
+import java.util.List;
+
 import eu.napcode.popmovies.model.Movie;
 import eu.napcode.popmovies.movies.SortMovies;
+import io.reactivex.Observable;
 
 public interface MoviesRepository {
 
-    void getMovies(DownloadMoviesListener downloadMoviesListener, SortMovies sortMovies);
+    Observable<List<Movie>> getMovies(SortMovies sortMovies);
 
-    Movie getMovieById(int movieId);
-
-    boolean shouldDownloadMoreMovies();
+    boolean isMoreMoviesToDownload();
 }

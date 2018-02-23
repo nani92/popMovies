@@ -2,6 +2,7 @@ package eu.napcode.popmovies.movies;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -112,7 +113,7 @@ public class MainActivity extends AppCompatActivity implements MoviesView, Movie
     }
 
     @Override
-    public void setMovies(List<Movie> movies) {
+    public void displayMovies(List<Movie> movies) {
         this.moviesAdapter.addMovies(movies);
     }
 
@@ -132,9 +133,14 @@ public class MainActivity extends AppCompatActivity implements MoviesView, Movie
     }
 
     @Override
-    public void movieClicked(int movieId) {
+    public void displayErrorWithDownloading() {
+        Snackbar.make(this.recyclerView, R.string.download_error_message, Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void movieClicked(Movie movie) {
         Intent intent = new Intent(this, DetailsActivity.class);
-        intent.putExtra(DetailsActivity.KEY_MOVIE_ID, movieId);
+        intent.putExtra(DetailsActivity.KEY_MOVIE, movie);
 
         startActivity(intent);
     }

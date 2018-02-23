@@ -7,11 +7,13 @@ import eu.napcode.popmovies.model.Movie;
 
 public interface MoviesView extends BaseView {
 
-    void setMovies(List<Movie> movies);
+    void displayMovies(List<Movie> movies);
 
     void clearRecyclerView();
 
     void showProgressBar();
 
     void hideProgressBar();
+
+    void displayErrorWithDownloading();
 }

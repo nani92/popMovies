@@ -1,19 +1,23 @@
 package eu.napcode.popmovies.movies;
 
+import android.util.Log;
+
 import java.util.List;
 
 import javax.inject.Inject;
 
 import eu.napcode.popmovies.archbase.BasePresenter;
 import eu.napcode.popmovies.model.Movie;
-import eu.napcode.popmovies.repository.DownloadMoviesListener;
 import eu.napcode.popmovies.repository.MoviesRepository;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
-public class MoviesPresenter implements DownloadMoviesListener, BasePresenter<MoviesView> {
+public class MoviesPresenter implements BasePresenter<MoviesView> {
 
     private MoviesView moviesView;
     private MoviesRepository moviesRepository;
     private SortMovies sort = SortMovies.POPULAR;
+    private boolean isDownloadingMovies;
 
     @Inject
     public MoviesPresenter(MoviesRepository moviesRepository) {
@@ -31,8 +35,14 @@ public class MoviesPresenter implements DownloadMoviesListener, BasePresenter<Mo
     }
 
     public void getMovies() {
+        this.isDownloadingMovies = true;
         this.moviesView.showProgressBar();
-        this.moviesRepository.getMovies(this, this.sort);
+        this.moviesRepository
+                .getMovies(this.sort)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(movies -> moviesDownloaded(movies),
+                        error -> displayError(error));
     }
 
     public void setSort(SortMovies sort) {
@@ -41,18 +51,20 @@ public class MoviesPresenter implements DownloadMoviesListener, BasePresenter<Mo
     }
 
     public boolean shouldDownloadMoreMovies() {
-        return this.moviesRepository.shouldDownloadMoreMovies();
+        return isDownloadingMovies == false &&
+                this.moviesRepository.isMoreMoviesToDownload();
     }
 
-    @Override
-    public void moviesReceived(List<Movie> movies) {
+    void moviesDownloaded(List<Movie> movies) {
+        this.isDownloadingMovies = false;
         this.moviesView.hideProgressBar();
-        this.moviesView.setMovies(movies);
+        this.moviesView.displayMovies(movies);
     }
 
-    @Override
-    public void moviesFailure() {
+    void displayError(Throwable error) {
+        Log.d("Natalia", "error" + error);
+        this.isDownloadingMovies = false;
         this.moviesView.hideProgressBar();
+        this.moviesView.displayErrorWithDownloading();
     }
-
 }

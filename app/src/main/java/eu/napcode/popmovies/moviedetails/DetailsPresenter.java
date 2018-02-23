@@ -1,6 +1,5 @@
 package eu.napcode.popmovies.moviedetails;
 
-
 import javax.inject.Inject;
 
 import eu.napcode.popmovies.archbase.BasePresenter;
@@ -29,9 +28,13 @@ public class DetailsPresenter implements BasePresenter<DetailsView> {
 
     }
 
-    public void getMovie(int id) {
-        this.movie = this.moviesRepository.getMovieById(id);
+    public void setMovie(Movie movie) {
+        this.movie = movie;
 
+        displayMovie();
+    }
+
+    private void displayMovie(){
         this.detailsView.displayMovieTitle(this.movie.getTitle());
         this.detailsView.displayBackdropImageView(this.movie.getBackdropPath());
         this.detailsView.displayPosterImageView(this.movie.getPosterPath());

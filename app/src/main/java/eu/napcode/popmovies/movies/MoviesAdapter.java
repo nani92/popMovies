@@ -56,7 +56,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
 
             @Override
             public void onClick(View v) {
-                onMovieClickedListener.movieClicked(movies.get(position).getId());
+                onMovieClickedListener.movieClicked(movies.get(position));
             }
         });
     }
@@ -81,6 +81,6 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
     }
 
     public interface OnMovieClickedListener {
-        void movieClicked(int movieId);
+        void movieClicked(Movie movie);
     }
 }

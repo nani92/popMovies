@@ -15,10 +15,11 @@ import butterknife.ButterKnife;
 import dagger.android.AndroidInjection;
 import eu.napcode.popmovies.R;
 import eu.napcode.popmovies.api.ApiUtils;
+import eu.napcode.popmovies.model.Movie;
 
 public class DetailsActivity extends AppCompatActivity implements DetailsView {
 
-    public static final String KEY_MOVIE_ID = "movie id";
+    public static final String KEY_MOVIE = "movie";
 
     @Inject DetailsPresenter detailsPresenter;
 
@@ -55,7 +56,7 @@ public class DetailsActivity extends AppCompatActivity implements DetailsView {
 
     private void setupPresenter() {
         this.detailsPresenter.attachView(this);
-        this.detailsPresenter.getMovie(getIntent().getIntExtra(KEY_MOVIE_ID, 0));
+        this.detailsPresenter.setMovie((Movie) getIntent().getParcelableExtra(KEY_MOVIE));
     }
 
     @Override
