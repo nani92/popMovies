@@ -8,14 +8,12 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone"
-        tools:visibility="visible"/>
+        android:layout_height="match_parent"/>
 
     <include
         android:id="@+id/emptyLayout"
         layout="@layout/empty_list_layout"
-        tools:visibility="gone"/>
+        android:visibility="gone"/>
 
     <ProgressBar
         android:id="@+id/progressBar"

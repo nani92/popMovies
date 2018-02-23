@@ -1,5 +1,6 @@
 package eu.napcode.popmovies.movies;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -11,6 +12,8 @@ import eu.napcode.popmovies.utils.rx.RxSchedulers;
 import io.reactivex.Scheduler;
 
 public class MoviesPresenter implements BasePresenter<MoviesView> {
+
+    List<Movie> movies = new ArrayList<>();
 
     private MoviesView moviesView;
     private MoviesRepository moviesRepository;
@@ -49,8 +52,8 @@ public class MoviesPresenter implements BasePresenter<MoviesView> {
 
     public void setSort(SortMovies sort) {
         this.sort = sort;
+        this.movies.clear();
         this.moviesView.clearRecyclerView();
-        this.moviesView.displayEmptyLayout();
     }
 
     public boolean shouldDownloadMoreMovies() {
@@ -59,14 +62,29 @@ public class MoviesPresenter implements BasePresenter<MoviesView> {
     }
 
     void moviesDownloaded(List<Movie> movies) {
+        this.movies.addAll(movies);
         this.isDownloadingMovies = false;
+
+        manageEmptyLayout();
+
         this.moviesView.hideProgressBar();
         this.moviesView.displayMovies(movies);
-        this.moviesView.hideEmptyLayout();
+    }
+
+    void manageEmptyLayout() {
+
+        if (this.movies.isEmpty()) {
+            this.moviesView.displayEmptyLayout();
+        } else {
+            this.moviesView.hideEmptyLayout();
+        }
     }
 
     void errorWithDownloadingMovies(Throwable error) {
         this.isDownloadingMovies = false;
+
+        manageEmptyLayout();
+
         this.moviesView.hideProgressBar();
         this.moviesView.displayErrorWithDownloading();
     }

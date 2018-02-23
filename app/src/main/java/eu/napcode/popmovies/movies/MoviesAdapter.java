@@ -29,11 +29,13 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
 
     public void addMovies(List<Movie> movies) {
         this.movies.addAll(movies);
-        notifyDataSetChanged();
+        notifyItemRangeInserted(this.movies.size() - movies.size(), movies.size());
     }
 
     public void clearMovies() {
+        int oldCount = this.movies.size();
         this.movies.clear();
+        notifyItemRangeRemoved(0, oldCount);
     }
 
     @Override
