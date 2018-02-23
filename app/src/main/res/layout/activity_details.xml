@@ -27,6 +27,7 @@
             android:id="@+id/posterImageView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:minHeight="300dp"
             android:adjustViewBounds="true"
             android:transitionName="@string/poster_transition"
             app:layout_constraintBottom_toBottomOf="@id/backdropImageView"
