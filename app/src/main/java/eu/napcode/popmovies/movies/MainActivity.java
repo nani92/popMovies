@@ -2,6 +2,7 @@ package eu.napcode.popmovies.movies;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -35,6 +36,9 @@ public class MainActivity extends AppCompatActivity implements MoviesView, Movie
 
     @BindView(R.id.progressBar)
     ProgressBar progressBar;
+
+    @BindView(R.id.emptyLayout)
+    ConstraintLayout emptyLayout;
 
     MoviesAdapter moviesAdapter;
 
@@ -115,6 +119,7 @@ public class MainActivity extends AppCompatActivity implements MoviesView, Movie
     @Override
     public void displayMovies(List<Movie> movies) {
         this.moviesAdapter.addMovies(movies);
+        this.recyclerView.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -135,6 +140,11 @@ public class MainActivity extends AppCompatActivity implements MoviesView, Movie
     @Override
     public void displayErrorWithDownloading() {
         Snackbar.make(this.recyclerView, R.string.download_error_message, Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void hideEmptyLayout() {
+        this.emptyLayout.setVisibility(View.GONE);
     }
 
     @Override

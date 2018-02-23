@@ -59,10 +59,10 @@ public class MoviesPresenter implements BasePresenter<MoviesView> {
         this.isDownloadingMovies = false;
         this.moviesView.hideProgressBar();
         this.moviesView.displayMovies(movies);
+        this.moviesView.hideEmptyLayout();
     }
 
     void displayError(Throwable error) {
-        Log.d("Natalia", "error" + error);
         this.isDownloadingMovies = false;
         this.moviesView.hideProgressBar();
         this.moviesView.displayErrorWithDownloading();

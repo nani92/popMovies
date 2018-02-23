@@ -6,4 +6,5 @@
     <string name="popular">Popular</string>
     <string name="top_rated">Top rated</string>
     <string name="download_error_message">Error with downloading data.</string>
+    <string name="no_movies_to_display">There is no movies to display.</string>
 </resources>

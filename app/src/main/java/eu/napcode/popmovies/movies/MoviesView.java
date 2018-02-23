@@ -16,4 +16,6 @@ public interface MoviesView extends BaseView {
     void hideProgressBar();
 
     void displayErrorWithDownloading();
+
+    void hideEmptyLayout();
 }
