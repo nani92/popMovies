@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">PopMovies</string>
+    <string name="release_date_label">Release date</string>
+    <string name="original_title">Original title</string>
+    <string name="average_vote">Average vote</string>
+    <string name="popular">Popular</string>
+    <string name="top_rated">Top rated</string>
+    <string name="download_error_message">Error with downloading data.</string>
+    <string name="no_movies_to_display">There is no movies to display.</string>
+    <string name="poster_transition">poster transition</string>
+</resources>

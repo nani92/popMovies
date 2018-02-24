@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.AppCompatImageButton
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:adjustViewBounds="false"
+        android:background="@null"
+        android:cropToPadding="false"
+        android:scaleType="fitCenter"
+        android:src="@drawable/popcorn"
+        app:layout_constraintBottom_toTopOf="@id/noMoviesTextView"
+        app:layout_constraintLeft_toRightOf="@id/leftGuideline"
+        app:layout_constraintRight_toLeftOf="@id/rightGuideline"
+        app:layout_constraintTop_toBottomOf="@id/topGuideline"/>
+
+    <TextView
+        android:id="@+id/noMoviesTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/no_movies_to_display"
+        android:textSize="@dimen/no_movies_text_size"
+        app:layout_constraintBottom_toTopOf="@id/bottomGuideline"
+        app:layout_constraintLeft_toRightOf="@id/leftGuideline"
+        app:layout_constraintRight_toLeftOf="@id/rightGuideline"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/leftGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="@dimen/base_margin"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/rightGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="@dimen/base_margin"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/bottomGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_end="@dimen/base_margin"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/topGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="@dimen/base_margin"/>
+
+</android.support.constraint.ConstraintLayout>
