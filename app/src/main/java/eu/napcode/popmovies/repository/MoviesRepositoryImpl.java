@@ -21,7 +21,6 @@ public class MoviesRepositoryImpl implements MoviesRepository {
 
     private MoviesService moviesService;
 
-    private SortMovies lastSortMovies = SortMovies.NONE;
     private int downloadedMoviesPage = 0;
     private boolean isThereNextMoviesPageToDownload = true;
 
@@ -33,18 +32,15 @@ public class MoviesRepositoryImpl implements MoviesRepository {
     @Override
     public Observable<List<Movie>> getMovies(SortMovies sortMovies) {
 
-        if (sortMovies != lastSortMovies) {
-            this.lastSortMovies = sortMovies;
-
-            return getMoviesFromService(sortMovies);
-        } else {
-            return getMoreMoviesFromService(sortMovies);
-        }
+        return this.moviesService
+                .getMovies(SortMovies.getUrlPathForSort(sortMovies), ApiUtils.TMDB_API_KEY)
+                .map(this.mapFunction);
     }
 
-    private Observable<List<Movie>> getMoviesFromService(SortMovies sortMovies) {
-        return moviesService
-                .getMovies(SortMovies.getUrlPathForSort(sortMovies), ApiUtils.TMDB_API_KEY)
+    @Override
+    public Observable<List<Movie>> getMoreMovies(SortMovies sortMovies) {
+        return this.moviesService
+                .getNextMovies(SortMovies.getUrlPathForSort(sortMovies), this.downloadedMoviesPage + 1, ApiUtils.TMDB_API_KEY)
                 .map(this.mapFunction);
     }
 
@@ -58,12 +54,6 @@ public class MoviesRepositoryImpl implements MoviesRepository {
         this.downloadedMoviesPage = moviePage.getPage();
         this.isThereNextMoviesPageToDownload =
                 this.downloadedMoviesPage < moviePage.getTotalPages();
-    }
-
-    private Observable<List<Movie>> getMoreMoviesFromService(SortMovies sortMovies) {
-        return this.moviesService
-                .getNextMovies(SortMovies.getUrlPathForSort(sortMovies), this.downloadedMoviesPage + 1, ApiUtils.TMDB_API_KEY)
-                .map(this.mapFunction);
     }
 
     @Override

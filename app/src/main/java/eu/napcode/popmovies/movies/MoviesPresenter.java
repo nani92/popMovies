@@ -9,6 +9,7 @@ import eu.napcode.popmovies.utils.archbase.BasePresenter;
 import eu.napcode.popmovies.model.Movie;
 import eu.napcode.popmovies.repository.MoviesRepository;
 import eu.napcode.popmovies.utils.rx.RxSchedulers;
+import io.reactivex.Observable;
 import io.reactivex.Scheduler;
 
 public class MoviesPresenter implements BasePresenter<MoviesView> {
@@ -42,8 +43,15 @@ public class MoviesPresenter implements BasePresenter<MoviesView> {
     public void loadMovies() {
         this.isDownloadingMovies = true;
         this.moviesView.displayProgressBar();
-        this.moviesRepository
-                .getMovies(this.sort)
+        Observable<List<Movie>> moviesObservable;
+
+        if (this.movies.isEmpty()) {
+            moviesObservable = this.moviesRepository.getMovies(this.sort);
+        } else {
+            moviesObservable = this.moviesRepository.getMoreMovies(this.sort);
+        }
+
+        moviesObservable
                 .subscribeOn(this.ioScheduler)
                 .observeOn(this.mainScheduler)
                 .subscribe(movies -> moviesDownloaded(movies),
