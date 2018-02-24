@@ -25,11 +25,15 @@ public class DetailsPresenter implements BasePresenter<DetailsView> {
 
     @Override
     public void dropView() {
-
+        this.detailsView = null;
     }
 
     public void setMovie(Movie movie) {
         this.movie = movie;
+
+        if (this.detailsView == null) {
+            return;
+        }
 
         displayMovie();
     }

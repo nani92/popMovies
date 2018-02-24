@@ -37,7 +37,7 @@ public class MoviesPresenter implements BasePresenter<MoviesView> {
 
     @Override
     public void dropView() {
-
+        this.moviesView = null;
     }
 
     public void loadMovies() {
@@ -73,6 +73,10 @@ public class MoviesPresenter implements BasePresenter<MoviesView> {
         this.movies.addAll(movies);
         this.isDownloadingMovies = false;
 
+        if (this.moviesView == null) {
+            return;
+        }
+
         this.moviesView.displayMovies(movies);
         manageEmptyLayout();
 
@@ -90,6 +94,10 @@ public class MoviesPresenter implements BasePresenter<MoviesView> {
 
     void errorWithDownloadingMovies(Throwable error) {
         this.isDownloadingMovies = false;
+
+        if (this.moviesView == null) {
+            return;
+        }
 
         manageEmptyLayout();
 
