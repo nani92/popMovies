@@ -65,6 +65,7 @@ public class MoviesPresenter implements BasePresenter<MoviesView> {
         this.movies.addAll(movies);
         this.isDownloadingMovies = false;
 
+        this.moviesView.displayMovies(movies);
         manageEmptyLayout();
 
         this.moviesView.hideProgressBar();
@@ -76,7 +77,6 @@ public class MoviesPresenter implements BasePresenter<MoviesView> {
             this.moviesView.displayEmptyLayout();
         } else {
             this.moviesView.hideEmptyLayout();
-            this.moviesView.displayMovies(movies);
         }
     }
 

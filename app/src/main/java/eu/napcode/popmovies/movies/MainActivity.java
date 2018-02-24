@@ -2,10 +2,10 @@ package eu.napcode.popmovies.movies;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.util.Pair;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements MoviesView, Movie
     ProgressBar progressBar;
 
     @BindView(R.id.emptyLayout)
-    SwipeRefreshLayout emptyLayout;
+    ConstraintLayout emptyLayout;
 
     MoviesAdapter moviesAdapter;
 
@@ -54,7 +54,6 @@ public class MainActivity extends AppCompatActivity implements MoviesView, Movie
         this.moviesPresenter.attachView(this);
 
         setupRecyclerView();
-        setupSwipeRefreshLayout();
 
         this.moviesPresenter.loadMovies();
     }
@@ -94,12 +93,6 @@ public class MainActivity extends AppCompatActivity implements MoviesView, Movie
         } else {
             return new GridLayoutManager(this, COLUMNS_LANDSCAPE);
         }
-    }
-
-    private void setupSwipeRefreshLayout() {
-        this.emptyLayout.setOnRefreshListener(() -> {
-            this.moviesPresenter.loadMovies();
-        });
     }
 
     @Override

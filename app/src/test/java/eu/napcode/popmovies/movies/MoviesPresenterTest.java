@@ -62,7 +62,6 @@ public class MoviesPresenterTest {
         //then
         Assert.assertEquals(true, ((MockMoviesView) view).emptyDisplayed);
         Assert.assertEquals(true, ((MockMoviesView) view).isEmptyDisplaying);
-        Assert.assertEquals(false, ((MockMoviesView) view).moviesDisplayed);
     }
 
     @Test
