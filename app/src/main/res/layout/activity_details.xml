@@ -28,14 +28,24 @@
             android:id="@+id/posterImageView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:minHeight="300dp"
             android:adjustViewBounds="true"
+            android:minHeight="300dp"
             android:transitionName="@string/poster_transition"
             app:layout_constraintBottom_toBottomOf="@id/backdropImageView"
             app:layout_constraintLeft_toRightOf="@id/leftGuideline"
             app:layout_constraintRight_toLeftOf="@id/posterRightGuideline"
             app:layout_constraintTop_toBottomOf="@id/backdropImageView"
             tools:src="@mipmap/ic_launcher"/>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/favouriteFab"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:src="@drawable/ic_favorite_border"
+            app:layout_constraintBottom_toBottomOf="@id/backdropImageView"
+            app:layout_constraintRight_toLeftOf="@id/rightGuideline"
+            app:layout_constraintTop_toBottomOf="@id/backdropImageView"
+            android:scaleType="center"/>
 
         <TextView
             android:id="@+id/titleTextView"
@@ -45,7 +55,7 @@
             android:layout_marginTop="@dimen/small_margin"
             android:textSize="@dimen/header_text_size"
             app:layout_constraintLeft_toRightOf="@id/posterRightGuideline"
-            app:layout_constraintRight_toLeftOf="@id/rightGuideline"
+            app:layout_constraintRight_toLeftOf="@id/favouriteFab"
             app:layout_constraintTop_toBottomOf="@id/backdropImageView"
             tools:text="@tools:sample/lorem"/>
 
