@@ -7,6 +7,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import eu.napcode.popmovies.persistance.FavoriteMoviesHelper;
 import eu.napcode.popmovies.utils.ApiUtils;
 import eu.napcode.popmovies.api.MoviesService;
 import eu.napcode.popmovies.api.responsemodel.ResponseMoviePage;
@@ -19,14 +20,16 @@ import io.reactivex.functions.Function;
 @Singleton
 public class MoviesRepositoryImpl implements MoviesRepository {
 
+    private final FavoriteMoviesHelper favoriteMoviesHelper;
     private MoviesService moviesService;
 
     private int downloadedMoviesPage = 0;
     private boolean isThereNextMoviesPageToDownload = true;
 
     @Inject
-    public MoviesRepositoryImpl(MoviesService moviesService) {
+    public MoviesRepositoryImpl(MoviesService moviesService, FavoriteMoviesHelper favoriteMoviesReader) {
         this.moviesService = moviesService;
+        this.favoriteMoviesHelper = favoriteMoviesReader;
     }
 
     @Override
@@ -60,4 +63,21 @@ public class MoviesRepositoryImpl implements MoviesRepository {
     public boolean isMoreMoviesToDownload() {
         return this.isThereNextMoviesPageToDownload;
     }
+
+    @Override
+    public boolean isMovieFavorite(int id) {
+        Movie movie = favoriteMoviesHelper.getFavoriteMovie(id);
+
+        return movie != null;
+    }
+
+    @Override
+    public void favoriteChange(Movie movie) {
+
+        if (isMovieFavorite(movie.getId())) {
+        } else {
+            this.favoriteMoviesHelper.saveMovie(movie);
+        }
+    }
+
 }
