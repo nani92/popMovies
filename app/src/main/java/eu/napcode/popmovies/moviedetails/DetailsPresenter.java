@@ -13,6 +13,8 @@ public class DetailsPresenter implements BasePresenter<DetailsView> {
     private DetailsView detailsView;
     private Movie movie;
 
+    private boolean isFavorite;
+
     @Inject
     public DetailsPresenter(MoviesRepository moviesRepository) {
         this.moviesRepository = moviesRepository;
@@ -46,5 +48,21 @@ public class DetailsPresenter implements BasePresenter<DetailsView> {
         this.detailsView.displayReleaseDate(this.movie.getReleaseDate());
         this.detailsView.displayVoteAverage(this.movie.getVoteAverage());
         this.detailsView.displayPlot(this.movie.getPlot());
+
+        displayFavorite();
+    }
+
+    private void displayFavorite() {
+
+        if (isFavorite) {
+            this.detailsView.displayFavoriteMovie();
+        } else {
+            this.detailsView.displayNotFavoriteMovie();
+        }
+    }
+
+    public void favoriteClicked() {
+        isFavorite = !isFavorite;
+        displayFavorite();
     }
 }

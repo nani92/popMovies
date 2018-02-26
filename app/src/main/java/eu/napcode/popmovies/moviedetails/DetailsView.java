@@ -17,4 +17,8 @@ public interface DetailsView extends BaseView {
     void displayVoteAverage(double voteAverage);
 
     void displayPlot(String plot);
+
+    void displayFavoriteMovie();
+
+    void displayNotFavoriteMovie();
 }

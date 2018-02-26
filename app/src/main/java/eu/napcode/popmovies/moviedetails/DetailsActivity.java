@@ -2,6 +2,7 @@ package eu.napcode.popmovies.moviedetails;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -12,6 +13,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import dagger.android.AndroidInjection;
 import eu.napcode.popmovies.R;
 import eu.napcode.popmovies.utils.ApiUtils;
@@ -21,7 +23,8 @@ public class DetailsActivity extends AppCompatActivity implements DetailsView {
 
     public static final String KEY_MOVIE = "movie";
 
-    @Inject DetailsPresenter detailsPresenter;
+    @Inject
+    DetailsPresenter detailsPresenter;
 
     @BindView(R.id.titleTextView)
     TextView titleTextView;
@@ -44,6 +47,9 @@ public class DetailsActivity extends AppCompatActivity implements DetailsView {
     @BindView(R.id.plotTextView)
     TextView plotTextView;
 
+    @BindView(R.id.favoriteFab)
+    FloatingActionButton favouriteFab;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +63,11 @@ public class DetailsActivity extends AppCompatActivity implements DetailsView {
     private void setupPresenter() {
         this.detailsPresenter.attachView(this);
         this.detailsPresenter.setMovie((Movie) getIntent().getParcelableExtra(KEY_MOVIE));
+    }
+
+    @OnClick(R.id.favoriteFab)
+    void onFavoriteFabClicked() {
+        this.detailsPresenter.favoriteClicked();
     }
 
     @Override
@@ -96,5 +107,15 @@ public class DetailsActivity extends AppCompatActivity implements DetailsView {
     @Override
     public void displayPlot(String plot) {
         this.plotTextView.setText(plot);
+    }
+
+    @Override
+    public void displayFavoriteMovie() {
+        this.favouriteFab.setImageResource(R.drawable.ic_favorite);
+    }
+
+    @Override
+    public void displayNotFavoriteMovie() {
+        this.favouriteFab.setImageResource(R.drawable.ic_favorite_border);
     }
 }
