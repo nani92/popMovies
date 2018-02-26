@@ -52,4 +52,8 @@ public class FavoriteMoviesHelper {
 
         return values;
     }
+
+    public void removeMovieById(int id) {
+        this.databaseHelper.removeById(id);
+    }
 }

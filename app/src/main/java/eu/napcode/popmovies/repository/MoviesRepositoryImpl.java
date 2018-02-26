@@ -75,6 +75,7 @@ public class MoviesRepositoryImpl implements MoviesRepository {
     public void favoriteChange(Movie movie) {
 
         if (isMovieFavorite(movie.getId())) {
+            this.favoriteMoviesHelper.removeMovieById(movie.getId());
         } else {
             this.favoriteMoviesHelper.saveMovie(movie);
         }

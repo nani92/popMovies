@@ -11,6 +11,7 @@ import javax.inject.Inject;
 import eu.napcode.popmovies.provider.FavouriteMoviesProvider;
 
 import static eu.napcode.popmovies.provider.FavouriteMoviesProvider.AUTHORITY;
+import static eu.napcode.popmovies.provider.FavouriteMoviesProvider.COLUMN_ID;
 import static eu.napcode.popmovies.provider.FavouriteMoviesProvider.TABLE_FAVORITE_MOVIES;
 
 public class DatabaseHelper {
@@ -24,8 +25,13 @@ public class DatabaseHelper {
     }
 
     protected void saveMovieData(ContentValues contentValues) {
-        Uri uri = this.uri;
-        this.contentResolver.insert(uri, contentValues);
+        this.contentResolver.insert(this.uri, contentValues);
+    }
+
+    protected void removeById(int id) {
+        String[] selectionArgs = {String.valueOf(id)};
+
+        this.contentResolver.delete(this.uri, COLUMN_ID + " = ?", selectionArgs);
     }
 
     protected Cursor getAll() {
@@ -34,7 +40,6 @@ public class DatabaseHelper {
 
     protected Cursor getById(int id) {
         Uri uri = Uri.parse(AUTHORITY + TABLE_FAVORITE_MOVIES + "/" + id);
-        Log.d("Natalia", uri.toString());
 
         return contentResolver.query(uri, null, null, null, null);
     }
