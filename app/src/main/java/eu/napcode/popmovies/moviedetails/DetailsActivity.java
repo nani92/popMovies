@@ -1,6 +1,8 @@
 package eu.napcode.popmovies.moviedetails;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +10,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 
 import javax.inject.Inject;
 
@@ -76,17 +81,27 @@ public class DetailsActivity extends AppCompatActivity implements DetailsView {
     }
 
     @Override
-    public void displayBackdropImageView(String path) {
+    public void displayBackdrop(String path) {
         Glide.with(this)
                 .load(ApiUtils.getBackdropUrl(path))
+                .apply(new RequestOptions()
+                    .placeholder(R.drawable.popcorn))
                 .into(this.backdropImageView);
     }
 
     @Override
-    public void displayPosterImageView(String path) {
+    public void displayPoster(String path) {
         Glide.with(this)
+                .asBitmap()
                 .load(ApiUtils.getPosterUrl(path))
-                .into(this.posterImageView);
+                .into(new SimpleTarget<Bitmap>() {
+
+                    @Override
+                    public void onResourceReady(@NonNull Bitmap posterBitmap, @Nullable Transition<? super Bitmap> transition) {
+                        DetailsActivity.this.posterImageView.setImageBitmap(posterBitmap);
+                        DetailsActivity.this.detailsPresenter.setPosterBitmap(posterBitmap);
+                    }
+                });
     }
 
     @Override
@@ -117,5 +132,10 @@ public class DetailsActivity extends AppCompatActivity implements DetailsView {
     @Override
     public void displayNotFavoriteMovie() {
         this.favouriteFab.setImageResource(R.drawable.ic_favorite_border);
+    }
+
+    @Override
+    public void displayPoster(Bitmap bitmap) {
+        this.posterImageView.setImageBitmap(bitmap);
     }
 }

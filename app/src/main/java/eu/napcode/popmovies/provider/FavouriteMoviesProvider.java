@@ -13,6 +13,7 @@ public class FavouriteMoviesProvider extends SQLiteContentProviderImpl {
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_TITLE = "title";
     public static final String COLUMN_RELEASE_DATE = "releasedate";
+    public static final String COLUMN_POSTER = "poster";
 
     public static final Uri FAVOURITE_MOVIES = Uri.parse(AUTHORITY)
             .buildUpon()

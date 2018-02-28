@@ -1,5 +1,7 @@
 package eu.napcode.popmovies.repository;
 
+import android.graphics.Bitmap;
+
 import com.google.common.collect.Lists;
 
 import java.util.List;
@@ -7,7 +9,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import eu.napcode.popmovies.persistance.FavoriteMoviesHelper;
+import eu.napcode.popmovies.utils.persistance.FavoriteMoviesHelper;
 import eu.napcode.popmovies.utils.ApiUtils;
 import eu.napcode.popmovies.api.MoviesService;
 import eu.napcode.popmovies.api.responsemodel.ResponseMoviePage;

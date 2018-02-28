@@ -1,4 +1,4 @@
-package eu.napcode.popmovies.persistance;
+package eu.napcode.popmovies.utils.persistance;
 
 import android.content.ContentResolver;
 import android.content.ContentValues;

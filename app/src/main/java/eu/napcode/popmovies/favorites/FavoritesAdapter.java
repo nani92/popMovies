@@ -1,6 +1,7 @@
 package eu.napcode.popmovies.favorites;
 
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,15 +48,23 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
 
         holder.titleTextView.setText(movie.getTitle());
         holder.releaseTextView.setText(movie.getReleaseDate());
-
-        Glide.with(holder.itemView)
-                .load(ApiUtils.getPosterUrl(movies.get(position).getPosterPath()))
-                .apply(new RequestOptions()
-                    .placeholder(R.drawable.popcorn))
-                .into(holder.posterImageView);
+        displayPoster(holder, movie);
 
         holder.itemView.setOnClickListener(v ->
                 onMovieClickedListener.movieClicked(movies.get(position), v));
+    }
+
+    private void displayPoster(FavoritesViewHolder holder, Movie movie) {
+
+        if (TextUtils.isEmpty(movie.getPosterPath())) {
+            holder.posterImageView.setImageBitmap(movie.getPosterBitmap());
+        } else {
+            Glide.with(holder.itemView)
+                    .load(ApiUtils.getPosterUrl(movie.getPosterPath()))
+                    .apply(new RequestOptions()
+                            .placeholder(R.drawable.popcorn))
+                    .into(holder.posterImageView);
+        }
     }
 
     @Override

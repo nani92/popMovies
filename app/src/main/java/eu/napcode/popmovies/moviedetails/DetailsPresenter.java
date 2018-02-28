@@ -1,5 +1,8 @@
 package eu.napcode.popmovies.moviedetails;
 
+import android.graphics.Bitmap;
+import android.text.TextUtils;
+
 import javax.inject.Inject;
 
 import eu.napcode.popmovies.utils.archbase.BasePresenter;
@@ -46,12 +49,22 @@ public class DetailsPresenter implements BasePresenter<DetailsView> {
 
     private void displayMovie(){
         this.detailsView.displayMovieTitle(this.movie.getTitle());
-        this.detailsView.displayBackdropImageView(this.movie.getBackdropPath());
-        this.detailsView.displayPosterImageView(this.movie.getPosterPath());
         this.detailsView.displayOriginalTitle(this.movie.getOriginalTitle());
         this.detailsView.displayReleaseDate(this.movie.getReleaseDate());
         this.detailsView.displayVoteAverage(this.movie.getVoteAverage());
         this.detailsView.displayPlot(this.movie.getPlot());
+        this.detailsView.displayBackdrop(this.movie.getBackdropPath());
+
+        displayPoster();
+    }
+
+    private void displayPoster() {
+
+        if (TextUtils.isEmpty(this.movie.getPosterPath())) {
+            this.detailsView.displayPoster(this.movie.getPosterBitmap());
+        } else {
+            this.detailsView.displayPoster(this.movie.getPosterPath());
+        }
     }
 
     private void displayFavorite(boolean isFavorite) {
@@ -67,5 +80,9 @@ public class DetailsPresenter implements BasePresenter<DetailsView> {
         this.moviesRepository.favoriteChange(this.movie);
 
         checkIfFavorite();
+    }
+
+    public void setPosterBitmap(Bitmap posterBitmap) {
+        this.movie.setPosterBitmap(posterBitmap);
     }
 }

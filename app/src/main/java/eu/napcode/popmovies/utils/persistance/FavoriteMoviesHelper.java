@@ -1,4 +1,4 @@
-package eu.napcode.popmovies.persistance;
+package eu.napcode.popmovies.utils.persistance;
 
 
 import android.content.ContentValues;
@@ -12,6 +12,7 @@ import javax.inject.Inject;
 import eu.napcode.popmovies.model.Movie;
 
 import static eu.napcode.popmovies.provider.FavouriteMoviesProvider.COLUMN_ID;
+import static eu.napcode.popmovies.provider.FavouriteMoviesProvider.COLUMN_POSTER;
 import static eu.napcode.popmovies.provider.FavouriteMoviesProvider.COLUMN_RELEASE_DATE;
 import static eu.napcode.popmovies.provider.FavouriteMoviesProvider.COLUMN_TITLE;
 
@@ -20,8 +21,8 @@ public class FavoriteMoviesHelper {
     private final DatabaseHelper databaseHelper;
 
     @Inject
-    public FavoriteMoviesHelper(DatabaseHelper databaseReader) {
-        this.databaseHelper = databaseReader;
+    public FavoriteMoviesHelper(DatabaseHelper databaseHelper) {
+        this.databaseHelper = databaseHelper;
     }
 
     public Movie getFavoriteMovie(int id) {
@@ -42,6 +43,7 @@ public class FavoriteMoviesHelper {
         movie.setId(cursor.getInt(cursor.getColumnIndex(COLUMN_ID)));
         movie.setTitle(cursor.getString(cursor.getColumnIndex(COLUMN_TITLE)));
         movie.setReleaseDate(cursor.getString(cursor.getColumnIndex(COLUMN_RELEASE_DATE)));
+        movie.setPosterBitmap(DatabaseBitmapHelper.getBitmapFromBytes(cursor.getBlob(cursor.getColumnIndex(COLUMN_POSTER))));
 
         return movie;
     }
@@ -55,6 +57,7 @@ public class FavoriteMoviesHelper {
         values.put(COLUMN_ID, movie.getId());
         values.put(COLUMN_TITLE, movie.getTitle());
         values.put(COLUMN_RELEASE_DATE, movie.getReleaseDate());
+        values.put(COLUMN_POSTER, DatabaseBitmapHelper.getBytesFromBitmap(movie.getPosterBitmap()));
 
         return values;
     }
