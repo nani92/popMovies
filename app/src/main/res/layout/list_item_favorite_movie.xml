@@ -27,13 +27,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/base_margin"
-            app:layout_constraintBottom_toTopOf="@id/bottomGuideline"
+            android:textSize="@dimen/header_text_size"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toRightOf="@id/posterRightGuideline"
             app:layout_constraintRight_toLeftOf="@id/rightGuideline"
             app:layout_constraintTop_toBottomOf="@id/topGuideline"
-            tools:text="@tools:sample/lorem"
-        android:textSize="@dimen/header_text_size"/>
+            tools:text="@tools:sample/lorem"/>
+
+        <TextView
+            android:id="@+id/releaseDateTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/bottomGuideline"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toLeftOf="@id/titleTextView"
+            app:layout_constraintRight_toLeftOf="@id/rightGuideline"
+            app:layout_constraintTop_toBottomOf="@id/titleTextView"
+            android:layout_marginTop="@dimen/small_margin"
+            tools:text="@tools:sample/lorem"/>
 
         <android.support.constraint.Guideline
             android:id="@+id/leftGuideline"

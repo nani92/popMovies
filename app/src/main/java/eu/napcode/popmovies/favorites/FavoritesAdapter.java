@@ -43,7 +43,10 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
 
     @Override
     public void onBindViewHolder(FavoritesViewHolder holder, final int position) {
-        holder.titleTextView.setText(movies.get(position).getTitle());
+        Movie movie = this.movies.get(position);
+
+        holder.titleTextView.setText(movie.getTitle());
+        holder.releaseTextView.setText(movie.getReleaseDate());
 
         Glide.with(holder.itemView)
                 .load(ApiUtils.getPosterUrl(movies.get(position).getPosterPath()))
@@ -67,6 +70,9 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
 
         @BindView(R.id.posterImageView)
         ImageView posterImageView;
+
+        @BindView(R.id.releaseDateTextView)
+        TextView releaseTextView;
 
         public FavoritesViewHolder(View itemView) {
             super(itemView);

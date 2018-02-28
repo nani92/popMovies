@@ -12,6 +12,7 @@ import javax.inject.Inject;
 import eu.napcode.popmovies.model.Movie;
 
 import static eu.napcode.popmovies.provider.FavouriteMoviesProvider.COLUMN_ID;
+import static eu.napcode.popmovies.provider.FavouriteMoviesProvider.COLUMN_RELEASE_DATE;
 import static eu.napcode.popmovies.provider.FavouriteMoviesProvider.COLUMN_TITLE;
 
 public class FavoriteMoviesHelper {
@@ -40,6 +41,7 @@ public class FavoriteMoviesHelper {
         Movie movie = new Movie();
         movie.setId(cursor.getInt(cursor.getColumnIndex(COLUMN_ID)));
         movie.setTitle(cursor.getString(cursor.getColumnIndex(COLUMN_TITLE)));
+        movie.setReleaseDate(cursor.getString(cursor.getColumnIndex(COLUMN_RELEASE_DATE)));
 
         return movie;
     }
@@ -52,6 +54,7 @@ public class FavoriteMoviesHelper {
         ContentValues values = new ContentValues();
         values.put(COLUMN_ID, movie.getId());
         values.put(COLUMN_TITLE, movie.getTitle());
+        values.put(COLUMN_RELEASE_DATE, movie.getReleaseDate());
 
         return values;
     }
