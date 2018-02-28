@@ -23,6 +23,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.android.AndroidInjection;
 import eu.napcode.popmovies.R;
+import eu.napcode.popmovies.favorites.FavoritesActivity;
 import eu.napcode.popmovies.model.Movie;
 import eu.napcode.popmovies.moviedetails.DetailsActivity;
 
@@ -104,6 +105,12 @@ public class MainActivity extends AppCompatActivity implements MoviesView, Movie
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
+        if (item.getItemId() == R.id.favorite) {
+            startActivity(new Intent(this, FavoritesActivity.class));
+
+            return true;
+        }
 
         if (item.getItemId() == R.id.popular) {
             this.moviesPresenter.setSort(SortMovies.POPULAR);

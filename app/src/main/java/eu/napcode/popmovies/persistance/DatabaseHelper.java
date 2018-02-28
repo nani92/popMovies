@@ -4,11 +4,8 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
-import android.util.Log;
 
 import javax.inject.Inject;
-
-import eu.napcode.popmovies.provider.FavouriteMoviesProvider;
 
 import static eu.napcode.popmovies.provider.FavouriteMoviesProvider.AUTHORITY;
 import static eu.napcode.popmovies.provider.FavouriteMoviesProvider.COLUMN_ID;

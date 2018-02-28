@@ -17,4 +17,6 @@ public interface MoviesRepository {
     boolean isMovieFavorite(int id);
 
     void favoriteChange(Movie movie);
+
+    List<Movie> getFavorites();
 }

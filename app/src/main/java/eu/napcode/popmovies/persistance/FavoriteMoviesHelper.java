@@ -4,6 +4,9 @@ package eu.napcode.popmovies.persistance;
 import android.content.ContentValues;
 import android.database.Cursor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.inject.Inject;
 
 import eu.napcode.popmovies.model.Movie;
@@ -55,5 +58,16 @@ public class FavoriteMoviesHelper {
 
     public void removeMovieById(int id) {
         this.databaseHelper.removeById(id);
+    }
+
+    public List<Movie> getAll() {
+        Cursor cursor = this.databaseHelper.getAll();
+        List<Movie> favoriteMovies = new ArrayList<>();
+
+        while (cursor.moveToNext()) {
+            favoriteMovies.add(getMovie(cursor));
+        }
+
+        return favoriteMovies;
     }
 }

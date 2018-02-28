@@ -81,4 +81,8 @@ public class MoviesRepositoryImpl implements MoviesRepository {
         }
     }
 
+    @Override
+    public List<Movie> getFavorites() {
+        return this.favoriteMoviesHelper.getAll();
+    }
 }
