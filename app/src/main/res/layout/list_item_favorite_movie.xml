@@ -32,7 +32,8 @@
             app:layout_constraintLeft_toRightOf="@id/posterRightGuideline"
             app:layout_constraintRight_toLeftOf="@id/rightGuideline"
             app:layout_constraintTop_toBottomOf="@id/topGuideline"
-            tools:text="@tools:sample/lorem"/>
+            tools:text="@tools:sample/lorem"
+        android:textSize="@dimen/header_text_size"/>
 
         <android.support.constraint.Guideline
             android:id="@+id/leftGuideline"

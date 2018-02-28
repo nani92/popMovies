@@ -7,6 +7,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +17,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import eu.napcode.popmovies.R;
 import eu.napcode.popmovies.model.Movie;
+import eu.napcode.popmovies.utils.ApiUtils;
 
 public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.FavoritesViewHolder> {
 
@@ -40,6 +44,12 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
     @Override
     public void onBindViewHolder(FavoritesViewHolder holder, final int position) {
         holder.titleTextView.setText(movies.get(position).getTitle());
+
+        Glide.with(holder.itemView)
+                .load(ApiUtils.getPosterUrl(movies.get(position).getPosterPath()))
+                .apply(new RequestOptions()
+                    .placeholder(R.drawable.popcorn))
+                .into(holder.posterImageView);
 
         holder.itemView.setOnClickListener(v ->
                 onMovieClickedListener.movieClicked(movies.get(position), v));
