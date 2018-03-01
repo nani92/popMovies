@@ -7,7 +7,6 @@ import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
 import android.support.design.widget.FloatingActionButton;
-import android.support.transition.TransitionManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
@@ -31,6 +30,8 @@ import eu.napcode.popmovies.model.Movie;
 public class DetailsActivity extends AppCompatActivity implements DetailsView {
 
     //TODO network helper
+    //TODO remove toolbar
+    //TODO create collapsible toolbar
     public static final String KEY_MOVIE = "movie";
 
     @Inject
@@ -107,7 +108,10 @@ public class DetailsActivity extends AppCompatActivity implements DetailsView {
     @Override
     public void hideBackdrop() {
         this.backdropImageView.setVisibility(View.GONE);
+        changeConstraintsForViewsRelatedWithBackdrop();
+    }
 
+    private void changeConstraintsForViewsRelatedWithBackdrop() {
         ConstraintSet constraintSet = new ConstraintSet();
         constraintSet.clone(detailsConstraintLayout);
 
@@ -118,7 +122,6 @@ public class DetailsActivity extends AppCompatActivity implements DetailsView {
 
         constraintSet.applyTo(detailsConstraintLayout);
     }
-
 
     @Override
     public void displayPoster(String path) {

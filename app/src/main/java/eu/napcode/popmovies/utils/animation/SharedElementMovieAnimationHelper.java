@@ -11,6 +11,7 @@ import eu.napcode.popmovies.R;
 public class SharedElementMovieAnimationHelper {
 
     public static Bundle getBundle(Activity activity, View view) {
+        //TODO animate title
         Bundle bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(activity,
                 new Pair<View, String>(view.findViewById(R.id.posterImageView), activity.getString(R.string.poster_transition)))
                 .toBundle();

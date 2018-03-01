@@ -67,6 +67,7 @@ public class FavoritesActivity extends AppCompatActivity implements FavoritesVie
 
     @Override
     public void movieClicked(Movie movie, View view) {
+        //TODO start for result in order to animate unfavorited movie
         Intent intent = new Intent(this, DetailsActivity.class);
         intent.putExtra(DetailsActivity.KEY_MOVIE, movie);
 
