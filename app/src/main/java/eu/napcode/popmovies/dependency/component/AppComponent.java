@@ -22,13 +22,15 @@ import eu.napcode.popmovies.dependency.module.RxModule;
         RxModule.class
 })
 public interface AppComponent {
+
     @Component.Builder
     interface Builder {
+
         @BindsInstance
-        Builder application(Application application);
+        Builder application(PopMoviesApp application);
 
         AppComponent build();
     }
 
-    void inject(PopMoviesApp popMoviesApp);
+    void inject(PopMoviesApp application);
 }

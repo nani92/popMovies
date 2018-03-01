@@ -13,4 +13,10 @@
         android:title="@string/top_rated"
         app:showAsAction="never"/>
 
+    <item
+        android:id="@+id/favorite"
+        android:title="@string/favorite"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_favorite"/>
+
 </menu>

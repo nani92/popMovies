@@ -1,5 +1,8 @@
 package eu.napcode.popmovies.moviedetails;
 
+import android.graphics.Bitmap;
+import android.text.TextUtils;
+
 import javax.inject.Inject;
 
 import eu.napcode.popmovies.utils.archbase.BasePresenter;
@@ -36,15 +39,59 @@ public class DetailsPresenter implements BasePresenter<DetailsView> {
         }
 
         displayMovie();
+        checkIfFavorite();
+    }
+
+    private void checkIfFavorite() {
+        boolean isFavorite = this.moviesRepository.isMovieFavorite(this.movie.getId());
+        displayFavorite(isFavorite);
     }
 
     private void displayMovie(){
         this.detailsView.displayMovieTitle(this.movie.getTitle());
-        this.detailsView.displayBackdropImageView(this.movie.getBackdropPath());
-        this.detailsView.displayPosterImageView(this.movie.getPosterPath());
         this.detailsView.displayOriginalTitle(this.movie.getOriginalTitle());
         this.detailsView.displayReleaseDate(this.movie.getReleaseDate());
         this.detailsView.displayVoteAverage(this.movie.getVoteAverage());
         this.detailsView.displayPlot(this.movie.getPlot());
+
+        displayBackdrop();
+        displayPoster();
+    }
+
+    private void displayPoster() {
+
+        if (TextUtils.isEmpty(this.movie.getPosterPath())) {
+            this.detailsView.displayPoster(this.movie.getPosterBitmap());
+        } else {
+            this.detailsView.displayPoster(this.movie.getPosterPath());
+        }
+    }
+
+    private void displayBackdrop() {
+
+        if (TextUtils.isEmpty(this.movie.getBackdropPath())) {
+            this.detailsView.hideBackdrop();
+        } else {
+            this.detailsView.displayBackdrop(this.movie.getBackdropPath());
+        }
+    }
+
+    private void displayFavorite(boolean isFavorite) {
+
+        if (isFavorite) {
+            this.detailsView.displayFavoriteMovie();
+        } else {
+            this.detailsView.displayNotFavoriteMovie();
+        }
+    }
+
+    public void favoriteClicked() {
+        this.moviesRepository.favoriteChange(this.movie);
+
+        checkIfFavorite();
+    }
+
+    public void setPosterBitmap(Bitmap posterBitmap) {
+        this.movie.setPosterBitmap(posterBitmap);
     }
 }

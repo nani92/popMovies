@@ -8,4 +8,5 @@
     <string name="download_error_message">Error with downloading data.</string>
     <string name="no_movies_to_display">There is no movies to display.</string>
     <string name="poster_transition">poster transition</string>
+    <string name="favorite">Favorite</string>
 </resources>

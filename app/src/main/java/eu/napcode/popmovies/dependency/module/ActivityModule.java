@@ -2,6 +2,7 @@ package eu.napcode.popmovies.dependency.module;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
+import eu.napcode.popmovies.favorites.FavoritesActivity;
 import eu.napcode.popmovies.moviedetails.DetailsActivity;
 import eu.napcode.popmovies.movies.MainActivity;
 
@@ -13,4 +14,7 @@ public interface ActivityModule {
 
     @ContributesAndroidInjector
     DetailsActivity bindDetailsActivity();
+
+    @ContributesAndroidInjector
+    FavoritesActivity bindFavoritesActivity();
 }

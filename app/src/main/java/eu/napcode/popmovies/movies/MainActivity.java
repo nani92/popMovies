@@ -23,8 +23,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.android.AndroidInjection;
 import eu.napcode.popmovies.R;
+import eu.napcode.popmovies.favorites.FavoritesActivity;
 import eu.napcode.popmovies.model.Movie;
 import eu.napcode.popmovies.moviedetails.DetailsActivity;
+import eu.napcode.popmovies.utils.animation.SharedElementMovieAnimationHelper;
 
 public class MainActivity extends AppCompatActivity implements MoviesView, MoviesAdapter.OnMovieClickedListener {
 
@@ -105,6 +107,12 @@ public class MainActivity extends AppCompatActivity implements MoviesView, Movie
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
+        if (item.getItemId() == R.id.favorite) {
+            startActivity(new Intent(this, FavoritesActivity.class));
+
+            return true;
+        }
+
         if (item.getItemId() == R.id.popular) {
             this.moviesPresenter.setSort(SortMovies.POPULAR);
         }
@@ -116,6 +124,13 @@ public class MainActivity extends AppCompatActivity implements MoviesView, Movie
         this.moviesPresenter.loadMovies();
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onDestroy() {
+        this.moviesPresenter.dropView();
+
+        super.onDestroy();
     }
 
     @Override
@@ -159,10 +174,7 @@ public class MainActivity extends AppCompatActivity implements MoviesView, Movie
     public void movieClicked(Movie movie, View view) {
         Intent intent = new Intent(this, DetailsActivity.class);
         intent.putExtra(DetailsActivity.KEY_MOVIE, movie);
-        Bundle bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(this,
-                new Pair<View, String>(view.findViewById(R.id.posterImageView), getString(R.string.poster_transition)))
-                .toBundle();
 
-        startActivity(intent, bundle);
+        startActivity(intent, SharedElementMovieAnimationHelper.getBundle(this, view));
     }
 }

@@ -18,7 +18,7 @@ public class MoviesMapper {
                     movie.setBackdropPath(responseMovie.getBackdropPath());
                     movie.setOriginalTitle(responseMovie.getOriginalTitle());
                     movie.setReleaseDate(responseMovie.getReleaseDate());
-                    movie.setVoteAverage(responseMovie.getVoteAverage());
+                    movie.setVoteAverage(String.valueOf(responseMovie.getVoteAverage()));
                     movie.setPlot(responseMovie.getOverview());
 
                     return movie;
