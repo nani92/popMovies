@@ -127,6 +127,13 @@ public class MainActivity extends AppCompatActivity implements MoviesView, Movie
     }
 
     @Override
+    protected void onDestroy() {
+        this.moviesPresenter.dropView();
+
+        super.onDestroy();
+    }
+
+    @Override
     public void displayMovies(List<Movie> movies) {
         this.moviesAdapter.addMovies(movies);
     }

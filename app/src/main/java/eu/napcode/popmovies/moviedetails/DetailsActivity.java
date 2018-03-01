@@ -79,6 +79,13 @@ public class DetailsActivity extends AppCompatActivity implements DetailsView {
     }
 
     @Override
+    protected void onDestroy() {
+        this.detailsPresenter.dropView();
+
+        super.onDestroy();
+    }
+
+    @Override
     public void displayMovieTitle(String title) {
         this.titleTextView.setText(title);
     }

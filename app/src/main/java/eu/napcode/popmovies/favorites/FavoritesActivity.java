@@ -44,13 +44,25 @@ public class FavoritesActivity extends AppCompatActivity implements FavoritesVie
         favoritesPresenter.attachView(this);
 
         setupRecyclerView();
-        this.favoritesPresenter.loadFavorites();
     }
 
     private void setupRecyclerView() {
         this.recyclerView.setLayoutManager(new LinearLayoutManager(this));
         this.favoritesAdapter = new FavoritesAdapter(this);
         this.recyclerView.setAdapter(this.favoritesAdapter);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        this.favoritesPresenter.loadFavorites();
+    }
+
+    @Override
+    protected void onDestroy() {
+        this.favoritesPresenter.dropView();
+
+        super.onDestroy();
     }
 
     @Override
@@ -68,11 +80,13 @@ public class FavoritesActivity extends AppCompatActivity implements FavoritesVie
 
     @Override
     public void displayEmptyLayout() {
+        this.recyclerView.setVisibility(View.GONE);
         this.emptyLayout.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideEmptyLayout() {
+        this.recyclerView.setVisibility(View.VISIBLE);
         this.emptyLayout.setVisibility(View.GONE);
     }
 }
