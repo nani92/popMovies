@@ -1,8 +1,10 @@
 package eu.napcode.popmovies.favorites;
 
+import java.util.List;
 
 import javax.inject.Inject;
 
+import eu.napcode.popmovies.model.Movie;
 import eu.napcode.popmovies.repository.MoviesRepository;
 import eu.napcode.popmovies.utils.archbase.BasePresenter;
 
@@ -27,6 +29,13 @@ public class FavoritesPresenter implements BasePresenter<FavoritesView> {
     }
 
     public void loadFavorites() {
-        this.favoritesView.displayFavorites(this.moviesRepository.getFavorites());
+        List<Movie> movies = this.moviesRepository.getFavorites();
+
+        if (movies.isEmpty()) {
+            this.favoritesView.displayEmptyLayout();
+        } else {
+            this.favoritesView.hideEmptyLayout();
+            this.favoritesView.displayFavorites(movies);
+        }
     }
 }

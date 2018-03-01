@@ -3,6 +3,7 @@ package eu.napcode.popmovies.favorites;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -25,9 +26,13 @@ public class FavoritesActivity extends AppCompatActivity implements FavoritesVie
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
 
+    @BindView(R.id.emptyLayout)
+    ConstraintLayout emptyLayout;
+
     private FavoritesAdapter favoritesAdapter;
 
-    @Inject FavoritesPresenter favoritesPresenter;
+    @Inject
+    FavoritesPresenter favoritesPresenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,5 +64,15 @@ public class FavoritesActivity extends AppCompatActivity implements FavoritesVie
     @Override
     public void displayFavorites(List<Movie> favorites) {
         this.favoritesAdapter.setMovies(favorites);
+    }
+
+    @Override
+    public void displayEmptyLayout() {
+        this.emptyLayout.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideEmptyLayout() {
+        this.emptyLayout.setVisibility(View.GONE);
     }
 }

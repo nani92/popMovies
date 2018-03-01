@@ -26,6 +26,10 @@ import eu.napcode.popmovies.model.Movie;
 
 public class DetailsActivity extends AppCompatActivity implements DetailsView {
 
+    //TODO empty layout for favorites
+    //TODO more data saved to sql
+    //TODO network helper
+
     public static final String KEY_MOVIE = "movie";
 
     @Inject

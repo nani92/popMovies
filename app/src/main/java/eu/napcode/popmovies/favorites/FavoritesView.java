@@ -7,4 +7,8 @@ import eu.napcode.popmovies.utils.archbase.BaseView;
 
 public interface FavoritesView extends BaseView {
     void displayFavorites(List<Movie> favorites);
+
+    void displayEmptyLayout();
+
+    void hideEmptyLayout();
 }
