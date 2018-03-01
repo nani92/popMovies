@@ -18,7 +18,7 @@ public interface DetailsView extends BaseView {
 
     void displayReleaseDate(String releaseDate);
 
-    void displayVoteAverage(double voteAverage);
+    void displayVoteAverage(String voteAverage);
 
     void displayPlot(String plot);
 

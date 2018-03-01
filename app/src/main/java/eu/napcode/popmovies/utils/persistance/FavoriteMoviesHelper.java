@@ -49,7 +49,7 @@ public class FavoriteMoviesHelper {
         movie.setPosterBitmap(DatabaseBitmapHelper.getBitmapFromBytes(cursor.getBlob(cursor.getColumnIndex(COLUMN_POSTER))));
         movie.setOriginalTitle(cursor.getString(cursor.getColumnIndex(COLUMN_ORIGINAL_TITLE)));
         movie.setPlot(cursor.getString(cursor.getColumnIndex(COLUMN_PLOT)));
-        movie.setVoteAverage(Float.parseFloat(cursor.getString(cursor.getColumnIndex(COLUMN_AVERAGE_VOTE))));
+        movie.setVoteAverage(cursor.getString(cursor.getColumnIndex(COLUMN_AVERAGE_VOTE)));
 
         return movie;
     }
@@ -66,7 +66,7 @@ public class FavoriteMoviesHelper {
         values.put(COLUMN_POSTER, DatabaseBitmapHelper.getBytesFromBitmap(movie.getPosterBitmap()));
         values.put(COLUMN_ORIGINAL_TITLE, movie.getOriginalTitle());
         values.put(COLUMN_PLOT, movie.getPlot());
-        values.put(COLUMN_AVERAGE_VOTE, String.valueOf(movie.getVoteAverage()));
+        values.put(COLUMN_AVERAGE_VOTE, movie.getVoteAverage());
 
         return values;
     }

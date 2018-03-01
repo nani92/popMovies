@@ -12,7 +12,7 @@ public class Movie implements Parcelable {
     private String backdropPath;
     private String originalTitle;
     private String releaseDate;
-    private double voteAverage;
+    private String voteAverage;
     private String plot;
 
     private Bitmap posterBitmap;
@@ -65,11 +65,11 @@ public class Movie implements Parcelable {
         this.releaseDate = releaseDate;
     }
 
-    public double getVoteAverage() {
+    public String getVoteAverage() {
         return voteAverage;
     }
 
-    public void setVoteAverage(double voteAverage) {
+    public void setVoteAverage(String voteAverage) {
         this.voteAverage = voteAverage;
     }
 
@@ -102,7 +102,7 @@ public class Movie implements Parcelable {
         dest.writeString(this.backdropPath);
         dest.writeString(this.originalTitle);
         dest.writeString(this.releaseDate);
-        dest.writeDouble(this.voteAverage);
+        dest.writeString(this.voteAverage);
         dest.writeString(this.plot);
         dest.writeParcelable(this.posterBitmap, flags);
     }
@@ -117,7 +117,7 @@ public class Movie implements Parcelable {
         this.backdropPath = in.readString();
         this.originalTitle = in.readString();
         this.releaseDate = in.readString();
-        this.voteAverage = in.readDouble();
+        this.voteAverage = in.readString();
         this.plot = in.readString();
         this.posterBitmap = in.readParcelable(Bitmap.class.getClassLoader());
     }

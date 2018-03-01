@@ -118,8 +118,8 @@ public class DetailsActivity extends AppCompatActivity implements DetailsView {
     }
 
     @Override
-    public void displayVoteAverage(double voteAverage) {
-        this.averageVoteTextView.setText(String.valueOf(voteAverage));
+    public void displayVoteAverage(String voteAverage) {
+        this.averageVoteTextView.setText(voteAverage);
     }
 
     @Override
