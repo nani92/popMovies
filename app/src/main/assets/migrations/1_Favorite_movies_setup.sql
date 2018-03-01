@@ -5,5 +5,5 @@ CREATE TABLE
          release_date TEXT,
          poster BLOB,
          original_title TEXT,
-         vote REAL,
-         plot TEXT)
+         vote TEXT,
+         plot TEXT);
