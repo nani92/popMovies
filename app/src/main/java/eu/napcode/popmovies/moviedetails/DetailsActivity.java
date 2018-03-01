@@ -4,8 +4,12 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
+import android.support.constraint.ConstraintSet;
 import android.support.design.widget.FloatingActionButton;
+import android.support.transition.TransitionManager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -26,9 +30,7 @@ import eu.napcode.popmovies.model.Movie;
 
 public class DetailsActivity extends AppCompatActivity implements DetailsView {
 
-    //TODO more data saved to sql
     //TODO network helper
-
     public static final String KEY_MOVIE = "movie";
 
     @Inject
@@ -57,6 +59,9 @@ public class DetailsActivity extends AppCompatActivity implements DetailsView {
 
     @BindView(R.id.favoriteFab)
     FloatingActionButton favouriteFab;
+
+    @BindView(R.id.detailsConstraintLayout)
+    ConstraintLayout detailsConstraintLayout;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -98,6 +103,22 @@ public class DetailsActivity extends AppCompatActivity implements DetailsView {
                     .placeholder(R.drawable.popcorn))
                 .into(this.backdropImageView);
     }
+
+    @Override
+    public void hideBackdrop() {
+        this.backdropImageView.setVisibility(View.GONE);
+
+        ConstraintSet constraintSet = new ConstraintSet();
+        constraintSet.clone(detailsConstraintLayout);
+
+        constraintSet.clear(R.id.posterImageView, ConstraintSet.BOTTOM);
+
+        constraintSet.clear(R.id.favoriteFab, ConstraintSet.TOP);
+        constraintSet.connect(R.id.favoriteFab, ConstraintSet.BOTTOM, R.id.detailsTopDividerView, ConstraintSet.TOP);
+
+        constraintSet.applyTo(detailsConstraintLayout);
+    }
+
 
     @Override
     public void displayPoster(String path) {

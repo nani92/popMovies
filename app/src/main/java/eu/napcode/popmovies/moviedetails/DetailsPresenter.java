@@ -53,8 +53,8 @@ public class DetailsPresenter implements BasePresenter<DetailsView> {
         this.detailsView.displayReleaseDate(this.movie.getReleaseDate());
         this.detailsView.displayVoteAverage(this.movie.getVoteAverage());
         this.detailsView.displayPlot(this.movie.getPlot());
-        this.detailsView.displayBackdrop(this.movie.getBackdropPath());
 
+        displayBackdrop();
         displayPoster();
     }
 
@@ -64,6 +64,15 @@ public class DetailsPresenter implements BasePresenter<DetailsView> {
             this.detailsView.displayPoster(this.movie.getPosterBitmap());
         } else {
             this.detailsView.displayPoster(this.movie.getPosterPath());
+        }
+    }
+
+    private void displayBackdrop() {
+
+        if (TextUtils.isEmpty(this.movie.getBackdropPath())) {
+            this.detailsView.hideBackdrop();
+        } else {
+            this.detailsView.displayBackdrop(this.movie.getBackdropPath());
         }
     }
 

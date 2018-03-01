@@ -8,6 +8,7 @@
     android:paddingBottom="@dimen/base_margin">
 
     <android.support.constraint.ConstraintLayout
+        android:id="@+id/detailsConstraintLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -34,18 +35,19 @@
             app:layout_constraintBottom_toBottomOf="@id/backdropImageView"
             app:layout_constraintLeft_toRightOf="@id/leftGuideline"
             app:layout_constraintRight_toLeftOf="@id/posterRightGuideline"
-            app:layout_constraintTop_toBottomOf="@id/backdropImageView"
+            app:layout_constraintTop_toBottomOf="@id/topBarrier"
             tools:src="@mipmap/ic_launcher"/>
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/favoriteFab"
             android:layout_width="56dp"
             android:layout_height="56dp"
+            android:layout_marginBottom="@dimen/base_margin"
+            android:scaleType="center"
             android:src="@drawable/ic_favorite_border"
             app:layout_constraintBottom_toBottomOf="@id/backdropImageView"
             app:layout_constraintRight_toLeftOf="@id/rightGuideline"
-            app:layout_constraintTop_toBottomOf="@id/backdropImageView"
-            android:scaleType="center"/>
+            app:layout_constraintTop_toBottomOf="@id/backdropImageView"/>
 
         <TextView
             android:id="@+id/titleTextView"
@@ -56,7 +58,7 @@
             android:textSize="@dimen/header_text_size"
             app:layout_constraintLeft_toRightOf="@id/posterRightGuideline"
             app:layout_constraintRight_toLeftOf="@id/favoriteFab"
-            app:layout_constraintTop_toBottomOf="@id/backdropImageView"
+            app:layout_constraintTop_toBottomOf="@id/topBarrier"
             tools:text="@tools:sample/lorem"/>
 
         <View
@@ -163,6 +165,13 @@
             app:layout_constraintGuide_begin="@dimen/base_margin"/>
 
         <android.support.constraint.Guideline
+            android:id="@+id/topGuideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="@dimen/base_margin"/>
+
+        <android.support.constraint.Guideline
             android:id="@+id/rightGuideline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -205,6 +214,13 @@
             app:constraint_referenced_ids="releaseDateLabelTextView,
                 averageVoteLabelTextView,
                 originalTitleLabelTextView"/>
+
+        <android.support.constraint.Barrier
+            android:id="@+id/topBarrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="topGuideline, backdropImageView"/>
 
     </android.support.constraint.ConstraintLayout>
 </ScrollView>

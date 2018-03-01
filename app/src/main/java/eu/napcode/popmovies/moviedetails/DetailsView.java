@@ -10,6 +10,8 @@ public interface DetailsView extends BaseView {
 
     void displayBackdrop(String path);
 
+    void hideBackdrop();
+
     void displayPoster(String path);
 
     void displayPoster(Bitmap bitmap);
