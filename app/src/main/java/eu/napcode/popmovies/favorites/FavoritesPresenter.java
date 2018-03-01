@@ -28,7 +28,7 @@ public class FavoritesPresenter implements BasePresenter<FavoritesView> {
         this.favoritesView = null;
     }
 
-    public void loadFavorites() {
+    void loadFavorites() {
         List<Movie> movies = this.moviesRepository.getFavorites();
 
         if (movies.isEmpty()) {

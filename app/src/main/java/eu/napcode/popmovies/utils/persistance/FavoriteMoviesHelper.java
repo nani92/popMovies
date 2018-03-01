@@ -11,7 +11,10 @@ import javax.inject.Inject;
 
 import eu.napcode.popmovies.model.Movie;
 
+import static eu.napcode.popmovies.provider.FavouriteMoviesProvider.COLUMN_AVERAGE_VOTE;
 import static eu.napcode.popmovies.provider.FavouriteMoviesProvider.COLUMN_ID;
+import static eu.napcode.popmovies.provider.FavouriteMoviesProvider.COLUMN_ORIGINAL_TITLE;
+import static eu.napcode.popmovies.provider.FavouriteMoviesProvider.COLUMN_PLOT;
 import static eu.napcode.popmovies.provider.FavouriteMoviesProvider.COLUMN_POSTER;
 import static eu.napcode.popmovies.provider.FavouriteMoviesProvider.COLUMN_RELEASE_DATE;
 import static eu.napcode.popmovies.provider.FavouriteMoviesProvider.COLUMN_TITLE;
@@ -44,6 +47,9 @@ public class FavoriteMoviesHelper {
         movie.setTitle(cursor.getString(cursor.getColumnIndex(COLUMN_TITLE)));
         movie.setReleaseDate(cursor.getString(cursor.getColumnIndex(COLUMN_RELEASE_DATE)));
         movie.setPosterBitmap(DatabaseBitmapHelper.getBitmapFromBytes(cursor.getBlob(cursor.getColumnIndex(COLUMN_POSTER))));
+        movie.setOriginalTitle(cursor.getString(cursor.getColumnIndex(COLUMN_ORIGINAL_TITLE)));
+        movie.setPlot(cursor.getString(cursor.getColumnIndex(COLUMN_PLOT)));
+        movie.setVoteAverage(cursor.getFloat(cursor.getColumnIndex(COLUMN_AVERAGE_VOTE)));
 
         return movie;
     }
@@ -58,6 +64,9 @@ public class FavoriteMoviesHelper {
         values.put(COLUMN_TITLE, movie.getTitle());
         values.put(COLUMN_RELEASE_DATE, movie.getReleaseDate());
         values.put(COLUMN_POSTER, DatabaseBitmapHelper.getBytesFromBitmap(movie.getPosterBitmap()));
+        values.put(COLUMN_ORIGINAL_TITLE, movie.getOriginalTitle());
+        values.put(COLUMN_PLOT, movie.getPlot());
+        values.put(COLUMN_AVERAGE_VOTE, movie.getVoteAverage());
 
         return values;
     }
