@@ -1,7 +1,5 @@
 package eu.napcode.popmovies.repository;
 
-import android.graphics.Bitmap;
-
 import com.google.common.collect.Lists;
 
 import java.util.List;
@@ -36,7 +34,6 @@ public class MoviesRepositoryImpl implements MoviesRepository {
 
     @Override
     public Observable<List<Movie>> getMovies(SortMovies sortMovies) {
-
         return this.moviesService
                 .getMovies(SortMovies.getUrlPathForSort(sortMovies), ApiUtils.TMDB_API_KEY)
                 .map(this.mapFunction);

@@ -1,7 +1,5 @@
 package eu.napcode.popmovies.repository;
 
-import android.graphics.Bitmap;
-
 import java.util.List;
 
 import eu.napcode.popmovies.model.Movie;

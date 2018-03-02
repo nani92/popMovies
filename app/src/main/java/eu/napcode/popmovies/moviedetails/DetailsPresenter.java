@@ -5,20 +5,27 @@ import android.text.TextUtils;
 
 import javax.inject.Inject;
 
+import eu.napcode.popmovies.repository.VideosRepository;
 import eu.napcode.popmovies.utils.archbase.BasePresenter;
 import eu.napcode.popmovies.model.Movie;
 import eu.napcode.popmovies.repository.MoviesRepository;
+import eu.napcode.popmovies.utils.rx.RxSchedulers;
 
 public class DetailsPresenter implements BasePresenter<DetailsView> {
 
     private MoviesRepository moviesRepository;
+    private VideosRepository videosRepository;
+
+    private RxSchedulers rxSchedulers;
 
     private DetailsView detailsView;
     private Movie movie;
 
     @Inject
-    public DetailsPresenter(MoviesRepository moviesRepository) {
+    public DetailsPresenter(MoviesRepository moviesRepository, VideosRepository videosRepository, RxSchedulers rxSchedulers) {
         this.moviesRepository = moviesRepository;
+        this.videosRepository = videosRepository;
+        this.rxSchedulers = rxSchedulers;
     }
 
     @Override
@@ -40,11 +47,7 @@ public class DetailsPresenter implements BasePresenter<DetailsView> {
 
         displayMovie();
         checkIfFavorite();
-    }
-
-    private void checkIfFavorite() {
-        boolean isFavorite = this.moviesRepository.isMovieFavorite(this.movie.getId());
-        displayFavorite(isFavorite);
+        loadVideos();
     }
 
     private void displayMovie(){
@@ -76,6 +79,11 @@ public class DetailsPresenter implements BasePresenter<DetailsView> {
         }
     }
 
+    private void checkIfFavorite() {
+        boolean isFavorite = this.moviesRepository.isMovieFavorite(this.movie.getId());
+        displayFavorite(isFavorite);
+    }
+
     private void displayFavorite(boolean isFavorite) {
 
         if (isFavorite) {
@@ -83,6 +91,14 @@ public class DetailsPresenter implements BasePresenter<DetailsView> {
         } else {
             this.detailsView.displayNotFavoriteMovie();
         }
+    }
+
+    private void loadVideos() {
+        this.videosRepository
+                .getVideos(this.movie.getId())
+                .subscribeOn(this.rxSchedulers.io())
+                .observeOn(this.rxSchedulers.androidMainThread())
+                .subscribe(videos -> this.detailsView.displayVideos(videos));
     }
 
     public void favoriteClicked() {

@@ -1,5 +1,6 @@
 package eu.napcode.popmovies.moviedetails;
 
+import android.content.ActivityNotFoundException;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -8,6 +9,8 @@ import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -17,6 +20,8 @@ import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -24,8 +29,10 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import dagger.android.AndroidInjection;
 import eu.napcode.popmovies.R;
+import eu.napcode.popmovies.model.Video;
 import eu.napcode.popmovies.utils.ApiUtils;
 import eu.napcode.popmovies.model.Movie;
+import eu.napcode.popmovies.utils.YoutubeUtils;
 
 public class DetailsActivity extends AppCompatActivity implements DetailsView {
 
@@ -64,6 +71,9 @@ public class DetailsActivity extends AppCompatActivity implements DetailsView {
     @BindView(R.id.detailsConstraintLayout)
     ConstraintLayout detailsConstraintLayout;
 
+    @BindView(R.id.videosRecyclerView)
+    RecyclerView videoRecyclerView;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,7 +111,7 @@ public class DetailsActivity extends AppCompatActivity implements DetailsView {
         Glide.with(this)
                 .load(ApiUtils.getBackdropUrl(path))
                 .apply(new RequestOptions()
-                    .placeholder(R.drawable.popcorn))
+                        .placeholder(R.drawable.popcorn))
                 .into(this.backdropImageView);
     }
 
@@ -166,6 +176,24 @@ public class DetailsActivity extends AppCompatActivity implements DetailsView {
     @Override
     public void displayNotFavoriteMovie() {
         this.favouriteFab.setImageResource(R.drawable.ic_favorite_border);
+    }
+
+    @Override
+    public void displayVideos(List<Video> videos) {
+        this.videoRecyclerView.setVisibility(View.VISIBLE);
+        this.videoRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        this.videoRecyclerView.setAdapter(new VideosAdapter(videos, videoKey -> {
+            displayYoutubeVideo(videoKey);
+        }));
+    }
+
+    private void displayYoutubeVideo(String key) {
+
+        try {
+            startActivity(YoutubeUtils.getYoutubeAppIntent(key));
+        } catch (ActivityNotFoundException ex) {
+            startActivity(YoutubeUtils.getYoutubeWebIntent(key));
+        }
     }
 
     @Override

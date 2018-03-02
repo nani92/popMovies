@@ -41,6 +41,7 @@ public class FavoriteMoviesHelper {
         return null;
     }
 
+    //TODO move to separatedMapper
     private Movie getMovie(Cursor cursor) {
         Movie movie = new Movie();
         movie.setId(cursor.getInt(cursor.getColumnIndex(COLUMN_ID)));

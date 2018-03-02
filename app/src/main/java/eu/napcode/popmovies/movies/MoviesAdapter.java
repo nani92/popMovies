@@ -41,7 +41,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
     @Override
     public MoviesViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.list_item_movie, parent, false);
+                .inflate(R.layout.recycler_item_movie, parent, false);
 
         return new MoviesViewHolder(itemView);
     }
