@@ -178,6 +178,7 @@ public class DetailsActivity extends AppCompatActivity implements DetailsView {
         this.favouriteFab.setImageResource(R.drawable.ic_favorite_border);
     }
 
+    //TODO display videos inside app
     @Override
     public void displayVideos(List<Video> videos) {
         this.videoRecyclerView.setVisibility(View.VISIBLE);
