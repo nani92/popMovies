@@ -13,6 +13,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.widget.ProgressBar;
 
 import java.util.List;
@@ -64,6 +66,7 @@ public class MainActivity extends AppCompatActivity implements MoviesView, Movie
         this.recyclerView.setLayoutManager(getLayoutManager());
         this.moviesAdapter = new MoviesAdapter(this);
         this.recyclerView.setAdapter(this.moviesAdapter);
+        this.recyclerView.setLayoutAnimation(AnimationUtils.loadLayoutAnimation(this, R.anim.layout_animation_rv));
 
         this.recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
@@ -136,6 +139,7 @@ public class MainActivity extends AppCompatActivity implements MoviesView, Movie
     @Override
     public void displayMovies(List<Movie> movies) {
         this.moviesAdapter.addMovies(movies);
+        this.recyclerView.scheduleLayoutAnimation();
     }
 
     @Override

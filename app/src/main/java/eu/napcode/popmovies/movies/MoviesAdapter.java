@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +53,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
 
         Glide.with(holder.itemView)
                 .load(ApiUtils.getPosterUrl(movies.get(position).getPosterPath()))
+                .apply(new RequestOptions().placeholder(R.drawable.popcorn))
                 .into(holder.posterImageView);
 
         holder.itemView.setOnClickListener(v ->
