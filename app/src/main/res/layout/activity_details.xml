@@ -157,6 +157,16 @@
             app:layout_constraintTop_toBottomOf="@id/detailsBottomDividerView"
             tools:text="@tools:sample/lorem/random"/>
 
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/videosRecyclerView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            app:layout_constraintLeft_toRightOf="@id/leftGuideline"
+            app:layout_constraintRight_toLeftOf="@id/rightGuideline"
+            app:layout_constraintTop_toBottomOf="@id/plotTextView"/>
+
         <android.support.constraint.Guideline
             android:id="@+id/leftGuideline"
             android:layout_width="wrap_content"
@@ -221,6 +231,5 @@
             android:layout_height="wrap_content"
             app:barrierDirection="bottom"
             app:constraint_referenced_ids="topGuideline, backdropImageView"/>
-
     </android.support.constraint.ConstraintLayout>
 </ScrollView>

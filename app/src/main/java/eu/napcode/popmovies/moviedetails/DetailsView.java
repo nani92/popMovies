@@ -2,6 +2,9 @@ package eu.napcode.popmovies.moviedetails;
 
 import android.graphics.Bitmap;
 
+import java.util.List;
+
+import eu.napcode.popmovies.model.Video;
 import eu.napcode.popmovies.utils.archbase.BaseView;
 
 public interface DetailsView extends BaseView {
@@ -27,4 +30,6 @@ public interface DetailsView extends BaseView {
     void displayFavoriteMovie();
 
     void displayNotFavoriteMovie();
+
+    void displayVideos(List<Video> videos);
 }
