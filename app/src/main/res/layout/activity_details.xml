@@ -59,7 +59,8 @@
             app:layout_constraintLeft_toRightOf="@id/posterRightGuideline"
             app:layout_constraintRight_toLeftOf="@id/favoriteFab"
             app:layout_constraintTop_toBottomOf="@id/topBarrier"
-            tools:text="@tools:sample/lorem"/>
+            tools:text="@tools:sample/lorem"
+            android:transitionName="@string/title_transition"/>
 
         <View
             android:id="@+id/detailsTopDividerView"
