@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -188,10 +189,12 @@ public class DetailsActivity extends AppCompatActivity implements DetailsView {
     @Override
     public void displayVideos(List<Video> videos) {
         this.videoRecyclerView.setVisibility(View.VISIBLE);
+        this.videoRecyclerView.setLayoutAnimation(AnimationUtils.loadLayoutAnimation(this, R.anim.layout_animation_rv));
         this.videoRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         this.videoRecyclerView.setAdapter(new VideosAdapter(videos, videoKey -> {
             displayYoutubeVideo(videoKey);
         }));
+        this.videoRecyclerView.scheduleLayoutAnimation();
     }
 
     private void displayYoutubeVideo(String key) {
