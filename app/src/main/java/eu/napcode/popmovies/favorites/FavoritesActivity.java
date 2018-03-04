@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.animation.AnimationUtils;
 
 import java.util.List;
 
@@ -42,6 +43,7 @@ public class FavoritesActivity extends AppCompatActivity implements FavoritesVie
 
         AndroidInjection.inject(this);
         favoritesPresenter.attachView(this);
+        recyclerView.setVisibility(View.INVISIBLE);
 
         setupRecyclerView();
     }
@@ -50,6 +52,7 @@ public class FavoritesActivity extends AppCompatActivity implements FavoritesVie
         this.recyclerView.setLayoutManager(new LinearLayoutManager(this));
         this.favoritesAdapter = new FavoritesAdapter(this);
         this.recyclerView.setAdapter(this.favoritesAdapter);
+        this.recyclerView.setLayoutAnimation(AnimationUtils.loadLayoutAnimation(this, R.anim.layout_animation_rv));
     }
 
     @Override
@@ -77,6 +80,10 @@ public class FavoritesActivity extends AppCompatActivity implements FavoritesVie
     @Override
     public void displayFavorites(List<Movie> favorites) {
         this.favoritesAdapter.setMovies(favorites);
+
+        if (this.recyclerView.getVisibility() == View.INVISIBLE) {
+            this.recyclerView.scheduleLayoutAnimation();
+        }
     }
 
     @Override
