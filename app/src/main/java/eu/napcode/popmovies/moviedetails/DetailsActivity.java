@@ -34,6 +34,7 @@ import eu.napcode.popmovies.model.Video;
 import eu.napcode.popmovies.utils.ApiUtils;
 import eu.napcode.popmovies.model.Movie;
 import eu.napcode.popmovies.utils.YoutubeUtils;
+import eu.napcode.popmovies.utils.animation.TransitionAnimations;
 
 public class DetailsActivity extends AppCompatActivity implements DetailsView {
 
@@ -82,7 +83,9 @@ public class DetailsActivity extends AppCompatActivity implements DetailsView {
         ButterKnife.bind(this);
         AndroidInjection.inject(this);
 
+
         setupPresenter();
+        TransitionAnimations.setDetailsTransitionAnimations(getWindow(), getResources().getInteger(R.integer.anim_duration));
     }
 
     private void setupPresenter() {

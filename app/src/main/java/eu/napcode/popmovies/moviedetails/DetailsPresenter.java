@@ -50,7 +50,7 @@ public class DetailsPresenter implements BasePresenter<DetailsView> {
         loadVideos();
     }
 
-    private void displayMovie(){
+    private void displayMovie() {
         this.detailsView.displayMovieTitle(this.movie.getTitle());
         this.detailsView.displayOriginalTitle(this.movie.getOriginalTitle());
         this.detailsView.displayReleaseDate(this.movie.getReleaseDate());
@@ -98,7 +98,16 @@ public class DetailsPresenter implements BasePresenter<DetailsView> {
                 .getVideos(this.movie.getId())
                 .subscribeOn(this.rxSchedulers.io())
                 .observeOn(this.rxSchedulers.androidMainThread())
-                .subscribe(videos -> this.detailsView.displayVideos(videos));
+                .subscribe(videos -> {
+
+                            if (this.detailsView != null) {
+                                this.detailsView.displayVideos(videos);
+                            }
+                        },
+
+                        throwable -> {
+
+                        });
     }
 
     public void favoriteClicked() {
