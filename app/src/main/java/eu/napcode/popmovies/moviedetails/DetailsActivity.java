@@ -2,6 +2,7 @@ package eu.napcode.popmovies.moviedetails;
 
 import android.content.ActivityNotFoundException;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Animatable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -170,12 +171,14 @@ public class DetailsActivity extends AppCompatActivity implements DetailsView {
 
     @Override
     public void displayFavoriteMovie() {
-        this.favouriteFab.setImageResource(R.drawable.ic_favorite);
+        this.favouriteFab.setImageResource(R.drawable.fav_empty_to_full);
+        ((Animatable)this.favouriteFab.getDrawable()).start();
     }
 
     @Override
     public void displayNotFavoriteMovie() {
-        this.favouriteFab.setImageResource(R.drawable.ic_favorite_border);
+        this.favouriteFab.setImageResource(R.drawable.fav_full_to_empty);
+        ((Animatable)this.favouriteFab.getDrawable()).start();
     }
 
     //TODO display videos inside app
