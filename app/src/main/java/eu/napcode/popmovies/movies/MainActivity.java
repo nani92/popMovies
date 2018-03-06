@@ -13,6 +13,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.widget.ProgressBar;
 
 import java.util.List;
@@ -27,8 +30,11 @@ import eu.napcode.popmovies.favorites.FavoritesActivity;
 import eu.napcode.popmovies.model.Movie;
 import eu.napcode.popmovies.moviedetails.DetailsActivity;
 import eu.napcode.popmovies.utils.animation.SharedElementMovieAnimationHelper;
+import eu.napcode.popmovies.utils.archbase.PresenterBundle;
 
 public class MainActivity extends AppCompatActivity implements MoviesView, MoviesAdapter.OnMovieClickedListener {
+
+    private static String SAVE_PRESENTER_STATE = "presenter";
 
     private static final int COLUMNS_LANDSCAPE = 4;
     private static final int COLUMNS_PORTRAIT = 2;
@@ -49,6 +55,8 @@ public class MainActivity extends AppCompatActivity implements MoviesView, Movie
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+        requestWindowFeature(Window.FEATURE_ACTIVITY_TRANSITIONS);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
@@ -57,13 +65,16 @@ public class MainActivity extends AppCompatActivity implements MoviesView, Movie
 
         setupRecyclerView();
 
-        this.moviesPresenter.loadMovies();
+        if (savedInstanceState == null) {
+            this.moviesPresenter.loadMovies();
+        }
     }
 
     private void setupRecyclerView() {
         this.recyclerView.setLayoutManager(getLayoutManager());
         this.moviesAdapter = new MoviesAdapter(this);
         this.recyclerView.setAdapter(this.moviesAdapter);
+        this.recyclerView.setLayoutAnimation(AnimationUtils.loadLayoutAnimation(this, R.anim.layout_animation_rv));
 
         this.recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
@@ -95,6 +106,18 @@ public class MainActivity extends AppCompatActivity implements MoviesView, Movie
         } else {
             return new GridLayoutManager(this, COLUMNS_LANDSCAPE);
         }
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        this.moviesPresenter.restoreState(new PresenterBundle(savedInstanceState.getBundle(SAVE_PRESENTER_STATE)));
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBundle(SAVE_PRESENTER_STATE, this.moviesPresenter.saveState().getBundle());
     }
 
     @Override
@@ -136,6 +159,7 @@ public class MainActivity extends AppCompatActivity implements MoviesView, Movie
     @Override
     public void displayMovies(List<Movie> movies) {
         this.moviesAdapter.addMovies(movies);
+        this.recyclerView.scheduleLayoutAnimation();
     }
 
     @Override
@@ -175,6 +199,6 @@ public class MainActivity extends AppCompatActivity implements MoviesView, Movie
         Intent intent = new Intent(this, DetailsActivity.class);
         intent.putExtra(DetailsActivity.KEY_MOVIE, movie);
 
-        startActivity(intent, SharedElementMovieAnimationHelper.getBundle(this, view));
+        startActivity(intent, SharedElementMovieAnimationHelper.getBundle(this, view, movie.getId()));
     }
 }

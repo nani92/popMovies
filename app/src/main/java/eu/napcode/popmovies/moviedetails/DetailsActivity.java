@@ -1,7 +1,9 @@
 package eu.napcode.popmovies.moviedetails;
 
 import android.content.ActivityNotFoundException;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Animatable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,7 +13,10 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.transition.TransitionManager;
 import android.view.View;
+import android.view.Window;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -33,6 +38,8 @@ import eu.napcode.popmovies.model.Video;
 import eu.napcode.popmovies.utils.ApiUtils;
 import eu.napcode.popmovies.model.Movie;
 import eu.napcode.popmovies.utils.YoutubeUtils;
+import eu.napcode.popmovies.utils.animation.SharedElementMovieAnimationHelper;
+import eu.napcode.popmovies.utils.animation.TransitionAnimations;
 
 public class DetailsActivity extends AppCompatActivity implements DetailsView {
 
@@ -77,16 +84,30 @@ public class DetailsActivity extends AppCompatActivity implements DetailsView {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+        requestWindowFeature(Window.FEATURE_ACTIVITY_TRANSITIONS);
         setContentView(R.layout.activity_details);
         ButterKnife.bind(this);
         AndroidInjection.inject(this);
 
+        this.posterImageView.setTransitionName(
+                SharedElementMovieAnimationHelper.getTransitionName(
+                        this.posterImageView.getTransitionName(),
+                        ((Movie) getIntent().getParcelableExtra(KEY_MOVIE)).getId()));
+
         setupPresenter();
+        TransitionAnimations.setDetailsTransitionAnimations(getWindow(), getResources().getInteger(R.integer.anim_duration));
     }
 
     private void setupPresenter() {
         this.detailsPresenter.attachView(this);
         this.detailsPresenter.setMovie((Movie) getIntent().getParcelableExtra(KEY_MOVIE));
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        this.favouriteFab.show();
     }
 
     @OnClick(R.id.favoriteFab)
@@ -170,22 +191,26 @@ public class DetailsActivity extends AppCompatActivity implements DetailsView {
 
     @Override
     public void displayFavoriteMovie() {
-        this.favouriteFab.setImageResource(R.drawable.ic_favorite);
+        this.favouriteFab.setImageResource(R.drawable.fav_empty_to_full);
+        ((Animatable)this.favouriteFab.getDrawable()).start();
     }
 
     @Override
     public void displayNotFavoriteMovie() {
-        this.favouriteFab.setImageResource(R.drawable.ic_favorite_border);
+        this.favouriteFab.setImageResource(R.drawable.fav_full_to_empty);
+        ((Animatable)this.favouriteFab.getDrawable()).start();
     }
 
     //TODO display videos inside app
     @Override
     public void displayVideos(List<Video> videos) {
         this.videoRecyclerView.setVisibility(View.VISIBLE);
+        this.videoRecyclerView.setLayoutAnimation(AnimationUtils.loadLayoutAnimation(this, R.anim.layout_animation_rv));
         this.videoRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         this.videoRecyclerView.setAdapter(new VideosAdapter(videos, videoKey -> {
             displayYoutubeVideo(videoKey);
         }));
+        this.videoRecyclerView.scheduleLayoutAnimation();
     }
 
     private void displayYoutubeVideo(String key) {

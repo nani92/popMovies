@@ -9,6 +9,7 @@ import eu.napcode.popmovies.repository.VideosRepository;
 import eu.napcode.popmovies.utils.archbase.BasePresenter;
 import eu.napcode.popmovies.model.Movie;
 import eu.napcode.popmovies.repository.MoviesRepository;
+import eu.napcode.popmovies.utils.archbase.PresenterBundle;
 import eu.napcode.popmovies.utils.rx.RxSchedulers;
 
 public class DetailsPresenter implements BasePresenter<DetailsView> {
@@ -38,6 +39,16 @@ public class DetailsPresenter implements BasePresenter<DetailsView> {
         this.detailsView = null;
     }
 
+    @Override
+    public PresenterBundle saveState() {
+        return null;
+    }
+
+    @Override
+    public void restoreState(PresenterBundle presenterBundle) {
+
+    }
+
     public void setMovie(Movie movie) {
         this.movie = movie;
 
@@ -50,7 +61,7 @@ public class DetailsPresenter implements BasePresenter<DetailsView> {
         loadVideos();
     }
 
-    private void displayMovie(){
+    private void displayMovie() {
         this.detailsView.displayMovieTitle(this.movie.getTitle());
         this.detailsView.displayOriginalTitle(this.movie.getOriginalTitle());
         this.detailsView.displayReleaseDate(this.movie.getReleaseDate());
@@ -98,7 +109,16 @@ public class DetailsPresenter implements BasePresenter<DetailsView> {
                 .getVideos(this.movie.getId())
                 .subscribeOn(this.rxSchedulers.io())
                 .observeOn(this.rxSchedulers.androidMainThread())
-                .subscribe(videos -> this.detailsView.displayVideos(videos));
+                .subscribe(videos -> {
+
+                            if (this.detailsView != null) {
+                                this.detailsView.displayVideos(videos);
+                            }
+                        },
+
+                        throwable -> {
+
+                        });
     }
 
     public void favoriteClicked() {

@@ -24,14 +24,21 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
 
     private List<Movie> movies = new ArrayList<>();
     private OnMovieClickedListener onMovieClickedListener;
+    private int displayedPosition = -1;
 
     public FavoritesAdapter(OnMovieClickedListener onMovieClickedListener) {
         this.onMovieClickedListener = onMovieClickedListener;
     }
 
     public void setMovies(List<Movie> movies) {
-        this.movies = movies;
-        notifyDataSetChanged();
+
+        if (movies.size() < this.movies.size() && this.displayedPosition >= 0) {
+            this.movies.remove(this.displayedPosition);
+            notifyItemRemoved(this.displayedPosition);
+        } else {
+            this.movies = movies;
+            notifyDataSetChanged();
+        }
     }
 
     @Override
@@ -50,8 +57,10 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
         holder.releaseTextView.setText(movie.getReleaseDate());
         displayPoster(holder, movie);
 
-        holder.itemView.setOnClickListener(v ->
-                onMovieClickedListener.movieClicked(movies.get(position), v));
+        holder.itemView.setOnClickListener(v -> {
+                onMovieClickedListener.movieClicked(movies.get(position), v);
+                this.displayedPosition = position;
+        });
     }
 
     private void displayPoster(FavoritesViewHolder holder, Movie movie) {

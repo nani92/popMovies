@@ -23,6 +23,7 @@
             android:layout_height="wrap_content"
             android:background="@color/colorWhiteTransparent"
             android:padding="@dimen/small_margin"
+            android:transitionName="@string/title_transition"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="@id/posterImageView"
             app:layout_constraintRight_toRightOf="@id/posterImageView"/>
