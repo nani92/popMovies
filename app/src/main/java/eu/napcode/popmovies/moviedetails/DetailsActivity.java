@@ -40,6 +40,7 @@ import eu.napcode.popmovies.R;
 import eu.napcode.popmovies.model.Video;
 import eu.napcode.popmovies.utils.ApiUtils;
 import eu.napcode.popmovies.model.Movie;
+import eu.napcode.popmovies.utils.ConstraintSetChangeUtils;
 import eu.napcode.popmovies.utils.YoutubeUtils;
 import eu.napcode.popmovies.utils.animation.SharedElementMovieAnimationHelper;
 import eu.napcode.popmovies.utils.animation.TransitionAnimations;
@@ -93,17 +94,20 @@ public class DetailsActivity extends AppCompatActivity implements DetailsView {
         ButterKnife.bind(this);
         AndroidInjection.inject(this);
 
-        this.posterImageView.setTransitionName(
-                SharedElementMovieAnimationHelper.getTransitionName(
-                        this.posterImageView.getTransitionName(),
-                        ((Movie) getIntent().getParcelableExtra(KEY_MOVIE)).getId()));
-
+        setupSharedElementAnimation();
         setupPresenter();
         TransitionAnimations.setDetailsTransitionAnimations(getWindow(), getResources().getInteger(R.integer.anim_duration));
 
         if (savedInstanceState != null) {
             this.favouriteFab.show();
         }
+    }
+
+    private void setupSharedElementAnimation() {
+        this.posterImageView.setTransitionName(
+                SharedElementMovieAnimationHelper.getTransitionName(
+                        this.posterImageView.getTransitionName(),
+                        ((Movie) getIntent().getParcelableExtra(KEY_MOVIE)).getId()));
     }
 
     private void setupPresenter() {
@@ -150,16 +154,8 @@ public class DetailsActivity extends AppCompatActivity implements DetailsView {
 
             return;
         }
-        ConstraintSet constraintSet = new ConstraintSet();
-        constraintSet.clone(detailsConstraintLayout);
 
-        constraintSet.clear(R.id.posterImageView, ConstraintSet.BOTTOM);
-        constraintSet.connect(R.id.posterImageView, ConstraintSet.TOP, R.id.topGuideline, ConstraintSet.BOTTOM);
-
-        constraintSet.clear(R.id.favoriteFab, ConstraintSet.TOP);
-        constraintSet.connect(R.id.favoriteFab, ConstraintSet.BOTTOM, R.id.detailsTopDividerView, ConstraintSet.TOP);
-
-        constraintSet.applyTo(detailsConstraintLayout);
+        ConstraintSetChangeUtils.detailsNoBackdropChange(this.detailsConstraintLayout);
     }
 
     @Override
