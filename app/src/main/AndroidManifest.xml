@@ -23,7 +23,8 @@
 
         <activity
             android:theme="@style/AppTheme.NoToolbar"
-            android:name=".moviedetails.DetailsActivity"/>
+            android:name=".moviedetails.DetailsActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"/>
 
         <activity android:name=".favorites.FavoritesActivity"/>
 

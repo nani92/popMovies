@@ -1,6 +1,7 @@
 package eu.napcode.popmovies.moviedetails;
 
 import android.content.ActivityNotFoundException;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Animatable;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.transition.TransitionManager;
 import android.view.View;
 import android.view.Window;
 import android.view.animation.AnimationUtils;
@@ -100,6 +102,12 @@ public class DetailsActivity extends AppCompatActivity implements DetailsView {
     private void setupPresenter() {
         this.detailsPresenter.attachView(this);
         this.detailsPresenter.setMovie((Movie) getIntent().getParcelableExtra(KEY_MOVIE));
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        this.favouriteFab.show();
     }
 
     @OnClick(R.id.favoriteFab)
