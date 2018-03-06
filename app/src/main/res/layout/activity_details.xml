@@ -35,7 +35,7 @@
             app:layout_constraintBottom_toBottomOf="@id/backdropImageView"
             app:layout_constraintLeft_toRightOf="@id/leftGuideline"
             app:layout_constraintRight_toLeftOf="@id/posterRightGuideline"
-            app:layout_constraintTop_toBottomOf="@id/topBarrier"
+            app:layout_constraintTop_toBottomOf="@id/backdropImageView"
             tools:src="@mipmap/ic_launcher"/>
 
         <android.support.design.widget.FloatingActionButton
@@ -60,7 +60,7 @@
             android:transitionName="@string/title_transition"
             app:layout_constraintLeft_toRightOf="@id/posterRightGuideline"
             app:layout_constraintRight_toLeftOf="@id/favoriteFab"
-            app:layout_constraintTop_toBottomOf="@id/topBarrier"
+            app:layout_constraintTop_toBottomOf="@id/backdropImageView"
             tools:text="@tools:sample/lorem"/>
 
         <View
@@ -227,11 +227,5 @@
                 averageVoteLabelTextView,
                 originalTitleLabelTextView"/>
 
-        <android.support.constraint.Barrier
-            android:id="@+id/topBarrier"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:barrierDirection="bottom"
-            app:constraint_referenced_ids="topGuideline, backdropImageView"/>
     </android.support.constraint.ConstraintLayout>
 </ScrollView>

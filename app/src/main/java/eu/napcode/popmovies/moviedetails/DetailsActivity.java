@@ -147,6 +147,7 @@ public class DetailsActivity extends AppCompatActivity implements DetailsView {
         constraintSet.clone(detailsConstraintLayout);
 
         constraintSet.clear(R.id.posterImageView, ConstraintSet.BOTTOM);
+        constraintSet.connect(R.id.posterImageView, ConstraintSet.TOP, R.id.topGuideline, ConstraintSet.BOTTOM);
 
         constraintSet.clear(R.id.favoriteFab, ConstraintSet.TOP);
         constraintSet.connect(R.id.favoriteFab, ConstraintSet.BOTTOM, R.id.detailsTopDividerView, ConstraintSet.TOP);
