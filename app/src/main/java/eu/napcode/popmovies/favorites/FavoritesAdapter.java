@@ -58,7 +58,7 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
         displayPoster(holder, movie);
 
         holder.itemView.setOnClickListener(v -> {
-                onMovieClickedListener.movieClicked(movies.get(position), v);
+                onMovieClickedListener.movieClicked(movie, v);
                 this.displayedPosition = position;
         });
     }

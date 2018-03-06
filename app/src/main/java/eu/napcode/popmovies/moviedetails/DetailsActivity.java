@@ -9,11 +9,12 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
+import android.support.constraint.Guideline;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.transition.TransitionManager;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.animation.AnimationUtils;
@@ -21,9 +22,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.bumptech.glide.signature.ObjectKey;
 
 import java.util.List;
 
@@ -97,17 +100,15 @@ public class DetailsActivity extends AppCompatActivity implements DetailsView {
 
         setupPresenter();
         TransitionAnimations.setDetailsTransitionAnimations(getWindow(), getResources().getInteger(R.integer.anim_duration));
+
+        if (savedInstanceState != null) {
+            this.favouriteFab.show();
+        }
     }
 
     private void setupPresenter() {
         this.detailsPresenter.attachView(this);
         this.detailsPresenter.setMovie((Movie) getIntent().getParcelableExtra(KEY_MOVIE));
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        this.favouriteFab.show();
     }
 
     @OnClick(R.id.favoriteFab)
@@ -143,6 +144,12 @@ public class DetailsActivity extends AppCompatActivity implements DetailsView {
     }
 
     private void changeConstraintsForViewsRelatedWithBackdrop() {
+
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            ((Guideline) findViewById(R.id.topCardviewGuideline)).setGuidelineBegin((int) getResources().getDimension(R.dimen.base_margin));
+
+            return;
+        }
         ConstraintSet constraintSet = new ConstraintSet();
         constraintSet.clone(detailsConstraintLayout);
 

@@ -50,7 +50,8 @@ public class MainActivity extends AppCompatActivity implements MoviesView, Movie
     @BindView(R.id.emptyLayout)
     ConstraintLayout emptyLayout;
 
-    MoviesAdapter moviesAdapter;
+    private MoviesAdapter moviesAdapter;
+    private boolean isFirstLoadAnimation = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -144,6 +145,7 @@ public class MainActivity extends AppCompatActivity implements MoviesView, Movie
             this.moviesPresenter.setSort(SortMovies.TOP_RATED);
         }
 
+        this.isFirstLoadAnimation = true;
         this.moviesPresenter.loadMovies();
 
         return super.onOptionsItemSelected(item);
@@ -159,7 +161,11 @@ public class MainActivity extends AppCompatActivity implements MoviesView, Movie
     @Override
     public void displayMovies(List<Movie> movies) {
         this.moviesAdapter.addMovies(movies);
-        this.recyclerView.scheduleLayoutAnimation();
+
+        if (this.isFirstLoadAnimation) {
+            this.isFirstLoadAnimation = false;
+            this.recyclerView.scheduleLayoutAnimation();
+        }
     }
 
     @Override
