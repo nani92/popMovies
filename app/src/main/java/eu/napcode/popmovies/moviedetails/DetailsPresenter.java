@@ -9,6 +9,7 @@ import eu.napcode.popmovies.repository.VideosRepository;
 import eu.napcode.popmovies.utils.archbase.BasePresenter;
 import eu.napcode.popmovies.model.Movie;
 import eu.napcode.popmovies.repository.MoviesRepository;
+import eu.napcode.popmovies.utils.archbase.PresenterBundle;
 import eu.napcode.popmovies.utils.rx.RxSchedulers;
 
 public class DetailsPresenter implements BasePresenter<DetailsView> {
@@ -36,6 +37,16 @@ public class DetailsPresenter implements BasePresenter<DetailsView> {
     @Override
     public void dropView() {
         this.detailsView = null;
+    }
+
+    @Override
+    public PresenterBundle saveState() {
+        return null;
+    }
+
+    @Override
+    public void restoreState(PresenterBundle presenterBundle) {
+
     }
 
     public void setMovie(Movie movie) {

@@ -18,6 +18,7 @@ import butterknife.ButterKnife;
 import eu.napcode.popmovies.R;
 import eu.napcode.popmovies.utils.ApiUtils;
 import eu.napcode.popmovies.model.Movie;
+import eu.napcode.popmovies.utils.animation.SharedElementMovieAnimationHelper;
 
 public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesViewHolder> {
 
@@ -49,15 +50,22 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
 
     @Override
     public void onBindViewHolder(MoviesViewHolder holder, final int position) {
-        holder.titleTextView.setText(movies.get(position).getTitle());
+        Movie movie = this.movies.get(position);
+        holder.titleTextView.setText(movie.getTitle());
 
         Glide.with(holder.itemView)
-                .load(ApiUtils.getPosterUrl(movies.get(position).getPosterPath()))
+                .load(ApiUtils.getPosterUrl(movie.getPosterPath()))
                 .apply(new RequestOptions().placeholder(R.drawable.popcorn))
                 .into(holder.posterImageView);
 
+        holder.posterImageView.setTransitionName(
+                SharedElementMovieAnimationHelper.getTransitionName(
+                        holder.posterImageView.getTransitionName(),
+                        movie.getId()
+                ));
+
         holder.itemView.setOnClickListener(v ->
-                onMovieClickedListener.movieClicked(movies.get(position), v));
+                onMovieClickedListener.movieClicked(movie, v));
     }
 
     @Override

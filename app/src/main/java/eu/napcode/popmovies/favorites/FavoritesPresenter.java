@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import eu.napcode.popmovies.model.Movie;
 import eu.napcode.popmovies.repository.MoviesRepository;
 import eu.napcode.popmovies.utils.archbase.BasePresenter;
+import eu.napcode.popmovies.utils.archbase.PresenterBundle;
 
 public class FavoritesPresenter implements BasePresenter<FavoritesView> {
 
@@ -26,6 +27,16 @@ public class FavoritesPresenter implements BasePresenter<FavoritesView> {
     @Override
     public void dropView() {
         this.favoritesView = null;
+    }
+
+    @Override
+    public PresenterBundle saveState() {
+        return null;
+    }
+
+    @Override
+    public void restoreState(PresenterBundle presenterBundle) {
+
     }
 
     void loadFavorites() {

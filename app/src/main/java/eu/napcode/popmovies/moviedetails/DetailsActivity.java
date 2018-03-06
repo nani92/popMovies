@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.Window;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -35,6 +36,7 @@ import eu.napcode.popmovies.model.Video;
 import eu.napcode.popmovies.utils.ApiUtils;
 import eu.napcode.popmovies.model.Movie;
 import eu.napcode.popmovies.utils.YoutubeUtils;
+import eu.napcode.popmovies.utils.animation.SharedElementMovieAnimationHelper;
 import eu.napcode.popmovies.utils.animation.TransitionAnimations;
 
 public class DetailsActivity extends AppCompatActivity implements DetailsView {
@@ -80,10 +82,16 @@ public class DetailsActivity extends AppCompatActivity implements DetailsView {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+        requestWindowFeature(Window.FEATURE_ACTIVITY_TRANSITIONS);
         setContentView(R.layout.activity_details);
         ButterKnife.bind(this);
         AndroidInjection.inject(this);
 
+        this.posterImageView.setTransitionName(
+                SharedElementMovieAnimationHelper.getTransitionName(
+                        this.posterImageView.getTransitionName(),
+                        ((Movie) getIntent().getParcelableExtra(KEY_MOVIE)).getId()));
 
         setupPresenter();
         TransitionAnimations.setDetailsTransitionAnimations(getWindow(), getResources().getInteger(R.integer.anim_duration));

@@ -6,4 +6,8 @@ public interface BasePresenter<T> {
 
     void dropView();
 
+    PresenterBundle saveState();
+
+    void restoreState(PresenterBundle presenterBundle);
+
 }
