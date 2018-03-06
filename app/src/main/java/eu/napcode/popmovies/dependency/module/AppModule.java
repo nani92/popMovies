@@ -1,6 +1,7 @@
 package eu.napcode.popmovies.dependency.module;
 
 import android.content.ContentResolver;
+import android.content.Context;
 
 import javax.inject.Singleton;
 
@@ -42,5 +43,10 @@ public class AppModule {
     @Provides
     ContentResolver providesContentResolver(PopMoviesApp application) {
         return application.getContentResolver();
+    }
+
+    @Provides
+    Context providesContext(PopMoviesApp application) {
+        return application;
     }
 }

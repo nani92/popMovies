@@ -10,6 +10,7 @@ import eu.napcode.popmovies.utils.archbase.BasePresenter;
 import eu.napcode.popmovies.model.Movie;
 import eu.napcode.popmovies.repository.MoviesRepository;
 import eu.napcode.popmovies.utils.archbase.PresenterBundle;
+import eu.napcode.popmovies.utils.rx.NetworkUtils;
 import eu.napcode.popmovies.utils.rx.RxSchedulers;
 
 public class DetailsPresenter implements BasePresenter<DetailsView> {
@@ -18,15 +19,18 @@ public class DetailsPresenter implements BasePresenter<DetailsView> {
     private VideosRepository videosRepository;
 
     private RxSchedulers rxSchedulers;
+    private NetworkUtils networkUtils;
 
     private DetailsView detailsView;
     private Movie movie;
 
     @Inject
-    public DetailsPresenter(MoviesRepository moviesRepository, VideosRepository videosRepository, RxSchedulers rxSchedulers) {
+    public DetailsPresenter(MoviesRepository moviesRepository, VideosRepository videosRepository,
+                            RxSchedulers rxSchedulers, NetworkUtils networkUtils) {
         this.moviesRepository = moviesRepository;
         this.videosRepository = videosRepository;
         this.rxSchedulers = rxSchedulers;
+        this.networkUtils = networkUtils;
     }
 
     @Override
@@ -45,9 +49,7 @@ public class DetailsPresenter implements BasePresenter<DetailsView> {
     }
 
     @Override
-    public void restoreState(PresenterBundle presenterBundle) {
-
-    }
+    public void restoreState(PresenterBundle presenterBundle) {}
 
     public void setMovie(Movie movie) {
         this.movie = movie;

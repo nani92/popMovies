@@ -36,7 +36,6 @@ public class FavoritesPresenter implements BasePresenter<FavoritesView> {
 
     @Override
     public void restoreState(PresenterBundle presenterBundle) {
-
     }
 
     void loadFavorites() {
