@@ -9,11 +9,12 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
+import android.support.constraint.Guideline;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.transition.TransitionManager;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.animation.AnimationUtils;
@@ -21,9 +22,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.bumptech.glide.signature.ObjectKey;
 
 import java.util.List;
 
@@ -37,6 +40,7 @@ import eu.napcode.popmovies.R;
 import eu.napcode.popmovies.model.Video;
 import eu.napcode.popmovies.utils.ApiUtils;
 import eu.napcode.popmovies.model.Movie;
+import eu.napcode.popmovies.utils.ConstraintSetChangeUtils;
 import eu.napcode.popmovies.utils.YoutubeUtils;
 import eu.napcode.popmovies.utils.animation.SharedElementMovieAnimationHelper;
 import eu.napcode.popmovies.utils.animation.TransitionAnimations;
@@ -90,24 +94,25 @@ public class DetailsActivity extends AppCompatActivity implements DetailsView {
         ButterKnife.bind(this);
         AndroidInjection.inject(this);
 
+        setupSharedElementAnimation();
+        setupPresenter();
+        TransitionAnimations.setDetailsTransitionAnimations(getWindow(), getResources().getInteger(R.integer.anim_duration));
+
+        if (savedInstanceState != null) {
+            this.favouriteFab.show();
+        }
+    }
+
+    private void setupSharedElementAnimation() {
         this.posterImageView.setTransitionName(
                 SharedElementMovieAnimationHelper.getTransitionName(
                         this.posterImageView.getTransitionName(),
                         ((Movie) getIntent().getParcelableExtra(KEY_MOVIE)).getId()));
-
-        setupPresenter();
-        TransitionAnimations.setDetailsTransitionAnimations(getWindow(), getResources().getInteger(R.integer.anim_duration));
     }
 
     private void setupPresenter() {
         this.detailsPresenter.attachView(this);
         this.detailsPresenter.setMovie((Movie) getIntent().getParcelableExtra(KEY_MOVIE));
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        this.favouriteFab.show();
     }
 
     @OnClick(R.id.favoriteFab)
@@ -143,16 +148,14 @@ public class DetailsActivity extends AppCompatActivity implements DetailsView {
     }
 
     private void changeConstraintsForViewsRelatedWithBackdrop() {
-        ConstraintSet constraintSet = new ConstraintSet();
-        constraintSet.clone(detailsConstraintLayout);
 
-        constraintSet.clear(R.id.posterImageView, ConstraintSet.BOTTOM);
-        constraintSet.connect(R.id.posterImageView, ConstraintSet.TOP, R.id.topGuideline, ConstraintSet.BOTTOM);
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            ((Guideline) findViewById(R.id.topCardviewGuideline)).setGuidelineBegin((int) getResources().getDimension(R.dimen.base_margin));
 
-        constraintSet.clear(R.id.favoriteFab, ConstraintSet.TOP);
-        constraintSet.connect(R.id.favoriteFab, ConstraintSet.BOTTOM, R.id.detailsTopDividerView, ConstraintSet.TOP);
+            return;
+        }
 
-        constraintSet.applyTo(detailsConstraintLayout);
+        ConstraintSetChangeUtils.detailsNoBackdropChange(this.detailsConstraintLayout);
     }
 
     @Override

@@ -11,4 +11,5 @@
 
     <string name="poster_transition" translatable="false">poster transition</string>
     <string name="title_transition" translatable="false">title transition</string>
+    <string name="videos">Videos</string>
 </resources>

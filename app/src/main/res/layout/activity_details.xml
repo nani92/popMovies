@@ -4,8 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/base_margin">
+    android:layout_height="match_parent">
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/detailsConstraintLayout"
@@ -89,7 +88,6 @@
             style="@style/DetailsValueStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/release_date_label"
             app:layout_constraintLeft_toRightOf="@id/labelsBarrier"
             app:layout_constraintRight_toLeftOf="@id/rightGuideline"
             app:layout_constraintTop_toBottomOf="@id/detailsTopDividerView"
@@ -110,7 +108,6 @@
             style="@style/DetailsValueStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/release_date_label"
             app:layout_constraintLeft_toRightOf="@id/labelsBarrier"
             app:layout_constraintRight_toLeftOf="@id/rightGuideline"
             app:layout_constraintTop_toBottomOf="@id/releaseDateValueTextView"
@@ -131,7 +128,6 @@
             style="@style/DetailsValueStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/release_date_label"
             app:layout_constraintLeft_toRightOf="@id/labelsBarrier"
             app:layout_constraintRight_toLeftOf="@id/rightGuideline"
             app:layout_constraintTop_toBottomOf="@id/originalTitleValueTextView"
@@ -163,6 +159,7 @@
             android:id="@+id/videosRecyclerView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/base_margin"
             android:orientation="horizontal"
             android:visibility="gone"
             app:layout_constraintLeft_toRightOf="@id/leftGuideline"
