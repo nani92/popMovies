@@ -1,6 +1,7 @@
-package eu.napcode.popmovies.moviedetails;
+package eu.napcode.popmovies.ui.moviedetails;
 
 import android.content.ActivityNotFoundException;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Animatable;
@@ -8,13 +9,11 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
-import android.support.constraint.ConstraintSet;
 import android.support.constraint.Guideline;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.animation.AnimationUtils;
@@ -22,11 +21,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
-import com.bumptech.glide.signature.ObjectKey;
 
 import java.util.List;
 
@@ -38,6 +35,7 @@ import butterknife.OnClick;
 import dagger.android.AndroidInjection;
 import eu.napcode.popmovies.R;
 import eu.napcode.popmovies.model.Video;
+import eu.napcode.popmovies.ui.reviews.ReviewsActivity;
 import eu.napcode.popmovies.utils.ApiUtils;
 import eu.napcode.popmovies.model.Movie;
 import eu.napcode.popmovies.utils.ConstraintSetChangeUtils;
@@ -118,6 +116,14 @@ public class DetailsActivity extends AppCompatActivity implements DetailsView {
     @OnClick(R.id.favoriteFab)
     void onFavoriteFabClicked() {
         this.detailsPresenter.favoriteClicked();
+    }
+
+    @OnClick(R.id.reviewsButton)
+    void onReviewsClicked() {
+        Intent intent = new Intent(this, ReviewsActivity.class);
+        intent.putExtra(ReviewsActivity.MOVIE_ID_KEY, this.detailsPresenter.getMovieId());
+
+        startActivity(intent);
     }
 
     @Override

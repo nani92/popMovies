@@ -1,6 +1,4 @@
-package eu.napcode.popmovies.movies;
-
-import android.util.Log;
+package eu.napcode.popmovies.ui.movies;
 
 import java.util.ArrayList;
 import java.util.List;

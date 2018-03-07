@@ -1,0 +1,64 @@
+package eu.napcode.popmovies.ui.reviews;
+
+
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+
+import java.util.List;
+
+import javax.inject.Inject;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import dagger.android.AndroidInjection;
+import eu.napcode.popmovies.R;
+import eu.napcode.popmovies.model.Review;
+
+public class ReviewsActivity extends AppCompatActivity implements ReviewsView {
+
+    public static String MOVIE_ID_KEY = "movie id";
+
+    @Inject
+    ReviewsPresenter reviewsPresenter;
+
+    @BindView(R.id.reviewRecyclerView)
+    RecyclerView recyclerView;
+
+    private ReviewsAdapter reviewsAdapter;
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_reviews);
+
+        ButterKnife.bind(this);
+        AndroidInjection.inject(this);
+
+        setupRecyclerView();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        this.reviewsPresenter.attachView(this);
+        this.reviewsPresenter.loadReviews(getIntent().getExtras().getInt(MOVIE_ID_KEY));
+    }
+
+    private void setupRecyclerView() {
+        this.recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        this.reviewsAdapter = new ReviewsAdapter();
+        this.recyclerView.setAdapter(this.reviewsAdapter);
+    }
+
+    @Override
+    protected void onDestroy() {
+        this.reviewsPresenter.dropView();
+
+        super.onDestroy();
+    }
+
+    @Override
+    public void displayReviews(List<Review> reviews) {
+        this.reviewsAdapter.addReviews(reviews);
+    }
+}

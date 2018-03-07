@@ -1,4 +1,4 @@
-package eu.napcode.popmovies.moviedetails;
+package eu.napcode.popmovies.ui.moviedetails;
 
 import android.graphics.Bitmap;
 import android.text.TextUtils;
@@ -129,5 +129,9 @@ public class DetailsPresenter implements BasePresenter<DetailsView> {
 
     public void setPosterBitmap(Bitmap posterBitmap) {
         this.movie.setPosterBitmap(posterBitmap);
+    }
+
+    public int getMovieId() {
+        return this.movie.getId();
     }
 }

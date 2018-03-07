@@ -1,4 +1,4 @@
-package eu.napcode.popmovies.movies;
+package eu.napcode.popmovies.ui.movies;
 
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -23,9 +23,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.android.AndroidInjection;
 import eu.napcode.popmovies.R;
-import eu.napcode.popmovies.favorites.FavoritesActivity;
+import eu.napcode.popmovies.ui.favorites.FavoritesActivity;
 import eu.napcode.popmovies.model.Movie;
-import eu.napcode.popmovies.moviedetails.DetailsActivity;
+import eu.napcode.popmovies.ui.moviedetails.DetailsActivity;
 import eu.napcode.popmovies.utils.animation.SharedElementMovieAnimationHelper;
 import eu.napcode.popmovies.utils.archbase.PresenterBundle;
 

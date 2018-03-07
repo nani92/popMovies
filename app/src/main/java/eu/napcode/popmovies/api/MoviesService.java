@@ -1,6 +1,7 @@
 package eu.napcode.popmovies.api;
 
 import eu.napcode.popmovies.api.responsemodel.ResponseMoviePage;
+import eu.napcode.popmovies.api.responsemodel.reviews.ResponseReviewsPage;
 import eu.napcode.popmovies.api.responsemodel.videos.ResponseVideos;
 import io.reactivex.Observable;
 import retrofit2.http.GET;
@@ -19,4 +20,7 @@ public interface MoviesService {
 
     @GET("{id}/videos")
     Observable<ResponseVideos> getVideos(@Path("id") int id, @Query(URL_PARAM_API_KEY) String apiKey);
+
+    @GET("{id}/reviews")
+    Observable<ResponseReviewsPage> getReviews(@Path("id") int id, @Query(URL_PARAM_API_KEY) String apiKey);
 }

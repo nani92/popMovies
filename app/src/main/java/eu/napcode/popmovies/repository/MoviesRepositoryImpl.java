@@ -13,7 +13,7 @@ import eu.napcode.popmovies.api.MoviesService;
 import eu.napcode.popmovies.api.responsemodel.ResponseMoviePage;
 import eu.napcode.popmovies.model.Movie;
 import eu.napcode.popmovies.model.MoviesMapper;
-import eu.napcode.popmovies.movies.SortMovies;
+import eu.napcode.popmovies.ui.movies.SortMovies;
 import io.reactivex.Observable;
 import io.reactivex.functions.Function;
 
