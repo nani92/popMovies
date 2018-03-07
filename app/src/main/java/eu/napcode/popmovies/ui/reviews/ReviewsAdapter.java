@@ -35,6 +35,7 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewsV
     public void onBindViewHolder(ReviewsViewHolder holder, final int position) {
         Review review = this.reviews.get(position);
         holder.authorTextView.setText(review.getAuthor());
+        holder.reviewTextView.setText(review.getContent());
     }
 
     @Override
@@ -46,6 +47,9 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewsV
 
         @BindView(R.id.authorTextView)
         TextView authorTextView;
+
+        @BindView(R.id.reviewTextView)
+        TextView reviewTextView;
 
         public ReviewsViewHolder(View itemView) {
             super(itemView);

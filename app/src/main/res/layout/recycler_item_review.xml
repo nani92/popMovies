@@ -1,12 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <TextView
+        android:id="@+id/reviewTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/habibi"
+        app:layout_constraintLeft_toRightOf="@id/leftGuideline"
+        app:layout_constraintRight_toLeftOf="@id/rightGuideline"
+        app:layout_constraintTop_toBottomOf="@id/topGuideline"
+        tools:text="@tools:sample/lorem/random"/>
+
+    <TextView
         android:id="@+id/authorTextView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/habibi"
+        app:layout_constraintRight_toRightOf="@id/reviewTextView"
+        app:layout_constraintTop_toBottomOf="@id/reviewTextView"
+        app:layout_constraintBottom_toTopOf="@id/bottomGuideline"
+        tools:text="@tools:sample/lorem"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/leftGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="@dimen/base_margin"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/topGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="@dimen/base_margin"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/rightGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="@dimen/base_margin"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/bottomGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_end="@dimen/base_margin"/>
 
 </android.support.constraint.ConstraintLayout>
