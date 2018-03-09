@@ -2,9 +2,14 @@ package eu.napcode.popmovies.ui.reviews;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.net.Uri;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.StyleSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +25,7 @@ import eu.napcode.popmovies.model.Review;
 
 public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewsViewHolder> {
 
+    //TODO add markdown (or something whatever should be used)
     private List<Review> reviews = new ArrayList<>();
     private Context context;
 
@@ -44,13 +50,21 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewsV
     public void onBindViewHolder(ReviewsViewHolder holder, final int position) {
         Review review = this.reviews.get(position);
         holder.authorTextView.setText(R.string.review_written_by);
-        holder.authorTextView.append(review.getAuthor());
+        holder.authorTextView.append(getAuthorSpannable(review.getAuthor()));
         holder.reviewTextView.setText(review.getContent());
 
         holder.reviewCardView.setOnClickListener(v -> {
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(review.getUrl()));
             this.context.startActivity(intent);
         });
+    }
+
+    private SpannableString getAuthorSpannable(String author) {
+        SpannableString authorSpannable = new SpannableString(author);
+        authorSpannable.setSpan(new StyleSpan(Typeface.BOLD), 0, author.length(), 0);
+        authorSpannable.setSpan(new ForegroundColorSpan(ContextCompat.getColor(this.context, R.color.colorPrimary)), 0, author.length(), 0);
+
+        return authorSpannable;
     }
 
     @Override
