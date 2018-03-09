@@ -12,7 +12,7 @@ public interface MoviesRepository {
 
     Observable<List<Movie>> getMoreMovies(SortMovies sortMovies);
 
-    boolean isMoreMoviesToDownload();
+    boolean hasMoreMoviesToDownload();
 
     boolean isMovieFavorite(int id);
 

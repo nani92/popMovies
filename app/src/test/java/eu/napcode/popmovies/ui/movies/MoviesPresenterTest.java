@@ -189,7 +189,7 @@ public class MoviesPresenterTest {
         }
 
         @Override
-        public boolean isMoreMoviesToDownload() {
+        public boolean hasMoreMoviesToDownload() {
             return false;
         }
     }

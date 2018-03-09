@@ -22,9 +22,10 @@ public class MoviesPresenter implements BasePresenter<MoviesView> {
     private MoviesView moviesView;
     private MoviesRepository moviesRepository;
     private SortMovies sort = SortMovies.POPULAR;
-    private boolean isDownloadingMovies;
 
     private Scheduler ioScheduler, mainScheduler;
+
+    private boolean isDownloading;
 
     @Inject
     public MoviesPresenter(MoviesRepository moviesRepository, RxSchedulers rxSchedulers) {
@@ -63,7 +64,12 @@ public class MoviesPresenter implements BasePresenter<MoviesView> {
     }
 
     public void loadMovies() {
-        this.isDownloadingMovies = true;
+
+        if (shouldNotDownload()) {
+            return;
+        }
+
+        this.isDownloading = true;
         this.moviesView.displayProgressBar();
         Observable<List<Movie>> moviesObservable;
 
@@ -80,20 +86,19 @@ public class MoviesPresenter implements BasePresenter<MoviesView> {
                         error -> errorWithDownloadingMovies(error));
     }
 
+    private boolean shouldNotDownload() {
+        return this.isDownloading || this.moviesRepository.hasMoreMoviesToDownload() == false;
+    }
+
     public void setSort(SortMovies sort) {
         this.sort = sort;
         this.movies.clear();
         this.moviesView.clearRecyclerView();
     }
 
-    public boolean shouldDownloadMoreMovies() {
-        return isDownloadingMovies == false &&
-                this.moviesRepository.isMoreMoviesToDownload();
-    }
-
     void moviesDownloaded(List<Movie> movies) {
+        this.isDownloading = false;
         this.movies.addAll(movies);
-        this.isDownloadingMovies = false;
         displayMovies(movies);
     }
 
@@ -119,7 +124,7 @@ public class MoviesPresenter implements BasePresenter<MoviesView> {
     }
 
     void errorWithDownloadingMovies(Throwable error) {
-        this.isDownloadingMovies = false;
+        this.isDownloading = false;
 
         if (this.moviesView == null) {
             return;

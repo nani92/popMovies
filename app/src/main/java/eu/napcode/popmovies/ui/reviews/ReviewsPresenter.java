@@ -5,11 +5,13 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import eu.napcode.popmovies.model.Movie;
 import eu.napcode.popmovies.model.Review;
 import eu.napcode.popmovies.repository.ReviewsRepository;
 import eu.napcode.popmovies.utils.archbase.BasePresenter;
 import eu.napcode.popmovies.utils.archbase.PresenterBundle;
 import eu.napcode.popmovies.utils.rx.RxSchedulers;
+import io.reactivex.Observable;
 
 public class ReviewsPresenter implements BasePresenter<ReviewsView> {
 
@@ -19,6 +21,7 @@ public class ReviewsPresenter implements BasePresenter<ReviewsView> {
     private ReviewsView reviewsView;
 
     private List<Review> reviews = new ArrayList<>();
+    private boolean isDownloading;
 
     @Inject
     public ReviewsPresenter(ReviewsRepository reviewsRepository, RxSchedulers rxSchedulers) {
@@ -47,21 +50,46 @@ public class ReviewsPresenter implements BasePresenter<ReviewsView> {
     }
 
     public void loadReviews(int movieId) {
-        this.reviewsRepository.getReviews(movieId)
+
+        if (shouldNotDownload()) {
+            return;
+        }
+
+        this.isDownloading = true;
+
+        Observable<List<Review>> reviewsObservable;
+
+        if (this.reviews.isEmpty()) {
+            reviewsObservable = this.reviewsRepository.getReviews(movieId);
+        } else {
+            reviewsObservable = this.reviewsRepository.getMoreReviews(movieId);
+        }
+
+        reviewsObservable
                 .subscribeOn(this.rxSchedulers.io())
                 .observeOn(this.rxSchedulers.androidMainThread())
-                .subscribe(reviews -> displayReviews(reviews),
+                .subscribe(reviews -> downloadedReviews(reviews),
                         throwable -> displayError());
     }
 
-    private void displayReviews(List<Review> reviews) {
+    private boolean shouldNotDownload() {
+        return isDownloading || this.reviewsRepository.hasMoreMoviesToDownload() == false;
+    }
 
-        if (reviews == null || reviews.isEmpty()) {
+    private void downloadedReviews(List<Review> reviews) {
+        this.isDownloading = false;
+
+        if (reviews.isEmpty() && this.reviews.isEmpty()) {
             displayNoReviews();
 
             return;
         }
 
+        this.reviews.addAll(reviews);
+        displayReviews(reviews);
+    }
+
+    private void displayReviews(List<Review> reviews) {
         this.reviewsView.displayReviews(reviews);
     }
 
@@ -70,7 +98,13 @@ public class ReviewsPresenter implements BasePresenter<ReviewsView> {
     }
 
     private void displayError() {
-        displayNoReviews();
-        //toDO display
+        this.isDownloading = false;
+
+        if (this.reviews.isEmpty()) {
+            displayNoReviews();
+        }
+
+
+        //TODO display error
     }
 }

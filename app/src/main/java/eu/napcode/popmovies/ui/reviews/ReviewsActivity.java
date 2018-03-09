@@ -16,8 +16,9 @@ import butterknife.ButterKnife;
 import dagger.android.AndroidInjection;
 import eu.napcode.popmovies.R;
 import eu.napcode.popmovies.model.Review;
+import eu.napcode.popmovies.utils.RecyclerViewLoadDataUtils;
 
-public class ReviewsActivity extends AppCompatActivity implements ReviewsView {
+public class ReviewsActivity extends AppCompatActivity implements ReviewsView, RecyclerViewLoadDataUtils.LoadDataRecyclerViewListener {
 
     public static String MOVIE_ID_KEY = "movie id";
 
@@ -48,6 +49,7 @@ public class ReviewsActivity extends AppCompatActivity implements ReviewsView {
         this.recyclerView.setLayoutManager(new LinearLayoutManager(this));
         this.reviewsAdapter = new ReviewsAdapter();
         this.recyclerView.setAdapter(this.reviewsAdapter);
+        this.recyclerView.addOnScrollListener(RecyclerViewLoadDataUtils.getOnScrollListener(this));
     }
 
     @Override
@@ -60,5 +62,10 @@ public class ReviewsActivity extends AppCompatActivity implements ReviewsView {
     @Override
     public void displayReviews(List<Review> reviews) {
         this.reviewsAdapter.addReviews(reviews);
+    }
+
+    @Override
+    public void shouldLoadNewData() {
+        this.reviewsPresenter.loadReviews(getIntent().getExtras().getInt(MOVIE_ID_KEY));
     }
 }

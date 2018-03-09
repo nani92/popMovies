@@ -24,7 +24,7 @@ public class MoviesRepositoryImpl implements MoviesRepository {
     private MoviesService moviesService;
 
     private int downloadedMoviesPage = 0;
-    private boolean isThereNextMoviesPageToDownload = true;
+    private boolean hasNextMoviesPageToDownload = true;
 
     @Inject
     public MoviesRepositoryImpl(MoviesService moviesService, FavoriteMoviesHelper favoriteMoviesReader) {
@@ -54,13 +54,13 @@ public class MoviesRepositoryImpl implements MoviesRepository {
 
     private void setMoviesPageVars(ResponseMoviePage moviePage) {
         this.downloadedMoviesPage = moviePage.getPage();
-        this.isThereNextMoviesPageToDownload =
+        this.hasNextMoviesPageToDownload =
                 this.downloadedMoviesPage < moviePage.getTotalPages();
     }
 
     @Override
-    public boolean isMoreMoviesToDownload() {
-        return this.isThereNextMoviesPageToDownload;
+    public boolean hasMoreMoviesToDownload() {
+        return this.hasNextMoviesPageToDownload;
     }
 
     @Override

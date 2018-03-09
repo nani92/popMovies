@@ -23,4 +23,7 @@ public interface MoviesService {
 
     @GET("{id}/reviews")
     Observable<ResponseReviewsPage> getReviews(@Path("id") int id, @Query(URL_PARAM_API_KEY) String apiKey);
+
+    @GET("{id}/reviews")
+    Observable<ResponseReviewsPage> getNextReviews(@Path("id") int id, @Query("page") int page, @Query(URL_PARAM_API_KEY) String apiKey);
 }

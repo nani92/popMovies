@@ -26,10 +26,11 @@ import eu.napcode.popmovies.R;
 import eu.napcode.popmovies.ui.favorites.FavoritesActivity;
 import eu.napcode.popmovies.model.Movie;
 import eu.napcode.popmovies.ui.moviedetails.DetailsActivity;
+import eu.napcode.popmovies.utils.RecyclerViewLoadDataUtils;
 import eu.napcode.popmovies.utils.animation.SharedElementMovieAnimationHelper;
 import eu.napcode.popmovies.utils.archbase.PresenterBundle;
 
-public class MainActivity extends AppCompatActivity implements MoviesView, MoviesAdapter.OnMovieClickedListener {
+public class MainActivity extends AppCompatActivity implements MoviesView, MoviesAdapter.OnMovieClickedListener, RecyclerViewLoadDataUtils.LoadDataRecyclerViewListener {
 
     private static String SAVE_PRESENTER_STATE = "presenter";
 
@@ -73,28 +74,7 @@ public class MainActivity extends AppCompatActivity implements MoviesView, Movie
         this.moviesAdapter = new MoviesAdapter(this);
         this.recyclerView.setAdapter(this.moviesAdapter);
         this.recyclerView.setLayoutAnimation(AnimationUtils.loadLayoutAnimation(this, R.anim.layout_animation_rv));
-
-        this.recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-
-                GridLayoutManager layoutManager = (GridLayoutManager) recyclerView.getLayoutManager();
-
-                int visibleItemCount = layoutManager.getChildCount();
-                int totalItemCount = layoutManager.getItemCount();
-                int firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition();
-
-                if (MainActivity.this.moviesPresenter.shouldDownloadMoreMovies()) {
-
-                    if (visibleItemCount + firstVisibleItemPosition >= totalItemCount
-                            && firstVisibleItemPosition >= 0) {
-                        MainActivity.this.moviesPresenter.loadMovies();
-                    }
-                }
-            }
-        });
+        this.recyclerView.addOnScrollListener(RecyclerViewLoadDataUtils.getOnScrollListener(this));
     }
 
     private GridLayoutManager getLayoutManager() {
@@ -203,5 +183,10 @@ public class MainActivity extends AppCompatActivity implements MoviesView, Movie
         intent.putExtra(DetailsActivity.KEY_MOVIE, movie);
 
         startActivity(intent, SharedElementMovieAnimationHelper.getBundle(this, view, movie.getId()));
+    }
+
+    @Override
+    public void shouldLoadNewData() {
+        this.moviesPresenter.loadMovies();
     }
 }
