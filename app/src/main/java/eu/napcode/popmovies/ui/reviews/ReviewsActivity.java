@@ -47,7 +47,7 @@ public class ReviewsActivity extends AppCompatActivity implements ReviewsView, R
 
     private void setupRecyclerView() {
         this.recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        this.reviewsAdapter = new ReviewsAdapter();
+        this.reviewsAdapter = new ReviewsAdapter(this);
         this.recyclerView.setAdapter(this.reviewsAdapter);
         this.recyclerView.addOnScrollListener(RecyclerViewLoadDataUtils.getOnScrollListener(this));
     }

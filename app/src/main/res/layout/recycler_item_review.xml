@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/reviewCardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/base_margin">
@@ -18,23 +19,34 @@
             android:id="@+id/authorTextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:textSize="@dimen/header_text_size"
+            app:layout_constraintHorizontal_bias="0"
             app:layout_constraintLeft_toRightOf="@id/leftGuideline"
-            app:layout_constraintTop_toBottomOf="@id/topGuideline"
             app:layout_constraintRight_toLeftOf="@id/rightGuideline"
-            tools:text="@tools:sample/lorem"
-        android:textSize="@dimen/header_text_size"
-        app:layout_constraintHorizontal_bias="0"/>
+            app:layout_constraintTop_toBottomOf="@id/topGuideline"
+            tools:text="@tools:sample/lorem"/>
 
         <TextView
             android:id="@+id/reviewTextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/base_margin"
+            android:ellipsize="end"
+            android:maxLines="@integer/max_lines"
             app:layout_constraintLeft_toRightOf="@id/leftGuideline"
             app:layout_constraintRight_toLeftOf="@id/rightGuideline"
             app:layout_constraintTop_toBottomOf="@id/authorTextView"
+            tools:text="@tools:sample/lorem/random"/>
+
+        <TextView
+            android:id="@+id/readMoreTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/read_more"
+            android:textColor="@color/colorAccent"
             app:layout_constraintBottom_toTopOf="@id/bottomGuideline"
-            tools:text="@tools:sample/lorem/random"
-        android:layout_marginTop="@dimen/base_margin"/>
+            app:layout_constraintRight_toLeftOf="@id/rightGuideline"
+            app:layout_constraintTop_toBottomOf="@id/reviewTextView"/>
 
         <android.support.constraint.Guideline
             android:id="@+id/leftGuideline"

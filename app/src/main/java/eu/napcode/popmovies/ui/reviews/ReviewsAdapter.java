@@ -1,5 +1,9 @@
 package eu.napcode.popmovies.ui.reviews;
 
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +21,11 @@ import eu.napcode.popmovies.model.Review;
 public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewsViewHolder> {
 
     private List<Review> reviews = new ArrayList<>();
+    private Context context;
+
+    public ReviewsAdapter(Context context) {
+        this.context = context;
+    }
 
     public void addReviews(List<Review> reviews) {
         this.reviews.addAll(reviews);
@@ -37,6 +46,11 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewsV
         holder.authorTextView.setText(R.string.review_written_by);
         holder.authorTextView.append(review.getAuthor());
         holder.reviewTextView.setText(review.getContent());
+
+        holder.reviewCardView.setOnClickListener(v -> {
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(review.getUrl()));
+            this.context.startActivity(intent);
+        });
     }
 
     @Override
@@ -46,11 +60,17 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewsV
 
     public class ReviewsViewHolder extends RecyclerView.ViewHolder {
 
+        @BindView(R.id.reviewCardView)
+        CardView reviewCardView;
+
         @BindView(R.id.authorTextView)
         TextView authorTextView;
 
         @BindView(R.id.reviewTextView)
         TextView reviewTextView;
+
+        @BindView(R.id.readMoreTextView)
+        TextView readMoreTextView;
 
         public ReviewsViewHolder(View itemView) {
             super(itemView);
