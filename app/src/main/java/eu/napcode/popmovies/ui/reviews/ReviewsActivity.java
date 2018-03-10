@@ -1,11 +1,11 @@
 package eu.napcode.popmovies.ui.reviews;
 
-
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.MenuItem;
 
 import java.util.List;
 
@@ -50,6 +50,18 @@ public class ReviewsActivity extends AppCompatActivity implements ReviewsView, R
         this.reviewsAdapter = new ReviewsAdapter(this);
         this.recyclerView.setAdapter(this.reviewsAdapter);
         this.recyclerView.addOnScrollListener(RecyclerViewLoadDataUtils.getOnScrollListener(this));
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

@@ -73,7 +73,8 @@ public class ReviewsPresenter implements BasePresenter<ReviewsView> {
     }
 
     private boolean shouldNotDownload() {
-        return isDownloading || this.reviewsRepository.hasMoreMoviesToDownload() == false;
+        return isDownloading ||
+                (!this.reviews.isEmpty() && this.reviewsRepository.hasMoreMoviesToDownload() == false);
     }
 
     private void downloadedReviews(List<Review> reviews) {
