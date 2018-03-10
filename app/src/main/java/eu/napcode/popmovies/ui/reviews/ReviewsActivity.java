@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
+import android.view.animation.AnimationUtils;
 
 import java.util.List;
 
@@ -29,6 +30,7 @@ public class ReviewsActivity extends AppCompatActivity implements ReviewsView, R
     RecyclerView recyclerView;
 
     private ReviewsAdapter reviewsAdapter;
+    private boolean isFirstLoadRecyclerview = true;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,6 +51,7 @@ public class ReviewsActivity extends AppCompatActivity implements ReviewsView, R
         this.recyclerView.setLayoutManager(new LinearLayoutManager(this));
         this.reviewsAdapter = new ReviewsAdapter(this);
         this.recyclerView.setAdapter(this.reviewsAdapter);
+        this.recyclerView.setLayoutAnimation(AnimationUtils.loadLayoutAnimation(this, R.anim.layout_animation_rv));
         this.recyclerView.addOnScrollListener(RecyclerViewLoadDataUtils.getOnScrollListener(this));
     }
 
@@ -74,6 +77,11 @@ public class ReviewsActivity extends AppCompatActivity implements ReviewsView, R
     @Override
     public void displayReviews(List<Review> reviews) {
         this.reviewsAdapter.addReviews(reviews);
+
+        if (this.isFirstLoadRecyclerview) {
+            this.isFirstLoadRecyclerview = false;
+            this.recyclerView.scheduleLayoutAnimation();
+        }
     }
 
     @Override
