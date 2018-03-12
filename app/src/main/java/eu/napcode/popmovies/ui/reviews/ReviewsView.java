@@ -10,4 +10,8 @@ public interface ReviewsView {
     void displayEmptyLayout();
 
     void hideEmptyLayout();
+
+    void displayProgressBar();
+
+    void hideProgressBar();
 }

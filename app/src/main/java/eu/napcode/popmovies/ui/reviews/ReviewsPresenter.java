@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import eu.napcode.popmovies.model.Movie;
 import eu.napcode.popmovies.model.Review;
 import eu.napcode.popmovies.repository.ReviewsRepository;
 import eu.napcode.popmovies.utils.archbase.BasePresenter;
@@ -55,6 +54,7 @@ public class ReviewsPresenter implements BasePresenter<ReviewsView> {
             return;
         }
 
+        this.reviewsView.displayProgressBar();
         this.isDownloading = true;
 
         Observable<List<Review>> reviewsObservable;
@@ -80,6 +80,10 @@ public class ReviewsPresenter implements BasePresenter<ReviewsView> {
     private void downloadedReviews(List<Review> reviews) {
         this.isDownloading = false;
 
+        if (this.reviewsView != null) {
+            this.reviewsView.hideProgressBar();
+        }
+
         if (reviews.isEmpty() && this.reviews.isEmpty()) {
             displayNoReviews();
 
@@ -102,10 +106,15 @@ public class ReviewsPresenter implements BasePresenter<ReviewsView> {
     private void displayError() {
         this.isDownloading = false;
 
+        if (this.reviewsView == null) {
+            return;
+        }
+
+        this.reviewsView.hideProgressBar();
+
         if (this.reviews.isEmpty()) {
             displayNoReviews();
         }
-
 
         //TODO display error
     }

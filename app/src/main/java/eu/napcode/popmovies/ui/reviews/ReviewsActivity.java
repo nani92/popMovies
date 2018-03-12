@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.List;
@@ -38,6 +39,9 @@ public class ReviewsActivity extends AppCompatActivity implements ReviewsView, R
 
     @BindView(R.id.noDataTextView)
     TextView noDataTextView;
+
+    @BindView(R.id.progressBar)
+    ProgressBar progressBar;
 
     private ReviewsAdapter reviewsAdapter;
     private boolean isFirstLoadRecyclerview = true;
@@ -119,6 +123,16 @@ public class ReviewsActivity extends AppCompatActivity implements ReviewsView, R
         });
 
         emptyLayout.startAnimation(animation);
+    }
+
+    @Override
+    public void displayProgressBar() {
+        this.progressBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideProgressBar() {
+        this.progressBar.setVisibility(View.GONE);
     }
 
     @Override
