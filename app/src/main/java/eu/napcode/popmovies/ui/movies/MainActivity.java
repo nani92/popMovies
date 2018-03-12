@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.animation.AnimationUtils;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -175,6 +176,7 @@ public class MainActivity extends AppCompatActivity implements MoviesView, Movie
     public void displayEmptyLayout() {
         this.emptyLayout.setVisibility(View.VISIBLE);
         this.recyclerView.setVisibility(View.GONE);
+        ((TextView)this.emptyLayout.findViewById(R.id.noDataTextView)).setText(R.string.no_movies_to_display);
     }
 
     @Override

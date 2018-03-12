@@ -91,11 +91,12 @@ public class ReviewsPresenter implements BasePresenter<ReviewsView> {
     }
 
     private void displayReviews(List<Review> reviews) {
+        this.reviewsView.hideEmptyLayout();
         this.reviewsView.displayReviews(reviews);
     }
 
     private void displayNoReviews() {
-
+        this.reviewsView.displayEmptyLayout();
     }
 
     private void displayError() {

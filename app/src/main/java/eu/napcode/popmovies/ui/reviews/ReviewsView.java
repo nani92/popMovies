@@ -6,4 +6,8 @@ import eu.napcode.popmovies.model.Review;
 
 public interface ReviewsView {
     void displayReviews(List<Review> reviews);
+
+    void displayEmptyLayout();
+
+    void hideEmptyLayout();
 }

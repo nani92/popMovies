@@ -2,11 +2,14 @@ package eu.napcode.popmovies.ui.reviews;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.animation.AnimationUtils;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -29,6 +32,12 @@ public class ReviewsActivity extends AppCompatActivity implements ReviewsView, R
     @BindView(R.id.reviewRecyclerView)
     RecyclerView recyclerView;
 
+    @BindView(R.id.emptyLayout)
+    ConstraintLayout emptyLayout;
+
+    @BindView(R.id.noDataTextView)
+    TextView noDataTextView;
+
     private ReviewsAdapter reviewsAdapter;
     private boolean isFirstLoadRecyclerview = true;
 
@@ -43,6 +52,8 @@ public class ReviewsActivity extends AppCompatActivity implements ReviewsView, R
         setupRecyclerView();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        this.noDataTextView.setText(R.string.no_reviews_to_display);
+
         this.reviewsPresenter.attachView(this);
         this.reviewsPresenter.loadReviews(getIntent().getExtras().getInt(MOVIE_ID_KEY));
     }
@@ -51,7 +62,7 @@ public class ReviewsActivity extends AppCompatActivity implements ReviewsView, R
         this.recyclerView.setLayoutManager(new LinearLayoutManager(this));
         this.reviewsAdapter = new ReviewsAdapter(this);
         this.recyclerView.setAdapter(this.reviewsAdapter);
-        this.recyclerView.setLayoutAnimation(AnimationUtils.loadLayoutAnimation(this, R.anim.layout_animation_rv));
+        this.recyclerView.setLayoutAnimation(AnimationUtils.loadLayoutAnimation(this, R.anim.layout_animation_rv_2));
         this.recyclerView.addOnScrollListener(RecyclerViewLoadDataUtils.getOnScrollListener(this));
     }
 
@@ -76,12 +87,23 @@ public class ReviewsActivity extends AppCompatActivity implements ReviewsView, R
 
     @Override
     public void displayReviews(List<Review> reviews) {
+        this.recyclerView.setVisibility(View.VISIBLE);
         this.reviewsAdapter.addReviews(reviews);
 
         if (this.isFirstLoadRecyclerview) {
             this.isFirstLoadRecyclerview = false;
             this.recyclerView.scheduleLayoutAnimation();
         }
+    }
+
+    @Override
+    public void displayEmptyLayout() {
+        this.emptyLayout.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideEmptyLayout() {
+        this.emptyLayout.setVisibility(View.GONE);
     }
 
     @Override
