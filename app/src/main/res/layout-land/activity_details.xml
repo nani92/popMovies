@@ -63,6 +63,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/small_margin"
                     android:layout_marginTop="@dimen/small_margin"
+                    android:layout_marginRight="@dimen/small_margin"
                     android:textSize="@dimen/header_text_size"
                     android:transitionName="@string/title_transition"
                     app:layout_constraintLeft_toRightOf="@id/posterRightGuideline"
@@ -174,6 +175,15 @@
                     app:layout_constraintLeft_toRightOf="@id/leftGuideline"
                     app:layout_constraintRight_toLeftOf="@id/rightGuideline"
                     app:layout_constraintTop_toBottomOf="@id/detailsBarrier"/>
+
+                <Button
+                    android:id="@+id/reviewsButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/reviews"
+                    style="@style/Button"
+                    app:layout_constraintRight_toLeftOf="@id/rightGuideline"
+                    app:layout_constraintTop_toBottomOf="@id/videosRecyclerView"/>
 
                 <android.support.constraint.Guideline
                     android:id="@+id/leftGuideline"
