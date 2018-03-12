@@ -1,10 +1,14 @@
 package eu.napcode.popmovies.ui.movies;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import eu.napcode.popmovies.model.Movie;
@@ -14,20 +18,57 @@ import io.reactivex.Observable;
 import io.reactivex.Scheduler;
 import io.reactivex.schedulers.Schedulers;
 
+@RunWith(MockitoJUnitRunner.class)
 public class MoviesPresenterTest {
+
+    @Mock
+    MoviesRepository moviesRepository;
+
+    @Before
+    public void initial() {
+        Mockito.when(moviesRepository.hasMoreMoviesToDownload())
+                .thenReturn(true);
+        Mockito.when(moviesRepository.getMovies(SortMovies.POPULAR))
+                .thenReturn(Observable.fromArray(getPopularMovies()));
+        Mockito.when(moviesRepository.getMoreMovies(SortMovies.POPULAR))
+                .thenReturn(Observable.fromArray(getPopularMovies()));
+        Mockito.when(moviesRepository.getMovies(SortMovies.TOP_RATED))
+                .thenReturn(Observable.fromArray(getTopMovies()));
+    }
+
+    private static ArrayList<Movie> getPopularMovies() {
+        ArrayList<Movie> movies = new ArrayList<>();
+        movies.add(createMovieWithTitle("Popular 1"));
+        movies.add(createMovieWithTitle("Popular 2"));
+
+        return movies;
+    }
+
+    private static Movie createMovieWithTitle(String title) {
+        Movie movie = new Movie();
+        movie.setTitle(title);
+
+        return movie;
+    }
+
+    private static ArrayList<Movie> getTopMovies() {
+        ArrayList<Movie> movies = new ArrayList<>();
+        movies.add(createMovieWithTitle("Top 1"));
+        movies.add(createMovieWithTitle("Top 2"));
+        movies.add(createMovieWithTitle("Top 3"));
+        movies.add(createMovieWithTitle("Top 4"));
+
+        return movies;
+    }
 
     @Test
     public void testDisplayBooks() {
-        //given
         MoviesView view = new MockMoviesView();
-        MoviesRepository repository = new MockMoviesRepository(MockMoviesRepository.Action.LIST_WITH_MOVIES);
 
-        //when
-        MoviesPresenter moviesPresenter = new MoviesPresenter(repository, new MockRxSchedulers());
+        MoviesPresenter moviesPresenter = new MoviesPresenter(moviesRepository, new MockRxSchedulers());
         moviesPresenter.attachView(view);
         moviesPresenter.loadMovies();
 
-        //then
         Assert.assertEquals(true, ((MockMoviesView) view).moviesDisplayed);
         Assert.assertEquals(true, ((MockMoviesView) view).emptyHidden);
         Assert.assertEquals(false, ((MockMoviesView) view).isEmptyDisplaying);
@@ -35,31 +76,27 @@ public class MoviesPresenterTest {
 
     @Test
     public void testDisplayError() {
-        //given
         MoviesView view = new MockMoviesView();
-        MoviesRepository repository = new MockMoviesRepository(MockMoviesRepository.Action.ERROR);
+        Mockito.when(moviesRepository.getMovies(SortMovies.POPULAR))
+                .thenReturn(Observable.error(new Throwable()));
 
-        //when
-        MoviesPresenter moviesPresenter = new MoviesPresenter(repository, new MockRxSchedulers());
+        MoviesPresenter moviesPresenter = new MoviesPresenter(moviesRepository, new MockRxSchedulers());
         moviesPresenter.attachView(view);
         moviesPresenter.loadMovies();
 
-        //then
         Assert.assertEquals(true, ((MockMoviesView) view).errorDisplayed);
     }
 
     @Test
     public void testDisplayEmptyLayout() {
-        //given
         MoviesView view = new MockMoviesView();
-        MoviesRepository repository = new MockMoviesRepository(MockMoviesRepository.Action.LIST_EMPTY);
+        Mockito.when(moviesRepository.getMovies(SortMovies.POPULAR))
+                .thenReturn(Observable.fromArray(new ArrayList<>()));
 
-        //when
-        MoviesPresenter moviesPresenter = new MoviesPresenter(repository, new MockRxSchedulers());
+        MoviesPresenter moviesPresenter = new MoviesPresenter(moviesRepository, new MockRxSchedulers());
         moviesPresenter.attachView(view);
         moviesPresenter.loadMovies();
 
-        //then
         Assert.assertEquals(true, ((MockMoviesView) view).emptyDisplayed);
         Assert.assertEquals(true, ((MockMoviesView) view).isEmptyDisplaying);
     }
@@ -67,9 +104,8 @@ public class MoviesPresenterTest {
     @Test
     public void testManagingProgressBarForListReturned() {
         MoviesView view = new MockMoviesView();
-        MoviesRepository repository = new MockMoviesRepository(MockMoviesRepository.Action.LIST_WITH_MOVIES);
 
-        MoviesPresenter moviesPresenter = new MoviesPresenter(repository, new MockRxSchedulers());
+        MoviesPresenter moviesPresenter = new MoviesPresenter(moviesRepository, new MockRxSchedulers());
         moviesPresenter.attachView(view);
         moviesPresenter.loadMovies();
 
@@ -81,15 +117,40 @@ public class MoviesPresenterTest {
     @Test
     public void testManagingProgressBarForError() {
         MoviesView view = new MockMoviesView();
-        MoviesRepository repository = new MockMoviesRepository(MockMoviesRepository.Action.LIST_WITH_MOVIES);
 
-        MoviesPresenter moviesPresenter = new MoviesPresenter(repository, new MockRxSchedulers());
+        MoviesPresenter moviesPresenter = new MoviesPresenter(moviesRepository, new MockRxSchedulers());
         moviesPresenter.attachView(view);
         moviesPresenter.loadMovies();
 
         Assert.assertEquals(true, ((MockMoviesView) view).progressBarDisplayed);
         Assert.assertEquals(true, ((MockMoviesView) view).progressBarHidden);
         Assert.assertEquals(false, ((MockMoviesView) view).isProgressBarDisplaying);
+    }
+
+    @Test
+    public void testDownloadWithSortChange() {
+        MoviesView view = new MockMoviesView();
+
+        MoviesPresenter moviesPresenter = new MoviesPresenter(moviesRepository, new MockRxSchedulers());
+        moviesPresenter.attachView(view);
+        moviesPresenter.loadMovies();
+        moviesPresenter.setSort(SortMovies.TOP_RATED);
+        moviesPresenter.loadMovies();
+
+        Assert.assertEquals(true, ((MockMoviesView) view).recyclerviewCleared);
+    }
+
+    @Test
+    public void testDownloadTwiceSameSort() {
+        MoviesView view = new MockMoviesView();
+
+        MoviesPresenter moviesPresenter = new MoviesPresenter(moviesRepository, new MockRxSchedulers());
+        moviesPresenter.attachView(view);
+        moviesPresenter.loadMovies();
+        moviesPresenter.loadMovies();
+
+        Assert.assertEquals(false, ((MockMoviesView) view).recyclerviewCleared);
+        Assert.assertEquals( getPopularMovies().size() * 2, ((MockMoviesView) view).movies.size());
     }
 
     public static class MockRxSchedulers implements RxSchedulers {
@@ -119,9 +180,13 @@ public class MoviesPresenterTest {
         boolean progressBarHidden;
         boolean isProgressBarDisplaying;
 
+        List<Movie> movies = new ArrayList<>();
+
         @Override
         public void displayMovies(List<Movie> movies) {
             moviesDisplayed = true;
+
+            this.movies.addAll(movies);
         }
 
         @Override
@@ -156,41 +221,6 @@ public class MoviesPresenterTest {
         public void displayEmptyLayout() {
             this.isEmptyDisplaying = true;
             this.emptyDisplayed = true;
-        }
-    }
-
-    public static class MockMoviesRepository implements MoviesRepository {
-
-        public enum Action {
-            LIST_WITH_MOVIES,
-            LIST_EMPTY,
-            ERROR
-        }
-
-        private Action action;
-
-        public MockMoviesRepository(Action action) {
-            this.action = action;
-        }
-
-        @Override
-        public Observable<List<Movie>> getMovies(SortMovies sortMovies) {
-
-            switch (this.action) {
-                case LIST_WITH_MOVIES:
-                    return Observable.fromArray(new ArrayList<>(Arrays.asList(new Movie())));
-                case LIST_EMPTY:
-                    return Observable.fromArray(new ArrayList<>());
-                case ERROR:
-                    return Observable.error(new Throwable());
-                default:
-                    return Observable.fromArray(new ArrayList<>());
-            }
-        }
-
-        @Override
-        public boolean hasMoreMoviesToDownload() {
-            return false;
         }
     }
 }

@@ -110,6 +110,8 @@ public class Movie implements Parcelable {
     public Movie() {
     }
 
+
+
     protected Movie(Parcel in) {
         this.title = in.readString();
         this.id = in.readInt();
