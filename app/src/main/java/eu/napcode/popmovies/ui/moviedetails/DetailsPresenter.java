@@ -1,7 +1,6 @@
 package eu.napcode.popmovies.ui.moviedetails;
 
 import android.graphics.Bitmap;
-import android.text.TextUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +9,7 @@ import javax.inject.Inject;
 
 import eu.napcode.popmovies.model.Video;
 import eu.napcode.popmovies.repository.VideosRepository;
+import eu.napcode.popmovies.utils.TextUtils;
 import eu.napcode.popmovies.utils.archbase.BasePresenter;
 import eu.napcode.popmovies.model.Movie;
 import eu.napcode.popmovies.repository.MoviesRepository;
