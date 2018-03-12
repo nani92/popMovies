@@ -8,6 +8,13 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="AppTheme.NoToolbar" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
     <style name="LabelStyle" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@color/gray</item>
         <item name="android:textSize">@dimen/label_text_size</item>
@@ -18,5 +25,7 @@
         <item name="android:layout_marginLeft">@dimen/base_margin</item>
         <item name="android:layout_marginTop">@dimen/small_margin</item>
     </style>
+
+    <style name="Button" parent="Base.Widget.AppCompat.Button.Colored"/>
 
 </resources>

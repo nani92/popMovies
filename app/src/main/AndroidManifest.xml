@@ -13,7 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".movies.MainActivity">
+        <activity android:name=".ui.movies.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -21,7 +21,18 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".moviedetails.DetailsActivity"/>
+        <activity
+            android:theme="@style/AppTheme.NoToolbar"
+            android:name=".ui.moviedetails.DetailsActivity"/>
+
+        <activity android:name=".ui.favorites.FavoritesActivity"/>
+
+        <activity android:name=".ui.reviews.ReviewsActivity"/>
+
+        <provider
+            android:name=".provider.FavouriteMoviesProvider"
+            android:authorities="eu.napcode.popmovies"
+            android:exported="false" />
     </application>
 
 </manifest>

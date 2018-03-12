@@ -4,10 +4,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/base_margin">
+    android:layout_height="match_parent">
 
     <android.support.constraint.ConstraintLayout
+        android:id="@+id/detailsConstraintLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -28,14 +28,26 @@
             android:id="@+id/posterImageView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:minHeight="300dp"
             android:adjustViewBounds="true"
+            android:minHeight="300dp"
             android:transitionName="@string/poster_transition"
             app:layout_constraintBottom_toBottomOf="@id/backdropImageView"
             app:layout_constraintLeft_toRightOf="@id/leftGuideline"
             app:layout_constraintRight_toLeftOf="@id/posterRightGuideline"
             app:layout_constraintTop_toBottomOf="@id/backdropImageView"
             tools:src="@mipmap/ic_launcher"/>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/favoriteFab"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_marginBottom="@dimen/base_margin"
+            android:scaleType="center"
+            android:src="@drawable/ic_favorite_border"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@id/backdropImageView"
+            app:layout_constraintRight_toLeftOf="@id/rightGuideline"
+            app:layout_constraintTop_toBottomOf="@id/backdropImageView"/>
 
         <TextView
             android:id="@+id/titleTextView"
@@ -44,8 +56,9 @@
             android:layout_marginLeft="@dimen/small_margin"
             android:layout_marginTop="@dimen/small_margin"
             android:textSize="@dimen/header_text_size"
+            android:transitionName="@string/title_transition"
             app:layout_constraintLeft_toRightOf="@id/posterRightGuideline"
-            app:layout_constraintRight_toLeftOf="@id/rightGuideline"
+            app:layout_constraintRight_toLeftOf="@id/favoriteFab"
             app:layout_constraintTop_toBottomOf="@id/backdropImageView"
             tools:text="@tools:sample/lorem"/>
 
@@ -75,7 +88,6 @@
             style="@style/DetailsValueStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/release_date_label"
             app:layout_constraintLeft_toRightOf="@id/labelsBarrier"
             app:layout_constraintRight_toLeftOf="@id/rightGuideline"
             app:layout_constraintTop_toBottomOf="@id/detailsTopDividerView"
@@ -96,7 +108,6 @@
             style="@style/DetailsValueStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/release_date_label"
             app:layout_constraintLeft_toRightOf="@id/labelsBarrier"
             app:layout_constraintRight_toLeftOf="@id/rightGuideline"
             app:layout_constraintTop_toBottomOf="@id/releaseDateValueTextView"
@@ -117,7 +128,6 @@
             style="@style/DetailsValueStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/release_date_label"
             app:layout_constraintLeft_toRightOf="@id/labelsBarrier"
             app:layout_constraintRight_toLeftOf="@id/rightGuideline"
             app:layout_constraintTop_toBottomOf="@id/originalTitleValueTextView"
@@ -145,11 +155,38 @@
             app:layout_constraintTop_toBottomOf="@id/detailsBottomDividerView"
             tools:text="@tools:sample/lorem/random"/>
 
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/videosRecyclerView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/base_margin"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            app:layout_constraintLeft_toRightOf="@id/leftGuideline"
+            app:layout_constraintRight_toLeftOf="@id/rightGuideline"
+            app:layout_constraintTop_toBottomOf="@id/plotTextView"/>
+
+        <Button
+            android:id="@+id/reviewsButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/reviews"
+            style="@style/Button"
+            app:layout_constraintRight_toLeftOf="@id/rightGuideline"
+            app:layout_constraintTop_toBottomOf="@id/videosRecyclerView"/>
+
         <android.support.constraint.Guideline
             android:id="@+id/leftGuideline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/base_margin"/>
+
+        <android.support.constraint.Guideline
+            android:id="@+id/topGuideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
             app:layout_constraintGuide_begin="@dimen/base_margin"/>
 
         <android.support.constraint.Guideline

@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/backdropImageView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:scaleType="center"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@mipmap/ic_launcher"/>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/base_margin"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/topCardviewGuideline"
+        app:layout_constraintBottom_toTopOf="@id/bottomCardviewGuideline">
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/detailsConstraintLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/posterImageView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:minHeight="300dp"
+                    android:transitionName="@string/poster_transition"
+                    app:layout_constraintLeft_toRightOf="@id/leftGuideline"
+                    app:layout_constraintRight_toLeftOf="@id/posterRightGuideline"
+                    app:layout_constraintTop_toBottomOf="@id/topGuideline"
+                    tools:src="@mipmap/ic_launcher"/>
+
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/favoriteFab"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:layout_marginBottom="@dimen/base_margin"
+                    android:scaleType="center"
+                    android:src="@drawable/ic_favorite_border"
+                    android:visibility="invisible"
+                    app:layout_constraintRight_toLeftOf="@id/rightGuideline"
+                    app:layout_constraintTop_toTopOf="@id/posterImageView"/>
+
+                <TextView
+                    android:id="@+id/titleTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/small_margin"
+                    android:layout_marginTop="@dimen/small_margin"
+                    android:layout_marginRight="@dimen/small_margin"
+                    android:textSize="@dimen/header_text_size"
+                    android:transitionName="@string/title_transition"
+                    app:layout_constraintLeft_toRightOf="@id/posterRightGuideline"
+                    app:layout_constraintRight_toLeftOf="@id/favoriteFab"
+                    app:layout_constraintTop_toTopOf="@id/posterImageView"
+                    tools:text="@tools:sample/lorem"/>
+
+                <View
+                    android:id="@+id/detailsTopDividerView"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="@dimen/small_margin"
+                    android:layout_marginLeft="@dimen/base_margin"
+                    android:layout_marginTop="@dimen/small_margin"
+                    android:background="@color/gray"
+                    app:layout_constraintLeft_toRightOf="@id/posterImageView"
+                    app:layout_constraintRight_toLeftOf="@id/rightGuideline"
+                    app:layout_constraintTop_toBottomOf="@id/titleBarrier"/>
+
+                <TextView
+                    android:id="@+id/releaseDateLabelTextView"
+                    style="@style/LabelStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/release_date_label"
+                    app:layout_constraintBottom_toBottomOf="@id/releaseDateValueTextView"
+                    app:layout_constraintLeft_toLeftOf="@id/detailsTopDividerView"
+                    app:layout_constraintTop_toTopOf="@id/releaseDateValueTextView"/>
+
+                <TextView
+                    android:id="@+id/releaseDateValueTextView"
+                    style="@style/DetailsValueStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintLeft_toRightOf="@id/labelsBarrier"
+                    app:layout_constraintRight_toLeftOf="@id/rightGuideline"
+                    app:layout_constraintTop_toBottomOf="@id/detailsTopDividerView"
+                    tools:text="@tools:sample/lorem"/>
+
+                <TextView
+                    android:id="@+id/originalTitleLabelTextView"
+                    style="@style/LabelStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/original_title"
+                    app:layout_constraintBottom_toBottomOf="@id/originalTitleValueTextView"
+                    app:layout_constraintLeft_toLeftOf="@id/detailsTopDividerView"
+                    app:layout_constraintTop_toTopOf="@id/originalTitleValueTextView"/>
+
+                <TextView
+                    android:id="@+id/originalTitleValueTextView"
+                    style="@style/DetailsValueStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintLeft_toRightOf="@id/labelsBarrier"
+                    app:layout_constraintRight_toLeftOf="@id/rightGuideline"
+                    app:layout_constraintTop_toBottomOf="@id/releaseDateValueTextView"
+                    tools:text="@tools:sample/lorem"/>
+
+                <TextView
+                    android:id="@+id/averageVoteLabelTextView"
+                    style="@style/LabelStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/average_vote"
+                    app:layout_constraintBottom_toBottomOf="@id/averageVoteValueTextView"
+                    app:layout_constraintLeft_toLeftOf="@id/detailsTopDividerView"
+                    app:layout_constraintTop_toTopOf="@id/averageVoteValueTextView"/>
+
+                <TextView
+                    android:id="@+id/averageVoteValueTextView"
+                    style="@style/DetailsValueStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintLeft_toRightOf="@id/labelsBarrier"
+                    app:layout_constraintRight_toLeftOf="@id/rightGuideline"
+                    app:layout_constraintTop_toBottomOf="@id/originalTitleValueTextView"
+                    tools:text="@tools:sample/lorem"/>
+
+                <View
+                    android:id="@+id/detailsBottomDividerView"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="@dimen/small_margin"
+                    android:layout_marginTop="@dimen/small_margin"
+                    android:background="@color/gray"
+                    app:layout_constraintLeft_toLeftOf="@id/detailsTopDividerView"
+                    app:layout_constraintRight_toLeftOf="@id/rightGuideline"
+                    app:layout_constraintTop_toBottomOf="@id/averageVoteValueTextView"/>
+
+                <TextView
+                    android:id="@+id/plotTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/base_margin"
+                    android:textSize="@dimen/details_value_text_size"
+                    app:layout_constraintLeft_toLeftOf="@id/detailsBottomDividerView"
+                    app:layout_constraintRight_toLeftOf="@id/rightGuideline"
+                    app:layout_constraintTop_toBottomOf="@id/detailsBottomDividerView"
+                    tools:text="@tools:sample/lorem/random"/>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/videosRecyclerView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/base_margin"
+                    android:orientation="horizontal"
+                    android:visibility="gone"
+                    app:layout_constraintLeft_toRightOf="@id/leftGuideline"
+                    app:layout_constraintRight_toLeftOf="@id/rightGuideline"
+                    app:layout_constraintTop_toBottomOf="@id/detailsBarrier"/>
+
+                <Button
+                    android:id="@+id/reviewsButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/reviews"
+                    style="@style/Button"
+                    app:layout_constraintRight_toLeftOf="@id/rightGuideline"
+                    app:layout_constraintTop_toBottomOf="@id/videosRecyclerView"/>
+
+                <android.support.constraint.Guideline
+                    android:id="@+id/leftGuideline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_begin="@dimen/base_margin"/>
+
+                <android.support.constraint.Guideline
+                    android:id="@+id/topGuideline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintGuide_begin="@dimen/base_margin"/>
+
+                <android.support.constraint.Guideline
+                    android:id="@+id/rightGuideline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_end="@dimen/base_margin"/>
+
+                <android.support.constraint.Guideline
+                    android:id="@+id/bottomGuideline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintGuide_end="@dimen/base_margin"/>
+
+                <android.support.constraint.Guideline
+                    android:id="@+id/posterRightGuideline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.3"/>
+
+                <android.support.constraint.Guideline
+                    android:id="@+id/backdropBottomGuideline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintGuide_percent="0.3"/>
+
+                <android.support.constraint.Barrier
+                    android:id="@+id/titleBarrier"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:barrierDirection="bottom"
+                    app:constraint_referenced_ids="favoriteFab,titleTextView"/>
+
+                <android.support.constraint.Barrier
+                    android:id="@+id/labelsBarrier"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:barrierDirection="right"
+                    app:constraint_referenced_ids="releaseDateLabelTextView,
+                averageVoteLabelTextView,
+                originalTitleLabelTextView"/>
+
+                <android.support.constraint.Barrier
+                    android:id="@+id/detailsBarrier"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:barrierDirection="bottom"
+                    app:constraint_referenced_ids="plotTextView, posterImageView"/>
+
+            </android.support.constraint.ConstraintLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.constraint.Guideline
+            android:id="@+id/topCardviewGuideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="@dimen/landscape_top_margin"/>
+
+        <android.support.constraint.Guideline
+            android:id="@+id/bottomCardviewGuideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_end="@dimen/base_margin"/>
+
+    </android.support.constraint.ConstraintLayout>
+</ScrollView>

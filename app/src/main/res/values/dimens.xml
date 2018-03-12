@@ -8,4 +8,5 @@
     <dimen name="details_value_text_size">16sp</dimen>
 
     <dimen name="no_movies_text_size">30sp</dimen>
+    <dimen name="landscape_top_margin">150dp</dimen>
 </resources>

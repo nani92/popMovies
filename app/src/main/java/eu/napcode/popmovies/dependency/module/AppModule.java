@@ -1,9 +1,12 @@
 package eu.napcode.popmovies.dependency.module;
 
+import android.content.ContentResolver;
+
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import eu.napcode.popmovies.PopMoviesApp;
 import eu.napcode.popmovies.utils.ApiUtils;
 import eu.napcode.popmovies.api.MoviesService;
 import okhttp3.OkHttpClient;
@@ -34,5 +37,10 @@ public class AppModule {
         httpClient.addInterceptor(logging);
 
         return httpClient.build();
+    }
+
+    @Provides
+    ContentResolver providesContentResolver(PopMoviesApp application) {
+        return application.getContentResolver();
     }
 }

@@ -3,7 +3,7 @@ package eu.napcode.popmovies.repository;
 import java.util.List;
 
 import eu.napcode.popmovies.model.Movie;
-import eu.napcode.popmovies.movies.SortMovies;
+import eu.napcode.popmovies.ui.movies.SortMovies;
 import io.reactivex.Observable;
 
 public interface MoviesRepository {
@@ -12,5 +12,11 @@ public interface MoviesRepository {
 
     Observable<List<Movie>> getMoreMovies(SortMovies sortMovies);
 
-    boolean isMoreMoviesToDownload();
+    boolean hasMoreMoviesToDownload();
+
+    boolean isMovieFavorite(int id);
+
+    void favoriteChange(Movie movie);
+
+    List<Movie> getFavorites();
 }
