@@ -23,9 +23,11 @@ import dagger.android.AndroidInjection;
 import eu.napcode.popmovies.R;
 import eu.napcode.popmovies.model.Review;
 import eu.napcode.popmovies.utils.RecyclerViewLoadDataUtils;
+import eu.napcode.popmovies.utils.archbase.PresenterBundle;
 
 public class ReviewsActivity extends AppCompatActivity implements ReviewsView, RecyclerViewLoadDataUtils.LoadDataRecyclerViewListener {
 
+    private static final String SAVE_PRESENTER_STATE = "reviews presenter";
     public static String MOVIE_ID_KEY = "movie id";
 
     @Inject
@@ -57,10 +59,8 @@ public class ReviewsActivity extends AppCompatActivity implements ReviewsView, R
         setupRecyclerView();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        this.noDataTextView.setText(R.string.no_reviews_to_display);
-
         this.reviewsPresenter.attachView(this);
-        this.reviewsPresenter.loadReviews(getIntent().getExtras().getInt(MOVIE_ID_KEY));
+        this.noDataTextView.setText(R.string.no_reviews_to_display);
     }
 
     private void setupRecyclerView() {
@@ -69,6 +69,13 @@ public class ReviewsActivity extends AppCompatActivity implements ReviewsView, R
         this.recyclerView.setAdapter(this.reviewsAdapter);
         this.recyclerView.setLayoutAnimation(AnimationUtils.loadLayoutAnimation(this, R.anim.layout_animation_rv_reviews));
         this.recyclerView.addOnScrollListener(RecyclerViewLoadDataUtils.getOnScrollListener(this));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        this.reviewsPresenter.loadReviews(getIntent().getExtras().getInt(MOVIE_ID_KEY));
     }
 
     @Override
@@ -81,6 +88,19 @@ public class ReviewsActivity extends AppCompatActivity implements ReviewsView, R
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        this.reviewsPresenter.restoreState(new PresenterBundle(savedInstanceState.getBundle(SAVE_PRESENTER_STATE)));
+    }
+
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBundle(SAVE_PRESENTER_STATE, this.reviewsPresenter.saveState().getBundle());
     }
 
     @Override

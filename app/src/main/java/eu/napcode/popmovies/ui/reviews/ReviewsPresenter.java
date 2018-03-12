@@ -14,6 +14,8 @@ import io.reactivex.Observable;
 
 public class ReviewsPresenter implements BasePresenter<ReviewsView> {
 
+    private static final String SAVE_REVIEWS_STATE = "reviews";
+
     private ReviewsRepository reviewsRepository;
     private RxSchedulers rxSchedulers;
 
@@ -40,15 +42,30 @@ public class ReviewsPresenter implements BasePresenter<ReviewsView> {
 
     @Override
     public PresenterBundle saveState() {
-        return null;
+        PresenterBundle bundle = new PresenterBundle();
+        bundle.putParcelableArrayList(SAVE_REVIEWS_STATE, new ArrayList<>(this.reviews));
+
+        return bundle;
     }
 
     @Override
     public void restoreState(PresenterBundle presenterBundle) {
+        this.reviews = presenterBundle.getParcelableArrayList(SAVE_REVIEWS_STATE);
 
+        if (this.reviews == null) {
+            displayNoReviews();
+
+            return;
+        }
+
+        displayReviews(this.reviews);
     }
 
     public void loadReviews(int movieId) {
+
+        if (this.reviews.isEmpty()) {
+            displayNoReviews();
+        }
 
         if (shouldNotDownload()) {
             return;
@@ -95,11 +112,21 @@ public class ReviewsPresenter implements BasePresenter<ReviewsView> {
     }
 
     private void displayReviews(List<Review> reviews) {
+
+        if (this.reviewsView == null) {
+            return;
+        }
+
         this.reviewsView.hideEmptyLayout();
         this.reviewsView.displayReviews(reviews);
     }
 
     private void displayNoReviews() {
+
+        if (this.reviewsView == null) {
+            return;
+        }
+
         this.reviewsView.displayEmptyLayout();
     }
 
