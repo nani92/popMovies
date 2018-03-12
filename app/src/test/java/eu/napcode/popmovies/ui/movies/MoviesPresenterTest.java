@@ -1,6 +1,5 @@
 package eu.napcode.popmovies.ui.movies;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,8 +8,6 @@ import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.ArrayList;
-import java.util.List;
-
 import eu.napcode.popmovies.model.Movie;
 import eu.napcode.popmovies.repository.MoviesRepository;
 import eu.napcode.popmovies.utils.rx.RxSchedulers;
@@ -18,22 +15,35 @@ import io.reactivex.Observable;
 import io.reactivex.Scheduler;
 import io.reactivex.schedulers.Schedulers;
 
+import static org.mockito.Mockito.times;
+
 @RunWith(MockitoJUnitRunner.class)
 public class MoviesPresenterTest {
 
     @Mock
     MoviesRepository moviesRepository;
 
+    @Mock
+    MoviesView view;
+
+    MoviesPresenter moviesPresenter;
+    ArrayList<Movie> popularMovies = getPopularMovies();
+    ArrayList<Movie> morePopularMovies = getPopularMovies();
+    ArrayList<Movie> topMovies = getTopMovies();
+
     @Before
     public void initial() {
         Mockito.when(moviesRepository.hasMoreMoviesToDownload())
                 .thenReturn(true);
         Mockito.when(moviesRepository.getMovies(SortMovies.POPULAR))
-                .thenReturn(Observable.fromArray(getPopularMovies()));
+                .thenReturn(Observable.fromArray(popularMovies));
         Mockito.when(moviesRepository.getMoreMovies(SortMovies.POPULAR))
-                .thenReturn(Observable.fromArray(getPopularMovies()));
+                .thenReturn(Observable.fromArray(morePopularMovies));
         Mockito.when(moviesRepository.getMovies(SortMovies.TOP_RATED))
-                .thenReturn(Observable.fromArray(getTopMovies()));
+                .thenReturn(Observable.fromArray(topMovies));
+
+        moviesPresenter = new MoviesPresenter(moviesRepository, new MockRxSchedulers());
+        moviesPresenter.attachView(view);
     }
 
     private static ArrayList<Movie> getPopularMovies() {
@@ -63,94 +73,65 @@ public class MoviesPresenterTest {
 
     @Test
     public void testDisplayBooks() {
-        MoviesView view = new MockMoviesView();
-
-        MoviesPresenter moviesPresenter = new MoviesPresenter(moviesRepository, new MockRxSchedulers());
-        moviesPresenter.attachView(view);
         moviesPresenter.loadMovies();
 
-        Assert.assertEquals(true, ((MockMoviesView) view).moviesDisplayed);
-        Assert.assertEquals(true, ((MockMoviesView) view).emptyHidden);
-        Assert.assertEquals(false, ((MockMoviesView) view).isEmptyDisplaying);
+        Mockito.verify(view).displayProgressBar();
+        Mockito.verify(view).hideProgressBar();
+        Mockito.verify(view).hideEmptyLayout();
+        Mockito.verify(view).displayMovies(popularMovies);
     }
 
     @Test
     public void testDisplayError() {
-        MoviesView view = new MockMoviesView();
         Mockito.when(moviesRepository.getMovies(SortMovies.POPULAR))
                 .thenReturn(Observable.error(new Throwable()));
 
-        MoviesPresenter moviesPresenter = new MoviesPresenter(moviesRepository, new MockRxSchedulers());
-        moviesPresenter.attachView(view);
         moviesPresenter.loadMovies();
 
-        Assert.assertEquals(true, ((MockMoviesView) view).errorDisplayed);
+        Mockito.verify(view).displayProgressBar();
+        Mockito.verify(view).hideProgressBar();
+        Mockito.verify(view).displayErrorWithDownloading();
     }
 
     @Test
     public void testDisplayEmptyLayout() {
-        MoviesView view = new MockMoviesView();
         Mockito.when(moviesRepository.getMovies(SortMovies.POPULAR))
                 .thenReturn(Observable.fromArray(new ArrayList<>()));
 
-        MoviesPresenter moviesPresenter = new MoviesPresenter(moviesRepository, new MockRxSchedulers());
-        moviesPresenter.attachView(view);
         moviesPresenter.loadMovies();
 
-        Assert.assertEquals(true, ((MockMoviesView) view).emptyDisplayed);
-        Assert.assertEquals(true, ((MockMoviesView) view).isEmptyDisplaying);
-    }
-
-    @Test
-    public void testManagingProgressBarForListReturned() {
-        MoviesView view = new MockMoviesView();
-
-        MoviesPresenter moviesPresenter = new MoviesPresenter(moviesRepository, new MockRxSchedulers());
-        moviesPresenter.attachView(view);
-        moviesPresenter.loadMovies();
-
-        Assert.assertEquals(true, ((MockMoviesView) view).progressBarDisplayed);
-        Assert.assertEquals(true, ((MockMoviesView) view).progressBarHidden);
-        Assert.assertEquals(false, ((MockMoviesView) view).isProgressBarDisplaying);
-    }
-
-    @Test
-    public void testManagingProgressBarForError() {
-        MoviesView view = new MockMoviesView();
-
-        MoviesPresenter moviesPresenter = new MoviesPresenter(moviesRepository, new MockRxSchedulers());
-        moviesPresenter.attachView(view);
-        moviesPresenter.loadMovies();
-
-        Assert.assertEquals(true, ((MockMoviesView) view).progressBarDisplayed);
-        Assert.assertEquals(true, ((MockMoviesView) view).progressBarHidden);
-        Assert.assertEquals(false, ((MockMoviesView) view).isProgressBarDisplaying);
+        Mockito.verify(view).displayProgressBar();
+        Mockito.verify(view).hideProgressBar();
+        Mockito.verify(view).displayEmptyLayout();
     }
 
     @Test
     public void testDownloadWithSortChange() {
-        MoviesView view = new MockMoviesView();
-
-        MoviesPresenter moviesPresenter = new MoviesPresenter(moviesRepository, new MockRxSchedulers());
-        moviesPresenter.attachView(view);
         moviesPresenter.loadMovies();
         moviesPresenter.setSort(SortMovies.TOP_RATED);
         moviesPresenter.loadMovies();
 
-        Assert.assertEquals(true, ((MockMoviesView) view).recyclerviewCleared);
+        Mockito.verify(view).displayMovies(popularMovies);
+        Mockito.verify(view, times(2)).displayProgressBar();
+        Mockito.verify(view, times(2)).hideProgressBar();
+        Mockito.verify(view).displayMovies(topMovies);
+        Mockito.verify(view).clearRecyclerView();
     }
 
     @Test
     public void testDownloadTwiceSameSort() {
-        MoviesView view = new MockMoviesView();
-
-        MoviesPresenter moviesPresenter = new MoviesPresenter(moviesRepository, new MockRxSchedulers());
-        moviesPresenter.attachView(view);
         moviesPresenter.loadMovies();
         moviesPresenter.loadMovies();
 
-        Assert.assertEquals(false, ((MockMoviesView) view).recyclerviewCleared);
-        Assert.assertEquals( getPopularMovies().size() * 2, ((MockMoviesView) view).movies.size());
+        Mockito.verify(view).displayMovies(popularMovies);
+        Mockito.verify(view).displayMovies(morePopularMovies);
+    }
+
+    @Test
+    public void testNoCrashWithoutView() {
+        moviesPresenter.dropView();
+        moviesPresenter.loadMovies();
+        moviesPresenter.loadMovies();
     }
 
     public static class MockRxSchedulers implements RxSchedulers {
@@ -163,64 +144,6 @@ public class MoviesPresenterTest {
         @Override
         public Scheduler androidMainThread() {
             return Schedulers.trampoline();
-        }
-    }
-
-    public static class MockMoviesView implements MoviesView {
-
-        boolean moviesDisplayed;
-        boolean errorDisplayed;
-        boolean recyclerviewCleared;
-
-        boolean emptyDisplayed;
-        boolean emptyHidden;
-        boolean isEmptyDisplaying;
-
-        boolean progressBarDisplayed;
-        boolean progressBarHidden;
-        boolean isProgressBarDisplaying;
-
-        List<Movie> movies = new ArrayList<>();
-
-        @Override
-        public void displayMovies(List<Movie> movies) {
-            moviesDisplayed = true;
-
-            this.movies.addAll(movies);
-        }
-
-        @Override
-        public void clearRecyclerView() {
-            this.recyclerviewCleared = true;
-        }
-
-        @Override
-        public void displayProgressBar() {
-            this.isProgressBarDisplaying = true;
-            this.progressBarDisplayed = true;
-        }
-
-        @Override
-        public void hideProgressBar() {
-            this.isProgressBarDisplaying = false;
-            this.progressBarHidden = true;
-        }
-
-        @Override
-        public void displayErrorWithDownloading() {
-            this.errorDisplayed = true;
-        }
-
-        @Override
-        public void hideEmptyLayout() {
-            this.isEmptyDisplaying = false;
-            this.emptyHidden = true;
-        }
-
-        @Override
-        public void displayEmptyLayout() {
-            this.isEmptyDisplaying = true;
-            this.emptyDisplayed = true;
         }
     }
 }

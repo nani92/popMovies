@@ -70,7 +70,11 @@ public class MoviesPresenter implements BasePresenter<MoviesView> {
         }
 
         this.isDownloading = true;
-        this.moviesView.displayProgressBar();
+
+        if (this.moviesView != null) {
+            this.moviesView.displayProgressBar();
+        }
+
         Observable<List<Movie>> moviesObservable;
 
         if (this.movies.isEmpty()) {
