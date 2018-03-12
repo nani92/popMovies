@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
@@ -62,7 +63,7 @@ public class ReviewsActivity extends AppCompatActivity implements ReviewsView, R
         this.recyclerView.setLayoutManager(new LinearLayoutManager(this));
         this.reviewsAdapter = new ReviewsAdapter(this);
         this.recyclerView.setAdapter(this.reviewsAdapter);
-        this.recyclerView.setLayoutAnimation(AnimationUtils.loadLayoutAnimation(this, R.anim.layout_animation_rv_2));
+        this.recyclerView.setLayoutAnimation(AnimationUtils.loadLayoutAnimation(this, R.anim.layout_animation_rv_reviews));
         this.recyclerView.addOnScrollListener(RecyclerViewLoadDataUtils.getOnScrollListener(this));
     }
 
@@ -103,7 +104,21 @@ public class ReviewsActivity extends AppCompatActivity implements ReviewsView, R
 
     @Override
     public void hideEmptyLayout() {
-        this.emptyLayout.setVisibility(View.GONE);
+        Animation animation = AnimationUtils.loadAnimation(this, R.anim.item_animation_hide_empty);
+        animation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {}
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {}
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                emptyLayout.setVisibility(View.GONE);
+            }
+        });
+
+        emptyLayout.startAnimation(animation);
     }
 
     @Override
