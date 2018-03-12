@@ -1,4 +1,4 @@
-package eu.napcode.popmovies.movies;
+package eu.napcode.popmovies.ui.movies;
 
 import java.util.List;
 

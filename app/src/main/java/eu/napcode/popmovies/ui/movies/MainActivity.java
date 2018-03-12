@@ -1,4 +1,4 @@
-package eu.napcode.popmovies.movies;
+package eu.napcode.popmovies.ui.movies;
 
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.animation.AnimationUtils;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -23,13 +24,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.android.AndroidInjection;
 import eu.napcode.popmovies.R;
-import eu.napcode.popmovies.favorites.FavoritesActivity;
+import eu.napcode.popmovies.ui.favorites.FavoritesActivity;
 import eu.napcode.popmovies.model.Movie;
-import eu.napcode.popmovies.moviedetails.DetailsActivity;
+import eu.napcode.popmovies.ui.moviedetails.DetailsActivity;
+import eu.napcode.popmovies.utils.RecyclerViewLoadDataUtils;
 import eu.napcode.popmovies.utils.animation.SharedElementMovieAnimationHelper;
 import eu.napcode.popmovies.utils.archbase.PresenterBundle;
 
-public class MainActivity extends AppCompatActivity implements MoviesView, MoviesAdapter.OnMovieClickedListener {
+public class MainActivity extends AppCompatActivity implements MoviesView, MoviesAdapter.OnMovieClickedListener, RecyclerViewLoadDataUtils.LoadDataRecyclerViewListener {
 
     private static String SAVE_PRESENTER_STATE = "presenter";
 
@@ -48,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements MoviesView, Movie
     ConstraintLayout emptyLayout;
 
     private MoviesAdapter moviesAdapter;
-    private boolean isFirstLoadAnimation = true;
+    private boolean isFirstLoadRecyclerview = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,28 +75,7 @@ public class MainActivity extends AppCompatActivity implements MoviesView, Movie
         this.moviesAdapter = new MoviesAdapter(this);
         this.recyclerView.setAdapter(this.moviesAdapter);
         this.recyclerView.setLayoutAnimation(AnimationUtils.loadLayoutAnimation(this, R.anim.layout_animation_rv));
-
-        this.recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-
-                GridLayoutManager layoutManager = (GridLayoutManager) recyclerView.getLayoutManager();
-
-                int visibleItemCount = layoutManager.getChildCount();
-                int totalItemCount = layoutManager.getItemCount();
-                int firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition();
-
-                if (MainActivity.this.moviesPresenter.shouldDownloadMoreMovies()) {
-
-                    if (visibleItemCount + firstVisibleItemPosition >= totalItemCount
-                            && firstVisibleItemPosition >= 0) {
-                        MainActivity.this.moviesPresenter.loadMovies();
-                    }
-                }
-            }
-        });
+        this.recyclerView.addOnScrollListener(RecyclerViewLoadDataUtils.getOnScrollListener(this));
     }
 
     private GridLayoutManager getLayoutManager() {
@@ -142,7 +123,7 @@ public class MainActivity extends AppCompatActivity implements MoviesView, Movie
             this.moviesPresenter.setSort(SortMovies.TOP_RATED);
         }
 
-        this.isFirstLoadAnimation = true;
+        this.isFirstLoadRecyclerview = true;
         this.moviesPresenter.loadMovies();
 
         return super.onOptionsItemSelected(item);
@@ -159,8 +140,8 @@ public class MainActivity extends AppCompatActivity implements MoviesView, Movie
     public void displayMovies(List<Movie> movies) {
         this.moviesAdapter.addMovies(movies);
 
-        if (this.isFirstLoadAnimation) {
-            this.isFirstLoadAnimation = false;
+        if (this.isFirstLoadRecyclerview) {
+            this.isFirstLoadRecyclerview = false;
             this.recyclerView.scheduleLayoutAnimation();
         }
     }
@@ -195,6 +176,7 @@ public class MainActivity extends AppCompatActivity implements MoviesView, Movie
     public void displayEmptyLayout() {
         this.emptyLayout.setVisibility(View.VISIBLE);
         this.recyclerView.setVisibility(View.GONE);
+        ((TextView)this.emptyLayout.findViewById(R.id.noDataTextView)).setText(R.string.no_movies_to_display);
     }
 
     @Override
@@ -203,5 +185,10 @@ public class MainActivity extends AppCompatActivity implements MoviesView, Movie
         intent.putExtra(DetailsActivity.KEY_MOVIE, movie);
 
         startActivity(intent, SharedElementMovieAnimationHelper.getBundle(this, view, movie.getId()));
+    }
+
+    @Override
+    public void shouldLoadNewData() {
+        this.moviesPresenter.loadMovies();
     }
 }

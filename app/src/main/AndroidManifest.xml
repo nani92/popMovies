@@ -13,7 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".movies.MainActivity">
+        <activity android:name=".ui.movies.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -23,9 +23,11 @@
 
         <activity
             android:theme="@style/AppTheme.NoToolbar"
-            android:name=".moviedetails.DetailsActivity"/>
+            android:name=".ui.moviedetails.DetailsActivity"/>
 
-        <activity android:name=".favorites.FavoritesActivity"/>
+        <activity android:name=".ui.favorites.FavoritesActivity"/>
+
+        <activity android:name=".ui.reviews.ReviewsActivity"/>
 
         <provider
             android:name=".provider.FavouriteMoviesProvider"

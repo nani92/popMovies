@@ -20,11 +20,11 @@ public class PresenterBundle {
         this.bundle = new Bundle();
     }
 
-    public void putParcelableArrayList(String key, ArrayList<Parcelable> value) {
+    public void putParcelableArrayList(String key, ArrayList<? extends Parcelable> value) {
         bundle.putParcelableArrayList(key, value);
     }
 
-    public List<Movie> getParcelableArrayList(String key) {
+    public <T extends Parcelable> ArrayList<T> getParcelableArrayList(String key) {
         return bundle.getParcelableArrayList(key);
     }
 

@@ -1,4 +1,4 @@
-package eu.napcode.popmovies.favorites;
+package eu.napcode.popmovies.ui.favorites;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,7 +19,7 @@ import butterknife.ButterKnife;
 import dagger.android.AndroidInjection;
 import eu.napcode.popmovies.R;
 import eu.napcode.popmovies.model.Movie;
-import eu.napcode.popmovies.moviedetails.DetailsActivity;
+import eu.napcode.popmovies.ui.moviedetails.DetailsActivity;
 import eu.napcode.popmovies.utils.animation.SharedElementMovieAnimationHelper;
 
 public class FavoritesActivity extends AppCompatActivity implements FavoritesView, FavoritesAdapter.OnMovieClickedListener {

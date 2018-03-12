@@ -1,4 +1,4 @@
-package eu.napcode.popmovies.movies;
+package eu.napcode.popmovies.ui.movies;
 
 import eu.napcode.popmovies.utils.ApiUtils;
 

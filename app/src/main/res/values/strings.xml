@@ -7,9 +7,13 @@
     <string name="top_rated">Top rated</string>
     <string name="download_error_message">Error with downloading data.</string>
     <string name="no_movies_to_display">There is no movies to display.</string>
+    <string name="no_reviews_to_display">There is no reviews to display.</string>
     <string name="favorite">Favorite</string>
 
     <string name="poster_transition" translatable="false">poster transition</string>
     <string name="title_transition" translatable="false">title transition</string>
     <string name="videos">Videos</string>
+    <string name="reviews">reviews</string>
+    <string name="review_written_by">"Review written by "</string>
+    <string name="read_more">read more</string>
 </resources>

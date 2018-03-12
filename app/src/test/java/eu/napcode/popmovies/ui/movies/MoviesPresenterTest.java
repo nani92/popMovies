@@ -1,4 +1,4 @@
-package eu.napcode.popmovies.movies;
+package eu.napcode.popmovies.ui.movies;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -189,7 +189,7 @@ public class MoviesPresenterTest {
         }
 
         @Override
-        public boolean isMoreMoviesToDownload() {
+        public boolean hasMoreMoviesToDownload() {
             return false;
         }
     }

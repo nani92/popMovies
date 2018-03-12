@@ -1,4 +1,4 @@
-package eu.napcode.popmovies.moviedetails;
+package eu.napcode.popmovies.ui.moviedetails;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;

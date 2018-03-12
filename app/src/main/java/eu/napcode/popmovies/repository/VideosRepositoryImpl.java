@@ -25,7 +25,7 @@ public class VideosRepositoryImpl implements VideosRepository {
     public Observable<List<Video>> getVideos(int movieId) {
         return this.moviesService
                 .getVideos(movieId, ApiUtils.TMDB_API_KEY)
-                .map(responseMoviePage ->
-                        Lists.transform(responseMoviePage.getResponseVideos(), VideosMapper.responseToVideo));
+                .map(responseMovies ->
+                        Lists.transform(responseMovies.getResponseVideos(), VideosMapper.responseToVideo));
     }
 }

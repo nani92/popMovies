@@ -1,4 +1,4 @@
-package eu.napcode.popmovies.moviedetails;
+package eu.napcode.popmovies.ui.moviedetails;
 
 import android.graphics.Bitmap;
 

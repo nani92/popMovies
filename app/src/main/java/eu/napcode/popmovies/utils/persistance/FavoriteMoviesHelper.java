@@ -1,6 +1,5 @@
 package eu.napcode.popmovies.utils.persistance;
 
-
 import android.content.ContentValues;
 import android.database.Cursor;
 

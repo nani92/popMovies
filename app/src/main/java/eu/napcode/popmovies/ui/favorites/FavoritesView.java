@@ -1,4 +1,4 @@
-package eu.napcode.popmovies.favorites;
+package eu.napcode.popmovies.ui.favorites;
 
 import java.util.List;
 

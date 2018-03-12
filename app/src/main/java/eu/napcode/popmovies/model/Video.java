@@ -1,8 +1,9 @@
 package eu.napcode.popmovies.model;
 
-import eu.napcode.popmovies.R;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-public class Video {
+public class Video implements Parcelable {
 
     private String id;
     private VideoSite site;
@@ -54,4 +55,40 @@ public class Video {
             return OTHER;
         }
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.id);
+        dest.writeInt(this.site == null ? -1 : this.site.ordinal());
+        dest.writeString(this.key);
+        dest.writeString(this.name);
+    }
+
+    public Video() {
+    }
+
+    protected Video(Parcel in) {
+        this.id = in.readString();
+        int tmpSite = in.readInt();
+        this.site = tmpSite == -1 ? null : VideoSite.values()[tmpSite];
+        this.key = in.readString();
+        this.name = in.readString();
+    }
+
+    public static final Parcelable.Creator<Video> CREATOR = new Parcelable.Creator<Video>() {
+        @Override
+        public Video createFromParcel(Parcel source) {
+            return new Video(source);
+        }
+
+        @Override
+        public Video[] newArray(int size) {
+            return new Video[size];
+        }
+    };
 }

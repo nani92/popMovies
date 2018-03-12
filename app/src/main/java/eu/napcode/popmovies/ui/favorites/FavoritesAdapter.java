@@ -1,4 +1,4 @@
-package eu.napcode.popmovies.favorites;
+package eu.napcode.popmovies.ui.favorites;
 
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
