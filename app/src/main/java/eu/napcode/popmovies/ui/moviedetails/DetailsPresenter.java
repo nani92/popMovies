@@ -3,8 +3,12 @@ package eu.napcode.popmovies.ui.moviedetails;
 import android.graphics.Bitmap;
 import android.text.TextUtils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.inject.Inject;
 
+import eu.napcode.popmovies.model.Video;
 import eu.napcode.popmovies.repository.VideosRepository;
 import eu.napcode.popmovies.utils.archbase.BasePresenter;
 import eu.napcode.popmovies.model.Movie;
@@ -14,6 +18,7 @@ import eu.napcode.popmovies.utils.rx.RxSchedulers;
 
 public class DetailsPresenter implements BasePresenter<DetailsView> {
 
+    private static final String SAVE_VIDEOS_LIST = "videos";
     private MoviesRepository moviesRepository;
     private VideosRepository videosRepository;
 
@@ -21,6 +26,8 @@ public class DetailsPresenter implements BasePresenter<DetailsView> {
 
     private DetailsView detailsView;
     private Movie movie;
+
+    private List<Video> videos;
 
     @Inject
     public DetailsPresenter(MoviesRepository moviesRepository, VideosRepository videosRepository, RxSchedulers rxSchedulers) {
@@ -41,12 +48,16 @@ public class DetailsPresenter implements BasePresenter<DetailsView> {
 
     @Override
     public PresenterBundle saveState() {
-        return null;
+        PresenterBundle presenterBundle = new PresenterBundle();
+        presenterBundle.putParcelableArrayList(SAVE_VIDEOS_LIST, new ArrayList<>(this.videos));
+
+        return presenterBundle;
     }
 
     @Override
     public void restoreState(PresenterBundle presenterBundle) {
-
+        this.videos = presenterBundle.getParcelableArrayList(SAVE_VIDEOS_LIST);
+        displayVideos();
     }
 
     public void setMovie(Movie movie) {
@@ -109,16 +120,20 @@ public class DetailsPresenter implements BasePresenter<DetailsView> {
                 .getVideos(this.movie.getId())
                 .subscribeOn(this.rxSchedulers.io())
                 .observeOn(this.rxSchedulers.androidMainThread())
-                .subscribe(videos -> {
+                .subscribe(videos -> videosDownloaded(videos),
+                        throwable -> {});
+    }
 
-                            if (this.detailsView != null) {
-                                this.detailsView.displayVideos(videos);
-                            }
-                        },
+    private void videosDownloaded(List<Video> videos) {
+        this.videos = videos;
+        displayVideos();
+    }
 
-                        throwable -> {
+    private void displayVideos() {
 
-                        });
+        if (this.detailsView != null) {
+            this.detailsView.displayVideos(videos);
+        }
     }
 
     public void favoriteClicked() {

@@ -42,6 +42,7 @@ import eu.napcode.popmovies.utils.ConstraintSetChangeUtils;
 import eu.napcode.popmovies.utils.YoutubeUtils;
 import eu.napcode.popmovies.utils.animation.SharedElementMovieAnimationHelper;
 import eu.napcode.popmovies.utils.animation.TransitionAnimations;
+import eu.napcode.popmovies.utils.archbase.PresenterBundle;
 
 public class DetailsActivity extends AppCompatActivity implements DetailsView {
 
@@ -49,6 +50,7 @@ public class DetailsActivity extends AppCompatActivity implements DetailsView {
     //TODO remove toolbar
     //TODO create collapsible toolbar
     public static final String KEY_MOVIE = "movie";
+    private static final String SAVE_PRESENTER_STATE = "details presenter";
 
     @Inject
     DetailsPresenter detailsPresenter;
@@ -124,6 +126,19 @@ public class DetailsActivity extends AppCompatActivity implements DetailsView {
         intent.putExtra(ReviewsActivity.MOVIE_ID_KEY, this.detailsPresenter.getMovieId());
 
         startActivity(intent);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        this.detailsPresenter.restoreState(new PresenterBundle(savedInstanceState.getBundle(SAVE_PRESENTER_STATE)));
+    }
+
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBundle(SAVE_PRESENTER_STATE, this.detailsPresenter.saveState().getBundle());
     }
 
     @Override
