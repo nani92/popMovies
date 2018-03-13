@@ -50,7 +50,7 @@ public class ReviewsRepositoryImpl implements ReviewsRepository {
     }
 
     @Override
-    public boolean hasMoreMoviesToDownload() {
+    public boolean hasMoreReviewsToDownload() {
         return this.hasNextPageToDownload;
     }
 }

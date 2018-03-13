@@ -40,7 +40,7 @@ public class ReviewsPresenterTest {
                 .thenReturn(Observable.fromArray(reviews));
         Mockito.when(reviewsRepository.getMoreReviews(movieId))
                 .thenReturn(Observable.fromArray(moreReviews));
-        Mockito.when(reviewsRepository.hasMoreMoviesToDownload())
+        Mockito.when(reviewsRepository.hasMoreReviewsToDownload())
                 .thenReturn(true);
     }
 
@@ -120,7 +120,7 @@ public class ReviewsPresenterTest {
 
     @Test
     public void testNoMoreReviews() {
-        Mockito.when(reviewsRepository.hasMoreMoviesToDownload())
+        Mockito.when(reviewsRepository.hasMoreReviewsToDownload())
                 .thenReturn(false);
 
         reviewsPresenter.loadReviews(movieId);

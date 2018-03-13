@@ -11,5 +11,5 @@ public interface ReviewsRepository {
 
     Observable<List<Review>> getMoreReviews(int movieId);
 
-    boolean hasMoreMoviesToDownload();
+    boolean hasMoreReviewsToDownload();
 }
