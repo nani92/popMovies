@@ -16,6 +16,10 @@ import eu.napcode.popmovies.utils.rx.RxSchedulers;
 import io.reactivex.Observable;
 import io.reactivex.Scheduler;
 import io.reactivex.schedulers.Schedulers;
+import testhelpers.MockRxSchedulers;
+
+import static testhelpers.MockReviewHelper.getMoreReviews;
+import static testhelpers.MockReviewHelper.getReviews;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ReviewsPresenterTest {
@@ -27,7 +31,7 @@ public class ReviewsPresenterTest {
     ReviewsView reviewsView;
 
     private ReviewsPresenter reviewsPresenter;
-    private int movieId;
+    private int movieId = 0;
     private List<Review> reviews = getReviews();
     private List<Review> moreReviews = getMoreReviews();
 
@@ -42,31 +46,6 @@ public class ReviewsPresenterTest {
                 .thenReturn(Observable.fromArray(moreReviews));
         Mockito.when(reviewsRepository.hasMoreReviewsToDownload())
                 .thenReturn(true);
-    }
-
-    private static ArrayList<Review> getReviews() {
-        ArrayList<Review> reviews = new ArrayList<>();
-        reviews.add(getReview("1"));
-        reviews.add(getReview("2"));
-
-        return reviews;
-    }
-
-    private static Review getReview(String reviewId) {
-        Review review = new Review();
-        review.setAuthor("a" + reviewId);
-        review.setContent("c" + reviewId);
-        review.setUrl("u" + reviewId);
-
-        return review;
-    }
-
-    private static ArrayList<Review> getMoreReviews() {
-        ArrayList<Review> reviews = new ArrayList<>();
-        reviews.add(getReview("3"));
-        reviews.add(getReview("4"));
-
-        return reviews;
     }
 
     @Test
@@ -132,16 +111,5 @@ public class ReviewsPresenterTest {
         Mockito.verify(reviewsView).displayEmptyLayout();
     }
 
-    public static class MockRxSchedulers implements RxSchedulers {
 
-        @Override
-        public Scheduler io() {
-            return Schedulers.trampoline();
-        }
-
-        @Override
-        public Scheduler androidMainThread() {
-            return Schedulers.trampoline();
-        }
-    }
 }

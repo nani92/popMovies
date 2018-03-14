@@ -14,8 +14,11 @@ import eu.napcode.popmovies.utils.rx.RxSchedulers;
 import io.reactivex.Observable;
 import io.reactivex.Scheduler;
 import io.reactivex.schedulers.Schedulers;
+import testhelpers.MockRxSchedulers;
 
 import static org.mockito.Mockito.times;
+import static testhelpers.MockMoviesHelper.getPopularMovies;
+import static testhelpers.MockMoviesHelper.getTopMovies;
 
 @RunWith(MockitoJUnitRunner.class)
 public class MoviesPresenterTest {
@@ -44,31 +47,6 @@ public class MoviesPresenterTest {
 
         moviesPresenter = new MoviesPresenter(moviesRepository, new MockRxSchedulers());
         moviesPresenter.attachView(view);
-    }
-
-    private static ArrayList<Movie> getPopularMovies() {
-        ArrayList<Movie> movies = new ArrayList<>();
-        movies.add(createMovieWithTitle("Popular 1"));
-        movies.add(createMovieWithTitle("Popular 2"));
-
-        return movies;
-    }
-
-    private static Movie createMovieWithTitle(String title) {
-        Movie movie = new Movie();
-        movie.setTitle(title);
-
-        return movie;
-    }
-
-    private static ArrayList<Movie> getTopMovies() {
-        ArrayList<Movie> movies = new ArrayList<>();
-        movies.add(createMovieWithTitle("Top 1"));
-        movies.add(createMovieWithTitle("Top 2"));
-        movies.add(createMovieWithTitle("Top 3"));
-        movies.add(createMovieWithTitle("Top 4"));
-
-        return movies;
     }
 
     @Test
@@ -132,18 +110,5 @@ public class MoviesPresenterTest {
         moviesPresenter.dropView();
         moviesPresenter.loadMovies();
         moviesPresenter.loadMovies();
-    }
-
-    public static class MockRxSchedulers implements RxSchedulers {
-
-        @Override
-        public Scheduler io() {
-            return Schedulers.trampoline();
-        }
-
-        @Override
-        public Scheduler androidMainThread() {
-            return Schedulers.trampoline();
-        }
     }
 }

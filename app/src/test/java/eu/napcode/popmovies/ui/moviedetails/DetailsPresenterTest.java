@@ -17,9 +17,14 @@ import eu.napcode.popmovies.model.Video;
 import eu.napcode.popmovies.repository.MoviesRepository;
 import eu.napcode.popmovies.repository.VideosRepository;
 import eu.napcode.popmovies.utils.rx.RxSchedulers;
+import io.reactivex.Completable;
 import io.reactivex.Observable;
 import io.reactivex.Scheduler;
 import io.reactivex.schedulers.Schedulers;
+import testhelpers.MockRxSchedulers;
+
+import static testhelpers.MockMoviesHelper.getFullMovie;
+import static testhelpers.MockVideoHelper.getVideos;
 
 @RunWith(MockitoJUnitRunner.class)
 public class DetailsPresenterTest {
@@ -45,26 +50,8 @@ public class DetailsPresenterTest {
 
         Mockito.when(videosRepository.getVideos(movie.getId()))
                 .thenReturn(Observable.fromArray(videos));
-    }
-
-    public static Movie getFullMovie() {
-        Movie movie = new Movie();
-        movie.setId(0);
-        movie.setTitle("Title");
-        movie.setPlot("Plot");
-        movie.setReleaseDate("20-02-2019");
-        movie.setOriginalTitle("Original title");
-        movie.setPosterPath("path");
-        movie.setBackdropPath("path");
-
-        return movie;
-    }
-
-    private static ArrayList<Video> getVideos() {
-        ArrayList<Video> videos = new ArrayList<>();
-        videos.add(new Video());
-
-        return videos;
+        Mockito.when(moviesRepository.favoriteChange(movie))
+                .thenReturn(Completable.complete());
     }
 
     @Test
@@ -173,18 +160,5 @@ public class DetailsPresenterTest {
         detailsPresenter.setMovie(movie);
 
         Mockito.verify(detailsView, Mockito.times(0)).displayVideos(null);
-    }
-
-    public static class MockRxSchedulers implements RxSchedulers {
-
-        @Override
-        public Scheduler io() {
-            return Schedulers.trampoline();
-        }
-
-        @Override
-        public Scheduler androidMainThread() {
-            return Schedulers.trampoline();
-        }
     }
 }
