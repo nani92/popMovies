@@ -74,6 +74,7 @@ public class MoviesRepositoryImpl implements MoviesRepository {
     @Override
     public Completable favoriteChange(Movie movie) {
         return Completable.fromAction(() -> {
+
             if (isMovieFavorite(movie.getId())) {
                 this.favoriteMoviesHelper.removeMovieById(movie.getId());
             } else {
