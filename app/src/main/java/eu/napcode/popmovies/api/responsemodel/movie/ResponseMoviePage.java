@@ -1,5 +1,5 @@
 
-package eu.napcode.popmovies.api.responsemodel;
+package eu.napcode.popmovies.api.responsemodel.movie;
 
 import java.util.List;
 import com.google.gson.annotations.Expose;
@@ -21,7 +21,7 @@ public class ResponseMoviePage {
 
     @SerializedName("results")
     @Expose
-    private List<ResponseReview> responseMovies = null;
+    private List<ResponseMovie> responseMovies = null;
 
     public Integer getPage() {
         return page;
@@ -47,11 +47,11 @@ public class ResponseMoviePage {
         this.totalPages = totalPages;
     }
 
-    public List<ResponseReview> getResponseMovies() {
+    public List<ResponseMovie> getResponseMovies() {
         return responseMovies;
     }
 
-    public void setResponseMovies(List<ResponseReview> responseMovies) {
+    public void setResponseMovies(List<ResponseMovie> responseMovies) {
         this.responseMovies = responseMovies;
     }
 

@@ -3,8 +3,8 @@ package testhelpers;
 import java.util.ArrayList;
 import java.util.List;
 
-import eu.napcode.popmovies.api.responsemodel.ResponseReview;
-import eu.napcode.popmovies.api.responsemodel.ResponseMoviePage;
+import eu.napcode.popmovies.api.responsemodel.movie.ResponseMovie;
+import eu.napcode.popmovies.api.responsemodel.movie.ResponseMoviePage;
 
 public class MockMoviesResponseHelper {
 
@@ -26,16 +26,16 @@ public class MockMoviesResponseHelper {
         return responseMoviePage;
     }
 
-    public static List<ResponseReview> getResponseMovieList() {
-        List<ResponseReview> responseMovies = new ArrayList<>();
+    public static List<ResponseMovie> getResponseMovieList() {
+        List<ResponseMovie> responseMovies = new ArrayList<>();
         responseMovies.add(getResponseMovie());
         responseMovies.add(getResponseMovie());
 
         return responseMovies;
     }
 
-    public static ResponseReview getResponseMovie() {
-        ResponseReview responseMovie = new ResponseReview();
+    public static ResponseMovie getResponseMovie() {
+        ResponseMovie responseMovie = new ResponseMovie();
 
         return responseMovie;
     }

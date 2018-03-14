@@ -2,15 +2,15 @@ package eu.napcode.popmovies.model;
 
 import com.google.common.base.Function;
 
-import eu.napcode.popmovies.api.responsemodel.ResponseReview;
+import eu.napcode.popmovies.api.responsemodel.movie.ResponseMovie;
 
 public class MoviesMapper {
 
-    public static Function<ResponseReview, Movie> responseToMovie =
-            new Function<ResponseReview, Movie>() {
+    public static Function<ResponseMovie, Movie> responseToMovie =
+            new Function<ResponseMovie, Movie>() {
 
                 @Override
-                public Movie apply(ResponseReview responseMovie) {
+                public Movie apply(ResponseMovie responseMovie) {
                     Movie movie = new Movie();
                     movie.setTitle(responseMovie.getTitle());
                     movie.setId(responseMovie.getId());

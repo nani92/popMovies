@@ -1,11 +1,11 @@
 
-package eu.napcode.popmovies.api.responsemodel;
+package eu.napcode.popmovies.api.responsemodel.movie;
 
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ResponseReview {
+public class ResponseMovie {
 
     @SerializedName("vote_count")
     @Expose

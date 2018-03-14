@@ -11,7 +11,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import java.util.concurrent.TimeUnit;
 
 import eu.napcode.popmovies.api.MoviesService;
-import eu.napcode.popmovies.api.responsemodel.ResponseMoviePage;
+import eu.napcode.popmovies.api.responsemodel.movie.ResponseMoviePage;
 import eu.napcode.popmovies.model.Movie;
 import eu.napcode.popmovies.ui.movies.SortMovies;
 import eu.napcode.popmovies.utils.ApiUtils;
