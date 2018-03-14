@@ -146,7 +146,6 @@ public class MoviesRepositoryImplTest {
 
     @Test
     public void testChangeToNotFav() {
-
         Movie movie = getFullMovie();
         moviesRepository.favoriteChange(movie)
                 .test()
