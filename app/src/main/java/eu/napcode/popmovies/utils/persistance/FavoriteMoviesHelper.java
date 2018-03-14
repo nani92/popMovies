@@ -10,13 +10,14 @@ import javax.inject.Inject;
 
 import eu.napcode.popmovies.model.Movie;
 
-import static eu.napcode.popmovies.provider.FavouriteMoviesProvider.COLUMN_AVERAGE_VOTE;
-import static eu.napcode.popmovies.provider.FavouriteMoviesProvider.COLUMN_ID;
-import static eu.napcode.popmovies.provider.FavouriteMoviesProvider.COLUMN_ORIGINAL_TITLE;
-import static eu.napcode.popmovies.provider.FavouriteMoviesProvider.COLUMN_PLOT;
-import static eu.napcode.popmovies.provider.FavouriteMoviesProvider.COLUMN_POSTER;
-import static eu.napcode.popmovies.provider.FavouriteMoviesProvider.COLUMN_RELEASE_DATE;
-import static eu.napcode.popmovies.provider.FavouriteMoviesProvider.COLUMN_TITLE;
+import static eu.napcode.popmovies.database.FavoritesDatabase.COLUMN_AVERAGE_VOTE;
+import static eu.napcode.popmovies.database.FavoritesDatabase.COLUMN_ID;
+import static eu.napcode.popmovies.database.FavoritesDatabase.COLUMN_ORIGINAL_TITLE;
+import static eu.napcode.popmovies.database.FavoritesDatabase.COLUMN_PLOT;
+import static eu.napcode.popmovies.database.FavoritesDatabase.COLUMN_POSTER;
+import static eu.napcode.popmovies.database.FavoritesDatabase.COLUMN_RELEASE_DATE;
+import static eu.napcode.popmovies.database.FavoritesDatabase.COLUMN_TITLE;
+
 
 public class FavoriteMoviesHelper {
 
