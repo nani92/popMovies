@@ -4,6 +4,7 @@ import java.util.List;
 
 import eu.napcode.popmovies.model.Movie;
 import eu.napcode.popmovies.ui.movies.SortMovies;
+import io.reactivex.Completable;
 import io.reactivex.Observable;
 
 public interface MoviesRepository {
@@ -16,7 +17,7 @@ public interface MoviesRepository {
 
     boolean isMovieFavorite(int id);
 
-    void favoriteChange(Movie movie);
+    Completable favoriteChange(Movie movie);
 
     List<Movie> getFavorites();
 }
