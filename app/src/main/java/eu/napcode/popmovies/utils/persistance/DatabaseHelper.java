@@ -7,14 +7,15 @@ import android.net.Uri;
 
 import javax.inject.Inject;
 
+import static eu.napcode.popmovies.database.FavoritesDatabase.COLUMN_ID;
+import static eu.napcode.popmovies.database.FavoritesDatabase.TABLE_FAVORITE_MOVIES;
 import static eu.napcode.popmovies.provider.FavouriteMoviesProvider.AUTHORITY;
-import static eu.napcode.popmovies.provider.FavouriteMoviesProvider.COLUMN_ID;
-import static eu.napcode.popmovies.provider.FavouriteMoviesProvider.TABLE_FAVORITE_MOVIES;
+import static eu.napcode.popmovies.provider.FavouriteMoviesProvider.CONTENT_URI;
 
 public class DatabaseHelper {
 
     private final ContentResolver contentResolver;
-    private Uri uri = Uri.parse(AUTHORITY + TABLE_FAVORITE_MOVIES);
+    private Uri uri = CONTENT_URI;
 
     @Inject
     public DatabaseHelper(ContentResolver contentResolver) {
@@ -36,7 +37,7 @@ public class DatabaseHelper {
     }
 
     protected Cursor getById(int id) {
-        Uri uri = Uri.parse(AUTHORITY + TABLE_FAVORITE_MOVIES + "/" + id);
+        Uri uri = Uri.parse(this.uri + "/" + id);
 
         return contentResolver.query(uri, null, null, null, null);
     }

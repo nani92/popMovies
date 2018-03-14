@@ -77,7 +77,4 @@ dependencies {
 
     //retrofit rxjava2 adapter
     compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
-
-    //content provider
-    compile 'com.novoda:sqlite-provider:2.0.0'
 }
