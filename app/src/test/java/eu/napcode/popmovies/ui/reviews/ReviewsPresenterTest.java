@@ -12,10 +12,7 @@ import java.util.List;
 
 import eu.napcode.popmovies.model.Review;
 import eu.napcode.popmovies.repository.ReviewsRepository;
-import eu.napcode.popmovies.utils.rx.RxSchedulers;
 import io.reactivex.Observable;
-import io.reactivex.Scheduler;
-import io.reactivex.schedulers.Schedulers;
 import testhelpers.MockRxSchedulers;
 
 import static testhelpers.MockReviewHelper.getMoreReviews;
@@ -110,6 +107,4 @@ public class ReviewsPresenterTest {
         Mockito.verify(reviewsView).hideProgressBar();
         Mockito.verify(reviewsView).displayEmptyLayout();
     }
-
-
 }

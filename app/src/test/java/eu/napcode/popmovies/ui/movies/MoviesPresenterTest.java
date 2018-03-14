@@ -10,10 +10,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import java.util.ArrayList;
 import eu.napcode.popmovies.model.Movie;
 import eu.napcode.popmovies.repository.MoviesRepository;
-import eu.napcode.popmovies.utils.rx.RxSchedulers;
 import io.reactivex.Observable;
-import io.reactivex.Scheduler;
-import io.reactivex.schedulers.Schedulers;
 import testhelpers.MockRxSchedulers;
 
 import static org.mockito.Mockito.times;
