@@ -238,11 +238,15 @@ public class DetailsActivity extends AppCompatActivity implements DetailsView {
     }
 
     private void displayYoutubeVideo(String key) {
+        Intent appIntent = YoutubeUtils.getYoutubeAppIntent(key);
+        Intent webIntent = YoutubeUtils.getYoutubeWebIntent(key);
 
-        try {
-            startActivity(YoutubeUtils.getYoutubeAppIntent(key));
-        } catch (ActivityNotFoundException ex) {
-            startActivity(YoutubeUtils.getYoutubeWebIntent(key));
+        if (appIntent.resolveActivity(getPackageManager()) != null) {
+            startActivity(appIntent);
+        } else if (webIntent.resolveActivity(getPackageManager()) != null) {
+            startActivity(webIntent);
+        } else {
+            //TODO: display message
         }
     }
 

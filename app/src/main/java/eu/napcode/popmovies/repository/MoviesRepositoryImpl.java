@@ -14,6 +14,7 @@ import eu.napcode.popmovies.api.responsemodel.ResponseMoviePage;
 import eu.napcode.popmovies.model.Movie;
 import eu.napcode.popmovies.model.MoviesMapper;
 import eu.napcode.popmovies.ui.movies.SortMovies;
+import io.reactivex.Completable;
 import io.reactivex.Observable;
 import io.reactivex.functions.Function;
 
@@ -71,13 +72,14 @@ public class MoviesRepositoryImpl implements MoviesRepository {
     }
 
     @Override
-    public void favoriteChange(Movie movie) {
-
-        if (isMovieFavorite(movie.getId())) {
-            this.favoriteMoviesHelper.removeMovieById(movie.getId());
-        } else {
-            this.favoriteMoviesHelper.saveMovie(movie);
-        }
+    public Completable favoriteChange(Movie movie) {
+        return Completable.fromAction(() -> {
+            if (isMovieFavorite(movie.getId())) {
+                this.favoriteMoviesHelper.removeMovieById(movie.getId());
+            } else {
+                this.favoriteMoviesHelper.saveMovie(movie);
+            }
+        });
     }
 
     @Override

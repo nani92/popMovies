@@ -137,9 +137,10 @@ public class DetailsPresenter implements BasePresenter<DetailsView> {
     }
 
     public void favoriteClicked() {
-        this.moviesRepository.favoriteChange(this.movie);
-
-        checkIfFavorite();
+        this.moviesRepository.favoriteChange(this.movie)
+                .subscribeOn(rxSchedulers.io())
+                .observeOn(rxSchedulers.androidMainThread())
+                .subscribe(()-> checkIfFavorite());
     }
 
     public void setPosterBitmap(Bitmap posterBitmap) {

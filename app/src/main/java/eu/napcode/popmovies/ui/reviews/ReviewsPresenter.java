@@ -117,7 +117,10 @@ public class ReviewsPresenter implements BasePresenter<ReviewsView> {
             return;
         }
 
-        this.reviewsView.hideEmptyLayout();
+        if (reviews.size() == this.reviews.size()) {
+            this.reviewsView.hideEmptyLayout();
+        }
+
         this.reviewsView.displayReviews(reviews);
     }
 
