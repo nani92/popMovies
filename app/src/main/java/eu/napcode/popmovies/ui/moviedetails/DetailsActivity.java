@@ -47,7 +47,6 @@ import eu.napcode.popmovies.utils.archbase.PresenterBundle;
 public class DetailsActivity extends AppCompatActivity implements DetailsView {
 
     //TODO network helper
-    //TODO remove toolbar
     //TODO create collapsible toolbar
     public static final String KEY_MOVIE = "movie";
     private static final String SAVE_PRESENTER_STATE = "details presenter";

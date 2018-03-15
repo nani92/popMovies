@@ -1,6 +1,6 @@
 package eu.napcode.popmovies.api;
 
-import eu.napcode.popmovies.api.responsemodel.ResponseMoviePage;
+import eu.napcode.popmovies.api.responsemodel.movie.ResponseMoviePage;
 import eu.napcode.popmovies.api.responsemodel.reviews.ResponseReviewsPage;
 import eu.napcode.popmovies.api.responsemodel.videos.ResponseVideos;
 import io.reactivex.Observable;

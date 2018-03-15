@@ -2,7 +2,7 @@ package eu.napcode.popmovies.model;
 
 import com.google.common.base.Function;
 
-import eu.napcode.popmovies.api.responsemodel.ResponseMovie;
+import eu.napcode.popmovies.api.responsemodel.movie.ResponseMovie;
 
 public class MoviesMapper {
 
