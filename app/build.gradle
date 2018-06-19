@@ -30,7 +30,7 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "com.android.support:appcompat-v7:$project.supportVersion"
-    implementation 'com.android.support.constraint:constraint-layout:1.1.0-beta5'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.1'
     implementation "com.android.support:design:$project.supportVersion"
 
     //recyclerview
@@ -40,14 +40,14 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
-    testCompile "org.mockito:mockito-core:2.15.0"
+    testImplementation "org.mockito:mockito-core:2.15.0"
 
     //gson
-    compile 'com.google.code.gson:gson:2.8.2'
+    implementation 'com.google.code.gson:gson:2.8.2'
 
     //retrofit
-    compile 'com.squareup.retrofit2:retrofit:2.3.0'
-    compile 'com.squareup.retrofit2:converter-gson:2.3.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
 
     //dagger
     implementation 'com.google.dagger:dagger-android:2.11'
@@ -56,13 +56,13 @@ dependencies {
     annotationProcessor 'com.google.dagger:dagger-compiler:2.11'
 
     //okhttp
-    compile 'com.squareup.okhttp3:logging-interceptor:3.9.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.9.0'
 
     //guava
-    compile 'com.google.guava:guava:24.0-android'
+    implementation 'com.google.guava:guava:24.0-android'
 
     //butterknife
-    compile 'com.jakewharton:butterknife:8.8.1'
+    implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 
     //glide
@@ -70,15 +70,15 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.6.1'
 
     //cardview
-    compile "com.android.support:cardview-v7:$project.supportVersion"
+    implementation "com.android.support:cardview-v7:$project.supportVersion"
 
     //rx
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
     implementation 'io.reactivex.rxjava2:rxjava:2.1.9'
 
     //retrofit rxjava2 adapter
-    compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
 
     //content provider
-    compile 'com.novoda:sqlite-provider:2.0.0'
+    implementation 'com.novoda:sqlite-provider:2.0.0'
 }
